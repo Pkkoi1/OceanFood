@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Carousel } from "antd";
+import React, { useEffect, useState } from "react";
+import { Carousel, Select } from "antd";
 import ProductCard from "../product/ProductCard";
 import { newProducts } from "../../data/mockData";
 
@@ -22,19 +22,47 @@ interface ListProductProps {
   title?: string;
   layout?: "vertical" | "horizontal";
   number?: number;
-  carousel?: boolean; // New prop for carousel mode
-  container?: boolean; // Optional prop to control container styling
+  carousel?: boolean;
+  container?: boolean;
+  titlePosition?: "left" | "center" | "right";
 }
 
 const ListProduct: React.FC<ListProductProps> = ({
   title,
   layout = "vertical",
   number = 10,
-  carousel = false, // Default to false
-  container = true, // Default to true
+  carousel = false,
+  container = true,
+  titlePosition = "center",
 }) => {
   const [products, setProducts] = useState<Product[]>(newProducts);
-  const [visibleCount, setVisibleCount] = useState(number); // Sử dụng number prop
+  const [visibleCount, setVisibleCount] = useState(number);
+  const [sortOption, setSortOption] = useState("default");
+  const [displayTitle, setDisplayTitle] = useState(title);
+
+  const sortOptions = [
+    { value: "default", label: "Mặc định" },
+    { value: "name-asc", label: "A → Z" },
+    { value: "name-desc", label: "Z → A" },
+    { value: "price-asc", label: "Giá tăng dần" },
+    { value: "price-desc", label: "Giá giảm dần" },
+    { value: "newest", label: "Hàng mới nhất" },
+    { value: "oldest", label: "Hàng cũ nhất" },
+  ];
+  useEffect(() => {
+    setDisplayTitle(title);
+  }, [title]);
+
+  const handleSortChange = (value: string) => {
+    setSortOption(value);
+    const selectedOption = sortOptions.find((option) => option.value === value);
+    if (
+      selectedOption &&
+      (titlePosition === "left" || titlePosition === "right")
+    ) {
+      setDisplayTitle(selectedOption.label);
+    }
+  };
 
   const toggleLike = (productId: number) => {
     setProducts((prev) =>
@@ -103,12 +131,37 @@ const ListProduct: React.FC<ListProductProps> = ({
     );
   };
 
+  const getTitleAlignment = () => {
+    switch (titlePosition) {
+      case "left":
+        return "justify-between";
+      case "right":
+        return "justify-end";
+      default:
+        return "justify-center";
+    }
+  };
+
   return (
     <div className={`py-8 mb-6 ${container ? "mx-[100px]" : ""}`}>
-      <div className="flex justify-around items-center mb-8">
-        <button className="text-3xl font-medium text-gray-800 hover:text-[#4FB3D9] transition-colors duration-300 cursor-pointer bg-transparent border-none outline-none">
-          {title}
-        </button>
+      <div className={`flex w-full items-center mb-8 ${getTitleAlignment()}`}>
+        <div className="flex items-center gap-4 w-full justify-between">
+          <h2 className="text-3xl font-medium text-gray-800 hover:text-[#4FB3D9] transition-colors duration-300">
+            {displayTitle}
+          </h2>
+
+          {(titlePosition === "left" || titlePosition === "right") && (
+            <div className="flex items-center gap-2">
+              <span className="text-gray-600">Sắp xếp theo:</span>
+              <Select
+                value={sortOption}
+                onChange={handleSortChange}
+                style={{ width: 200 }}
+                options={sortOptions}
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Products Display */}

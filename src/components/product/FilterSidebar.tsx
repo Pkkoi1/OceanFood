@@ -84,24 +84,24 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="bg-white p-6  w-1/3">
+    <div className="bg-white p-6 w-1/3">
       {/* Price Range Section */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-[#4FB3D9]">
+        <h3 className="text-sm font-semibold text-gray-800 mb-4 pb-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-1/4 after:h-0.5 after:bg-[#4FB3D9]">
           Chọn mức giá
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-1">
           {priceRanges.map((range) => (
             <label key={range.key} className="flex items-center cursor-pointer">
               <input
-                type="radio"
+                type="checkbox"
                 name="priceRange"
                 value={range.key}
                 checked={selectedPriceRange === range.key}
                 onChange={(e) => handlePriceRangeChange(e.target.value)}
                 className="mr-3 w-4 h-4 text-[#4FB3D9] focus:ring-[#4FB3D9]"
               />
-              <span className="text-gray-700">{range.label}</span>
+              <span className="text-sm text-gray-700">{range.label}</span>
             </label>
           ))}
         </div>
@@ -109,10 +109,10 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
 
       {/* Product Type Section */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-[#4FB3D9]">
+        <h3 className="text-sm font-semibold text-gray-800 mb-4 pb-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-1/4 after:h-0.5 after:bg-[#4FB3D9]">
           Loại hàng
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-1">
           {productTypes.map((type) => (
             <label key={type.key} className="flex items-center cursor-pointer">
               <input
@@ -123,7 +123,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
                 }
                 className="mr-3 w-4 h-4 text-[#4FB3D9] focus:ring-[#4FB3D9] rounded border-gray-300"
               />
-              <span className="text-gray-700">{type.label}</span>
+              <span className="text-sm text-gray-700">{type.label}</span>
             </label>
           ))}
         </div>
@@ -131,10 +131,10 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
 
       {/* Origin Section */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-[#4FB3D9]">
+        <h3 className="text-sm font-semibold text-gray-800 mb-4 pb-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-1/4 after:h-0.5 after:bg-[#4FB3D9]">
           Xuất xứ
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-1">
           {origins.map((origin) => (
             <label
               key={origin.key}
@@ -148,7 +148,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
                 }
                 className="mr-3 w-4 h-4 text-[#4FB3D9] focus:ring-[#4FB3D9] rounded border-gray-300"
               />
-              <span className="text-gray-700">{origin.label}</span>
+              <span className="text-sm text-gray-700">{origin.label}</span>
             </label>
           ))}
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
+import { productCategories } from "../../constants/productCategories";
 
 const MainMenu = () => {
   const [showProductMenu, setShowProductMenu] = useState(false);
@@ -18,19 +19,6 @@ const MainMenu = () => {
     },
     { name: "Cẩm nang ẩm thực", href: "#", path: "/handbook" },
     { name: "Liên hệ", href: "#", path: "/contact" },
-  ];
-
-  const productCategories = [
-    { key: "hai-san-dong-lanh", label: "Hải sản đông lạnh" },
-    { key: "100-tuoi-song", label: "100% tươi sống" },
-    { key: "hai-san-nhap-khau", label: "Hải sản nhập khẩu" },
-    { key: "ca-hoi", label: "Cá hồi" },
-    { key: "hau-sua", label: "Hàu sữa" },
-    { key: "ngao-so-oc", label: "Ngao, sò, ốc" },
-    { key: "cua-ghe", label: "Cua - ghẹ" },
-    { key: "tom-cac-loai", label: "Tôm các loại" },
-    { key: "muc", label: "Mực" },
-    { key: "gia-vi-sot", label: "Gia vị - sốt" },
   ];
 
   // Chia đều 10 sản phẩm thành 4 cột: 3-3-2-2
@@ -102,7 +90,7 @@ const MainMenu = () => {
                           {getColumnItems(colIndex).map((item) => (
                             <a
                               key={item.key}
-                              href="#"
+                              href={`/OceanFood/products?category=${item.key}`}
                               className="block hover:text-[#49c9ea] cursor-pointer py-1 transition-colors"
                             >
                               {item.label}
