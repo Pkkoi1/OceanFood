@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MenuOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { useLocation } from "react-router-dom";
 
-const SideMenu = () => {
+interface SideMenuProps {
+  onToggle?: (isOpen: boolean) => void;
+}
+
+const SideMenu: React.FC<SideMenuProps> = ({ onToggle }) => {
+  const location = useLocation();
   const [showCategoryMenu, setShowCategoryMenu] = useState(true); // Mặc định luôn hiện
+
+  // Auto close/open based on route
+  useEffect(() => {
+    const isHomePage = location.pathname === "/";
+    setShowCategoryMenu(isHomePage);
+  }, [location.pathname]);
 
   const productCategories = [
     { key: "hai-san-dong-lanh", label: "Hải sản đông lạnh" },
@@ -18,7 +30,9 @@ const SideMenu = () => {
   ];
 
   const toggleMenu = () => {
-    setShowCategoryMenu(!showCategoryMenu);
+    const newState = !showCategoryMenu;
+    setShowCategoryMenu(newState);
+    onToggle?.(newState); // ✅ gọi callback truyền lên NavBar
   };
 
   return (

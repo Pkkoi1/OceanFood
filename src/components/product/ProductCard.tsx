@@ -92,16 +92,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
               )}
             </div>
           </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-1">
-            <button className="w-8 h-8 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center text-xs">
-              <ShoppingCartOutlined />
-            </button>
-            <button className="w-8 h-8 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center text-xs">
-              <EyeOutlined />
-            </button>
-          </div>
         </div>
       </div>
     );

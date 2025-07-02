@@ -250,8 +250,8 @@ const FlashSale: React.FC = () => {
                 key={index}
                 className={`w-3 h-3 rounded-full cursor-pointer transition-all duration-300 ${
                   currentSlide === index
-                    ? "bg-primary scale-110"
-                    : "bg-[#ececec] hover:bg-primary/50"
+                    ? "bg-[#4FB3D9] scale-110"
+                    : "bg-[#ececec] hover:bg-[#4FB3D9]/50"
                 }`}
                 onClick={() => goToSlide(index)}
               />

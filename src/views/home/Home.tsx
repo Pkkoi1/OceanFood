@@ -8,11 +8,14 @@ import productImg2 from "../../assets/images/product-image-2.webp";
 import Handbook from "../../components/home/Handbook";
 import Brand from "../../components/home/Brand";
 
-const Home = () => {
+interface HomeProps {
+  isSidebarOpen: boolean;
+}
+const Home: React.FC<HomeProps> = ({ isSidebarOpen }) => {
   return (
     <div>
-      <div className="bg-gradient-to-b from-[#37bee3] via-[#fff] via-[#fff] to-white">
-        <Banner></Banner>
+      <div className="bg-gradient-to-b from-[#6acfea] via-[#fff] via-[#fff] to-white">
+        <Banner isSidebarOpen={isSidebarOpen} />
         <FlashSale></FlashSale>
         <ListCategory></ListCategory>
         <ListProduct title="Hải sản mới về" layout="vertical"></ListProduct>

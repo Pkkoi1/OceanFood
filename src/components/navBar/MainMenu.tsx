@@ -1,133 +1,133 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { CaretDownOutlined } from "@ant-design/icons";
+import { useLocation } from "react-router-dom";
 
 const MainMenu = () => {
   const [showProductMenu, setShowProductMenu] = useState(false);
+  const location = useLocation();
+  const productMenuTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const menuItems = [
+    { name: "Trang chủ", href: "/OceanFood", path: "/" },
+    { name: "Giới thiệu", href: "/OceanFood/about", path: "/about" },
+    {
+      name: "Sản phẩm",
+      href: "/OceanFood/products",
+      hasDropdown: true,
+      path: "/products",
+    },
+    { name: "Cẩm nang ẩm thực", href: "#", path: "/handbook" },
+    { name: "Liên hệ", href: "#", path: "/contact" },
+  ];
+
+  const productCategories = [
+    { key: "hai-san-dong-lanh", label: "Hải sản đông lạnh" },
+    { key: "100-tuoi-song", label: "100% tươi sống" },
+    { key: "hai-san-nhap-khau", label: "Hải sản nhập khẩu" },
+    { key: "ca-hoi", label: "Cá hồi" },
+    { key: "hau-sua", label: "Hàu sữa" },
+    { key: "ngao-so-oc", label: "Ngao, sò, ốc" },
+    { key: "cua-ghe", label: "Cua - ghẹ" },
+    { key: "tom-cac-loai", label: "Tôm các loại" },
+    { key: "muc", label: "Mực" },
+    { key: "gia-vi-sot", label: "Gia vị - sốt" },
+  ];
+
+  // Chia đều 10 sản phẩm thành 4 cột: 3-3-2-2
+  const getColumnItems = (colIndex: number) => {
+    const itemsPerColumn = [3, 3, 2, 2];
+    let startIndex = 0;
+    for (let i = 0; i < colIndex; i++) {
+      startIndex += itemsPerColumn[i];
+    }
+    return productCategories.slice(
+      startIndex,
+      startIndex + itemsPerColumn[colIndex]
+    );
+  };
+
+  const isActive = (itemPath: string) => {
+    return location.pathname === itemPath;
+  };
+
+  const handleProductMouseEnter = () => {
+    if (productMenuTimeout.current) {
+      clearTimeout(productMenuTimeout.current);
+    }
+    setShowProductMenu(true);
+  };
+
+  const handleProductMouseLeave = () => {
+    productMenuTimeout.current = setTimeout(() => {
+      setShowProductMenu(false);
+    }, 200); // 200ms delay
+  };
 
   return (
     <nav className="flex-1 flex justify-center">
       <ul className="flex items-center gap-8 text-base font-medium">
-        <li>
-          <a href="#" className="hover:text-blue-600 transition-colors">
-            Trang chủ
-          </a>
-        </li>
-        <li>
-          <a href="#" className="hover:text-blue-600 transition-colors">
-            Giới thiệu
-          </a>
-        </li>
-        <li className="relative">
-          <div
-            onMouseEnter={() => setShowProductMenu(true)}
-            onMouseLeave={() => setShowProductMenu(false)}
-          >
-            <a
-              href="#"
-              className="flex items-center hover:text-blue-600 transition-colors"
-            >
-              Sản phẩm
-              <CaretDownOutlined
-                className={`ml-1 text-xs transition-transform duration-300 ${
-                  showProductMenu ? "rotate-180" : "rotate-0"
-                }`}
-              />
-            </a>
+        {menuItems.map((item) => (
+          <li key={item.name} className={item.hasDropdown ? "relative" : ""}>
+            {item.hasDropdown ? (
+              <div
+                onMouseEnter={handleProductMouseEnter}
+                onMouseLeave={handleProductMouseLeave}
+              >
+                <a
+                  href={item.href}
+                  className={`flex items-center transition-colors py-2 ${
+                    isActive(item.path)
+                      ? "text-[#49c9ea] font-semibold"
+                      : "hover:text-[#49c9ea]"
+                  }`}
+                >
+                  {item.name}
+                  <CaretDownOutlined
+                    className={`ml-1 text-xs transition-transform duration-300 ${
+                      showProductMenu ? "rotate-180" : "rotate-0"
+                    }`}
+                  />
+                </a>
 
-            {/* Product Dropdown - 4 columns */}
-            {showProductMenu && (
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 bg-white shadow-lg rounded border border-gray-200 w-[800px] z-50 mt-1">
-                <div className="grid grid-cols-4 gap-6 p-6">
-                  {/* Cột 1 - 3 dòng */}
-                  <div className="space-y-3">
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      Hải Sản Đông Lạnh
-                    </a>
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      100% Tươi Sống
-                    </a>
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      Hải Sản Nhập Khẩu
-                    </a>
+                {/* Product Dropdown - 4 columns */}
+                {showProductMenu && (
+                  <div
+                    className="absolute top-full left-1/2 transform -translate-x-1/2 bg-white shadow-lg rounded border border-gray-200 w-[800px] z-50"
+                    onMouseEnter={handleProductMouseEnter}
+                    onMouseLeave={handleProductMouseLeave}
+                  >
+                    <div className="grid grid-cols-4 gap-6 p-6">
+                      {[0, 1, 2, 3].map((colIndex) => (
+                        <div key={colIndex} className="space-y-3">
+                          {getColumnItems(colIndex).map((item) => (
+                            <a
+                              key={item.key}
+                              href="#"
+                              className="block hover:text-[#49c9ea] cursor-pointer py-1 transition-colors"
+                            >
+                              {item.label}
+                            </a>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-
-                  {/* Cột 2 - 3 dòng */}
-                  <div className="space-y-3">
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      Cá Hồi
-                    </a>
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      Hàu Sữa
-                    </a>
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      Tôm Các Loại
-                    </a>
-                  </div>
-
-                  {/* Cột 3 - 2 dòng */}
-                  <div className="space-y-3">
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      Ngao, Sò, Ốc
-                    </a>
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      Cua - Ghẹ
-                    </a>
-                  </div>
-
-                  {/* Cột 4 - 2 dòng */}
-                  <div className="space-y-3">
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      Mực
-                    </a>
-                    <a
-                      href="#"
-                      className="block hover:text-blue-600 cursor-pointer py-1 transition-colors"
-                    >
-                      Gia Vị - Sốt
-                    </a>
-                  </div>
-                </div>
+                )}
               </div>
+            ) : (
+              <a
+                href={item.href}
+                className={`transition-colors ${
+                  isActive(item.path)
+                    ? "text-[#49c9ea] font-semibold"
+                    : "hover:text-[#49c9ea]"
+                }`}
+              >
+                {item.name}
+              </a>
             )}
-          </div>
-        </li>
-        <li>
-          <a href="#" className="hover:text-blue-600 transition-colors">
-            Cẩm nang ẩm thực
-          </a>
-        </li>
-        <li>
-          <a href="#" className="hover:text-blue-600 transition-colors">
-            Liên hệ
-          </a>
-        </li>
+          </li>
+        ))}
       </ul>
     </nav>
   );

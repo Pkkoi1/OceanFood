@@ -6,18 +6,26 @@ import banner3 from "../../../assets/images/slider_1.webp";
 import banner4 from "../../../assets/images/slider_1.webp";
 import banner5 from "../../../assets/images/two_banner_image_1.webp";
 import banner6 from "../../../assets/images/two_banner_image_2.webp";
-import styles from "./Banner.module.css"; // Sửa đường dẫn import CSS module
+import styles from "./Banner.module.css";
+
+interface BannerProps {
+  isSidebarOpen?: boolean;
+}
 
 const bannerStyle: React.CSSProperties = {
   width: "100%",
   height: "400px",
-  objectFit: "cover",
+  objectFit: "fill",
   borderRadius: "8px",
 };
 
-const Banner: React.FC = () => (
+const Banner: React.FC<BannerProps> = ({ isSidebarOpen = true }) => (
   <div>
-    <div className="w-2/3 ml-[400px] p-4 pb-0">
+    <div
+      className={`pt-4 transition-all duration-300 ${
+        isSidebarOpen ? "w-2/3 ml-[400px]" : "w-auto mx-[100px]"
+      }`}
+    >
       <Carousel
         arrows
         infinite={true}
