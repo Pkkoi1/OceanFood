@@ -91,13 +91,13 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
               >
                 <div className="py-2">
                   <a
-                    href="/login"
+                    href="/OceanFood/login"
                     className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-[#37bee3] transition-colors"
                   >
                     Đăng nhập
                   </a>
                   <a
-                    href="/register"
+                    href="/OceanFood/register"
                     className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-[#37bee3] transition-colors"
                   >
                     Đăng ký
