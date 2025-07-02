@@ -5,6 +5,9 @@ import ListCategory from "../../components/home/ListCategory";
 import ListProduct from "../../components/home/ListProduct";
 import productImg1 from "../../assets/images/product-image-1.webp";
 import productImg2 from "../../assets/images/product-image-2.webp";
+import Handbook from "../../components/home/Handbook";
+import Brand from "../../components/home/Brand";
+
 const Home = () => {
   return (
     <div>
@@ -25,6 +28,8 @@ const Home = () => {
           layout="horizontal"
           number={6}
         ></ListProduct>
+        <Handbook></Handbook>
+        <Brand></Brand>
       </div>
     </div>
   );

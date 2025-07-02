@@ -51,7 +51,7 @@ const ListCategory = () => {
             key={category.id}
             className="flex flex-col items-center group cursor-pointer"
           >
-            <div className="w-24 h-24 rounded-full border-2 border-[#4FB3D9] flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-[#4FB3D9] group-hover:scale-110">
+            <div className="bg-white w-24 h-24 rounded-full border-2 border-[#4FB3D9] flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-[#4FB3D9] group-hover:scale-110">
               <img
                 src={category.icon}
                 alt={category.name}
