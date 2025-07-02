@@ -11,7 +11,7 @@ import Brand from "../../components/home/Brand";
 const Home = () => {
   return (
     <div>
-      <div className="bg-gradient-to-b from-[#6acfea] via-[#fff] via-[#fff] to-white">
+      <div className="bg-gradient-to-b from-[#37bee3] via-[#fff] via-[#fff] to-white">
         <Banner></Banner>
         <FlashSale></FlashSale>
         <ListCategory></ListCategory>

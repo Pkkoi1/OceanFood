@@ -6,7 +6,7 @@ import NavBar from "./components/navBar";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/OceanFood">
       <Header />
       <NavBar></NavBar>
       <Routes>
