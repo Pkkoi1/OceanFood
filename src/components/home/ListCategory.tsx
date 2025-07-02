@@ -19,7 +19,7 @@ const ListCategory = () => {
       name: "Hải sản nhập khẩu",
       icon: "/public/images/airplane-mode.webp",
     },
-    { id: 4, name: "Cá hồi", icon: "/public/images/salmon.webp" },
+    { id: 4, name: "Cá hồi", icon: "/images/salmon.webp" },
     { id: 5, name: "Hàu sữa", icon: "/public/images/oyster.webp" },
     { id: 6, name: "Ngao, sò, ốc", icon: "/public/images/seashell.webp" },
     { id: 7, name: "Cua - ghẹ", icon: "/public/images/crab.webp" },

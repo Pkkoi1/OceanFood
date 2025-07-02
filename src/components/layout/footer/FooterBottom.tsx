@@ -8,10 +8,10 @@ import {
   InstagramFilled,
   TwitterOutlined,
 } from "@ant-design/icons";
-import method1 from "../../../../public/images/trustbadge_1.png";
-import method2 from "../../../../public/images/trustbadge_2.webp";
-import method3 from "../../../../public/images/trustbadge_3.webp";
-import method4 from "../../../../public/images/trustbadge_4.webp";
+import method1 from "../../../assets/images/trustbadge_1.png";
+import method2 from "../../../assets/images/trustbadge_2.webp";
+import method3 from "../../../assets/images/trustbadge_3.webp";
+import method4 from "../../../assets/images/trustbadge_4.webp";
 import { Image } from "antd";
 
 const FooterBottom = () => {

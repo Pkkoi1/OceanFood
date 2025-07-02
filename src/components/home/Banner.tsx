@@ -1,11 +1,11 @@
 import React from "react";
 import { Carousel } from "antd";
-import banner1 from "../../../public/images/slider_1.webp";
-import banner2 from "../../../public/images/slider_1.webp";
-import banner3 from "../../../public/images/slider_1.webp";
-import banner4 from "../../../public/images/slider_1.webp";
-import banner5 from "../../../public/images/two_banner_image_1.webp";
-import banner6 from "../../../public/images/two_banner_image_2.webp";
+import banner1 from "../../assets/images/slider_1.webp";
+import banner2 from "../../assets/images/slider_1.webp";
+import banner3 from "../../assets/images/slider_1.webp";
+import banner4 from "../../assets/images/slider_1.webp";
+import banner5 from "../../assets/images/two_banner_image_1.webp";
+import banner6 from "../../assets/images/two_banner_image_2.webp";
 
 const bannerStyle: React.CSSProperties = {
   width: "100%",

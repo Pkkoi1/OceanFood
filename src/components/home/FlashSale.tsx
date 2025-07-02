@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Carousel } from "antd";
 import SaleProductCard from "./SaleProductCard";
+import flashSale from "../../assets/images/save-icon.webp";
 
 interface Product {
   id: number;
@@ -33,7 +34,7 @@ const FlashSale: React.FC = () => {
       originalPrice: 1600000,
       discount: 16,
       sold: 174,
-      image: "/images/ca-hoi.jpg",
+      image: "../../assets/images/ca-hoi.webp",
       isLiked: false,
       badge: "BÁN CHẠY",
     },
@@ -45,7 +46,7 @@ const FlashSale: React.FC = () => {
       originalPrice: 400000,
       discount: 18,
       sold: 0,
-      image: "/images/tom-cang.jpg",
+      image: "../../assets/images/tom-cang.jpg",
       isLiked: false,
       badge: "BÁN CHẠY",
       stockStatus: "Sắp hết hàng",
@@ -62,7 +63,7 @@ const FlashSale: React.FC = () => {
         originalPrice: 1600000,
         discount: 16,
         sold: 174,
-        image: "/public/images/ca-hoi.webp",
+        image: "../../assets/images/ca-hoi.webp",
         isLiked: false,
         badge: "BÁN CHẠY",
       },
@@ -74,7 +75,7 @@ const FlashSale: React.FC = () => {
         originalPrice: 400000,
         discount: 18,
         sold: 0,
-        image: "/public/images/tom-cang-xanh.webp",
+        image: "../../assets/images/tom-cang-xanh.webp",
         isLiked: false,
         badge: "BÁN CHẠY",
         stockStatus: "Sắp hết hàng",
@@ -89,7 +90,7 @@ const FlashSale: React.FC = () => {
         originalPrice: 3000000,
         discount: 17,
         sold: 89,
-        image: "/images/cua-hoang-de.jpg",
+        image: "../../assets/images/cua-hoang-de.jpg",
         isLiked: false,
         badge: "MỚI",
       },
@@ -101,7 +102,7 @@ const FlashSale: React.FC = () => {
         originalPrice: 220000,
         discount: 18,
         sold: 156,
-        image: "/images/bach-tuoc.jpg",
+        image: "../../assets/images/bach-tuoc.jpg",
         isLiked: false,
         badge: "BÁN CHẠY",
       },
@@ -115,7 +116,7 @@ const FlashSale: React.FC = () => {
         originalPrice: 550000,
         discount: 18,
         sold: 67,
-        image: "/images/so-diep.jpg",
+        image: "../../assets/images/so-diep.jpg",
         isLiked: false,
         badge: "HOT",
       },
@@ -127,7 +128,7 @@ const FlashSale: React.FC = () => {
         originalPrice: 400000,
         discount: 20,
         sold: 124,
-        image: "/images/ghe-xanh.jpg",
+        image: "../../assets/images/ghe-xanh.jpg",
         isLiked: false,
         stockStatus: "Chỉ còn 5 con",
       },
@@ -180,7 +181,7 @@ const FlashSale: React.FC = () => {
         <div className="flex items-center">
           <div className="text-white mr-6 flex items-center">
             <div className="text-4xl font-bold">
-              <img src="../../../public/images/save-icon.webp" alt="" />
+              <img src={flashSale} alt="" />
             </div>
             <div className="text-2xl mt-2 font-bold ml-4">
               GIỜ VÀNG GIẢM GIÁ!

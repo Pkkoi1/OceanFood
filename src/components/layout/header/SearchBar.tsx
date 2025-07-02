@@ -1,9 +1,9 @@
 import { Image } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
-import logo from "../../../../public/images/logo.webp";
-import timeWork from "../../../../public/images/time-work.webp";
-import ship from "../../../../public/images/free-ship-2h.webp";
+import logo from "../../../assets/images/logo.webp";
+import timeWork from "../../../assets/images/time-work.webp";
+import ship from "../../../assets/images/free-ship-2h.webp";
 
 const SearchBar = () => {
   const [placeholder, setPlaceholder] = useState("");
