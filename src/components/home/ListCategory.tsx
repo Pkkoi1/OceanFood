@@ -1,4 +1,14 @@
 import React from "react";
+import fridge from "../../assets/images/fridge.webp";
+import fish from "../../assets/images/fish.webp";
+import airplane from "../../assets/images/airplane-mode.webp";
+import salmon from "../../assets/images/salmon.webp";
+import oyster from "../../assets/images/oyster.webp";
+import seashell from "../../assets/images/seashell.webp";
+import crab from "../../assets/images/crab.webp";
+import shrimp from "../../assets/images/shrimp.webp";
+import squid from "../../assets/images/squid.webp";
+import spices from "../../assets/images/spices.webp";
 
 interface Category {
   id: number;
@@ -11,21 +21,21 @@ const ListCategory = () => {
     {
       id: 1,
       name: "Hải sản đông lạnh",
-      icon: "/public/images/fridge.webp",
+      icon: fridge,
     },
-    { id: 2, name: "100% tươi sống", icon: "/public/images/fish.webp" },
+    { id: 2, name: "100% tươi sống", icon: fish },
     {
       id: 3,
       name: "Hải sản nhập khẩu",
-      icon: "/public/images/airplane-mode.webp",
+      icon: airplane,
     },
-    { id: 4, name: "Cá hồi", icon: "/images/salmon.webp" },
-    { id: 5, name: "Hàu sữa", icon: "/public/images/oyster.webp" },
-    { id: 6, name: "Ngao, sò, ốc", icon: "/public/images/seashell.webp" },
-    { id: 7, name: "Cua - ghẹ", icon: "/public/images/crab.webp" },
-    { id: 8, name: "Tôm các loại", icon: "/public/images/shrimp.webp" },
-    { id: 9, name: "Mực", icon: "/public/images/squid.webp" },
-    { id: 10, name: "Gia vị - sốt", icon: "/public/images/spices.webp" },
+    { id: 4, name: "Cá hồi", icon: salmon },
+    { id: 5, name: "Hàu sữa", icon: oyster },
+    { id: 6, name: "Ngao, sò, ốc", icon: seashell },
+    { id: 7, name: "Cua - ghẹ", icon: crab },
+    { id: 8, name: "Tôm các loại", icon: shrimp },
+    { id: 9, name: "Mực", icon: squid },
+    { id: 10, name: "Gia vị - sốt", icon: spices },
   ];
 
   return (

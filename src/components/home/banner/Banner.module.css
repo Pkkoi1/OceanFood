@@ -1,0 +1,138 @@
+/* App.css hoặc Banner.module.css */
+
+.imageHoverWrapper {
+  position: relative;
+  overflow: hidden;
+  /* Note: Force immediate hover response */
+  transition: none !important;
+}
+
+.imageHoverWrapper img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Note: Prevent image transition interference */
+  transition: none !important;
+}
+
+.imageHoverVertical,
+.imageHoverHorizontal {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  /* Note: Force no transition to prevent delay */
+  transition: none !important;
+}
+
+.imageHoverVertical {
+  width: 100%;
+  height: 0%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.imageHoverHorizontal {
+  height: 100%;
+  width: 0%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+/* Note: Animation sẽ chạy ngay lập tức khi hover mà không bị delay */
+.imageHoverWrapper:hover .imageHoverVertical {
+  animation: verticalShrink 0.7s ease forwards !important;
+  transition: none !important;
+}
+
+.imageHoverWrapper:hover .imageHoverHorizontal {
+  animation: horizontalShrink 0.7s ease forwards !important;
+  transition: none !important;
+}
+
+/* Note: Animation ngược khi hover ra */
+.imageHoverWrapper:not(:hover) .imageHoverVertical {
+  animation: verticalReverse 0.7s ease forwards !important;
+}
+
+.imageHoverWrapper:not(:hover) .imageHoverHorizontal {
+  animation: horizontalReverse 0.7s ease forwards !important;
+}
+
+/* Note: Hiệu ứng bắt đầu từ full size và thu hẹp vào giữa, giữ 70% thời gian ở trạng thái full */
+@keyframes verticalShrink {
+  0% {
+    opacity: 1;
+    height: 100%;
+    top: 0;
+    transform: translateX(-50%);
+  }
+  20% {
+    opacity: 1;
+    height: 100%;
+    top: 0;
+    transform: translateX(-50%);
+  }
+  100% {
+    opacity: 0;
+    height: 0%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes horizontalShrink {
+  0% {
+    opacity: 1;
+    width: 100%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  20% {
+    opacity: 1;
+    width: 100%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  100% {
+    opacity: 0;
+    width: 0%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Note: Keyframes cho animation ngược khi mouse leave */
+@keyframes verticalReverse {
+  0% {
+    opacity: 0;
+    height: 0%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  80% {
+    opacity: 1;
+    height: 100%;
+    top: 0;
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes horizontalReverse {
+  0% {
+    opacity: 0;
+    width: 0%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+  }
+  80% {
+    opacity: 1;
+    width: 100%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+}

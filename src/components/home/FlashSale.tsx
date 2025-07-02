@@ -219,10 +219,11 @@ const FlashSale: React.FC = () => {
       <div className="relative">
         <Carousel
           ref={carouselRef}
-          arrows
+          arrows={true}
           infinite={true}
           dots={false}
           autoplay={false}
+          draggable={true}
           className="flash-sale-carousel"
           beforeChange={(from, to) => setCurrentSlide(to)}
         >
