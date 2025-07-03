@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import { PlusOutlined, MinusOutlined, UserOutlined } from "@ant-design/icons";
 import { productCategories } from "../../constants/productCategories";
 import { useLocation } from "react-router-dom";
 
@@ -52,6 +52,27 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
 
   return (
     <div className="text-md">
+      {/* Login/Register Section - Only visible on mobile */}
+      <div className="lg:hidden mb-4">
+        <div className="bg-[#4FB3D9] text-white p-4 flex items-center gap-3">
+          <UserOutlined className="text-white text-lg" />
+          <div className="flex-1">
+            <div
+              className="font-semibold cursor-pointer hover:opacity-80 transition-opacity"
+              onClick={() => handleMenuClick("login", "/OceanFood/login")}
+            >
+              Đăng nhập
+            </div>
+            <div
+              className="text-sm opacity-90 cursor-pointer hover:opacity-70 transition-opacity"
+              onClick={() => handleMenuClick("register", "/OceanFood/register")}
+            >
+              Đăng ký
+            </div>
+          </div>
+        </div>
+      </div>
+
       {menuItems.map((item) => (
         <div
           key={item.key}
@@ -63,7 +84,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
         >
           <button
             onClick={() => handleMenuClick(item.key, item.href)}
-            className={`w-full text-left pr-4 py-1 flex items-center justify-between  hover:text-[#37bee3] cursor-pointer transition-colors ${
+            className={`w-full text-left pl-4 lg:pl-0 pr-4 py-1 flex items-center justify-between  hover:text-[#37bee3] cursor-pointer transition-colors ${
               location.pathname === item.href.replace("/OceanFood", "")
                 ? "text-[#37bee3]"
                 : "text-gray-700"

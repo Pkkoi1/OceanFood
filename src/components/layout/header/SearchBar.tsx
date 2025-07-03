@@ -93,7 +93,7 @@ const SearchBar = () => {
         onClose={() => setOpenDrawer(false)}
         open={openDrawer}
         width={280}
-        bodyStyle={{ padding: 16 }}
+        bodyStyle={{ padding: 0 }}
       >
         <MainMenu
           onMenuClick={(key) => {
