@@ -9,12 +9,33 @@ interface SideMenuProps {
 const SideMenu: React.FC<SideMenuProps> = ({ onToggle }) => {
   const location = useLocation();
   const [showCategoryMenu, setShowCategoryMenu] = useState(true); // Mặc định luôn hiện
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // Ngưỡng 768px cho điện thoại
 
-  // Auto close/open based on route
+  // Cập nhật trạng thái khi thay đổi kích thước màn hình
   useEffect(() => {
-    const isHomePage = location.pathname === "/";
-    setShowCategoryMenu(isHomePage);
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (mobile) {
+        setShowCategoryMenu(false); // Đóng menu khi là điện thoại
+      } else {
+        const isHomePage = location.pathname === "/";
+        setShowCategoryMenu(isHomePage); // Mở lại nếu là desktop và trang chủ
+      }
+    };
+
+    handleResize(); // Gọi ngay khi component mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); // Cleanup
   }, [location.pathname]);
+
+  // Auto close/open based on route (chỉ áp dụng cho desktop)
+  useEffect(() => {
+    if (!isMobile) {
+      const isHomePage = location.pathname === "/";
+      setShowCategoryMenu(isHomePage);
+    }
+  }, [location.pathname, isMobile]);
 
   const productCategories = [
     { key: "hai-san-dong-lanh", label: "Hải sản đông lạnh" },

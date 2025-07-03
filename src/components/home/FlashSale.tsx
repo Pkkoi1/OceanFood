@@ -135,6 +135,9 @@ const FlashSale: React.FC = () => {
     ],
   ]);
 
+  // Flatten products for mobile view (one product per slide)
+  const mobileProducts = allProducts.flat().map((product) => [product]);
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const carouselRef = useRef<any>(null);
 
@@ -175,15 +178,15 @@ const FlashSale: React.FC = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-[#4FB3D9] to-[#5BC0DE] p-6 rounded-lg mx-[100px] my-8 relative">
+    <div className="bg-gradient-to-r from-[#4FB3D9] to-[#5BC0DE] p-6 rounded-lg mx-4 lg:mx-[100px] my-8 relative">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center">
-          <div className="text-white mr-6 flex items-center">
+      <div className="flex flex-col lg:flex-row lg:justify-between items-center mb-6">
+        <div className="flex flex-col lg:flex-row items-center">
+          <div className="gap-2 flex-col lg:flex-row text-white lg:mr-6 flex items-center">
             <div className="text-4xl font-bold">
               <img src={flashSale} alt="" />
             </div>
-            <div className="text-2xl mt-2 font-bold ml-4">
+            <div className="text-2xl text-center justify-around my-2 font-bold lg:ml-4">
               GIỜ VÀNG GIẢM GIÁ!
             </div>
           </div>
@@ -217,45 +220,91 @@ const FlashSale: React.FC = () => {
 
       {/* Products Carousel */}
       <div className="relative">
-        <Carousel
-          ref={carouselRef}
-          arrows={true}
-          infinite={true}
-          dots={false}
-          autoplay={false}
-          draggable={true}
-          className="flash-sale-carousel"
-          beforeChange={(from, to) => setCurrentSlide(to)}
-        >
-          {allProducts.map((productSet, index) => (
-            <div key={index}>
-              <div className="grid grid-cols-2 gap-6">
-                {productSet.map((product) => (
-                  <SaleProductCard
-                    key={product.id}
-                    product={product}
-                    onToggleLike={toggleLike}
-                  />
-                ))}
+        {/* Desktop Carousel */}
+        <div className="hidden lg:block">
+          <Carousel
+            ref={carouselRef}
+            arrows={true}
+            infinite={true}
+            dots={false}
+            autoplay={false}
+            draggable={true}
+            className="flash-sale-carousel"
+            beforeChange={(from, to) => setCurrentSlide(to)}
+          >
+            {allProducts.map((productSet, index) => (
+              <div key={index}>
+                <div className="grid grid-cols-2 gap-6">
+                  {productSet.map((product) => (
+                    <SaleProductCard
+                      key={product.id}
+                      product={product}
+                      onToggleLike={toggleLike}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </Carousel>
+            ))}
+          </Carousel>
+        </div>
+
+        {/* Mobile Carousel */}
+        <div className="block lg:hidden">
+          <Carousel
+            ref={carouselRef}
+            arrows={true}
+            infinite={true}
+            dots={false}
+            autoplay={false}
+            draggable={true}
+            className="flash-sale-carousel"
+            beforeChange={(from, to) => setCurrentSlide(to)}
+          >
+            {mobileProducts.map((productSet, index) => (
+              <div key={index}>
+                <div className="grid grid-cols-1 gap-6">
+                  {productSet.map((product) => (
+                    <SaleProductCard
+                      key={product.id}
+                      product={product}
+                      onToggleLike={toggleLike}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </Carousel>
+        </div>
 
         {/* Navigation Dots - positioned at bottom of cards */}
         <div className="absolute left-1/2 transform -translate-x-1/2 translate-y-1/2 z-20">
           <div className="flex gap-3 bg-white p-2 rounded-full shadow-lg">
-            {allProducts.map((_, index) => (
-              <div
-                key={index}
-                className={`w-3 h-3 rounded-full cursor-pointer transition-all duration-300 ${
-                  currentSlide === index
-                    ? "bg-[#4FB3D9] scale-110"
-                    : "bg-[#ececec] hover:bg-[#4FB3D9]/50"
-                }`}
-                onClick={() => goToSlide(index)}
-              />
-            ))}
+            <div className="hidden lg:flex gap-3">
+              {allProducts.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-3 h-3 rounded-full cursor-pointer transition-all duration-300 ${
+                    currentSlide === index
+                      ? "bg-[#4FB3D9] scale-110"
+                      : "bg-[#ececec] hover:bg-[#4FB3D9]/50"
+                  }`}
+                  onClick={() => goToSlide(index)}
+                />
+              ))}
+            </div>
+            <div className="flex lg:hidden gap-3">
+              {mobileProducts.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-3 h-3 rounded-full cursor-pointer transition-all duration-300 ${
+                    currentSlide === index
+                      ? "bg-[#4FB3D9] scale-110"
+                      : "bg-[#ececec] hover:bg-[#4FB3D9]/50"
+                  }`}
+                  onClick={() => goToSlide(index)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

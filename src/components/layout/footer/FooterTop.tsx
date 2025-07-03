@@ -3,13 +3,13 @@ import logo from "../../../assets/images/logo-footer.png";
 
 const FooterTop = () => {
   return (
-    <div className="flex items-center justify-between gap-3 px-[100px] py-10 bg-[#0282a5]">
+    <div className="flex lg:flex-row flex-col items-center justify-between gap-3 px-4 lg:px-[100px] py-10 bg-[#0282a5]">
       <div>
         <Image src={logo} alt="Ocean Food Logo" width={120} height={60} />
       </div>
-      <div className="flex items-center relative">
+      <div className="flex items-center relative ">
         <input
-          className="bg-[#fff] border-0 rounded-full py-3 px-6 w-md pr-32 outline-none focus:border-[#27acd0]"
+          className="bg-[#fff] border-0 rounded-full py-3  px-6 lg:w-md pr-32 outline-none focus:border-[#27acd0]"
           type="text"
           placeholder="Nhập email nhận tin khuyến mãi"
         />

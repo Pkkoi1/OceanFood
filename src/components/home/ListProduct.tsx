@@ -94,11 +94,14 @@ const ListProduct: React.FC<ListProductProps> = ({
   // Tính toán số cột grid dựa trên layout và số lượng sản phẩm
   const getGridCols = () => {
     if (carousel) return ""; // No grid for carousel
+    if (number === 1) return "grid-cols-1"; // Chỉ 1 hàng 1 cột
+    if (number === 2) return "grid-cols-2"; // Chỉ 1 hàng 2 cột
     if (number === 3) return "grid-cols-3"; // Chỉ 1 hàng 3 cột
-    if (number <= 4) return "grid-cols-4";
+    if (number === 4) return "grid-cols-4";
     if (number === 5) return "grid-cols-5";
     if (number === 6) return "grid-cols-3"; // 6 sản phẩm: 3 cột x 2 hàng
     if (number <= 8) return "grid-cols-4"; // 7-8 sản phẩm: 4 cột
+    if (number <= 10) return "grid-cols-5"; // 9-10 sản phẩm: 5 cột
     return "grid-cols-4"; // Mặc định 5 cột cho số lượng lớn hơn 6
   };
 
@@ -107,7 +110,7 @@ const ListProduct: React.FC<ListProductProps> = ({
     const { onClick } = props;
     return (
       <button
-        className="absolute left-[-50px] top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-200 hover:bg-[#4FB3D9] cursor-pointer text-gray-600 hover:text-white rounded-full flex items-center justify-center transition-all duration-300"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-200 hover:bg-[#4FB3D9] cursor-pointer text-gray-600 hover:text-white rounded-full flex items-center justify-center transition-all duration-300"
         onClick={onClick}
       >
         <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
@@ -121,7 +124,7 @@ const ListProduct: React.FC<ListProductProps> = ({
     const { onClick } = props;
     return (
       <button
-        className="absolute right-[-50px] top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-200 hover:bg-[#4FB3D9] cursor-pointer text-gray-600 hover:text-white rounded-full flex items-center justify-center transition-all duration-300"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-200 hover:bg-[#4FB3D9] cursor-pointer text-gray-600 hover:text-white rounded-full flex items-center justify-center transition-all duration-300"
         onClick={onClick}
       >
         <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
@@ -134,24 +137,28 @@ const ListProduct: React.FC<ListProductProps> = ({
   const getTitleAlignment = () => {
     switch (titlePosition) {
       case "left":
-        return "justify-between";
+        return "justify-between flex-col lg:flex-row";
       case "right":
-        return "justify-end";
+        return "justify-between flex-col lg:flex-row";
+      case "center":
+        return "justify-evenly";
       default:
-        return "justify-center";
+        return "justify-evenly";
     }
   };
 
   return (
-    <div className={`py-8 mb-6 ${container ? "mx-[100px]" : ""}`}>
-      <div className={`flex w-full items-center mb-8 ${getTitleAlignment()}`}>
-        <div className="flex items-center gap-4 w-full justify-between">
-          <h2 className="text-3xl font-medium text-gray-800 hover:text-[#4FB3D9] transition-colors duration-300">
+    <div className={`py-8 mb-6 ${container ? "mx-4 lg:mx-[100px]" : ""}`}>
+      <div className={`flex w-full items-center mb-8`}>
+        <div
+          className={`flex items-center gap-4 w-full  ${getTitleAlignment()}`}
+        >
+          <h2 className="lg:text-3xl text-2xl font-bold lg:font-medium text-gray-800 hover:text-[#4FB3D9] transition-colors duration-300">
             {displayTitle}
           </h2>
 
           {(titlePosition === "left" || titlePosition === "right") && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-[150px] lg:gap-2">
               <span className="text-gray-600">Sắp xếp theo:</span>
               <Select
                 value={sortOption}
@@ -185,7 +192,7 @@ const ListProduct: React.FC<ListProductProps> = ({
             {
               breakpoint: 768,
               settings: {
-                slidesToShow: 2,
+                slidesToShow: 1,
               },
             },
             {

@@ -16,7 +16,7 @@ const FullBanner: React.FC<FullBannerProps> = ({
   return (
     <div className="w-full mb-6">
       <div
-        className={`${styles.imageHoverWrapper}  h-full mx-[100px] relative`}
+        className={`${styles.imageHoverWrapper}  h-full mx-4 lg:mx-[100px] relative`}
       >
         <img src={image} alt={alt} className="w-full h-full object-cover" />
         <div className={styles.imageHoverVertical}></div>

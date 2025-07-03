@@ -60,7 +60,7 @@ const Breadcrumb: React.FC = () => {
 
   return (
     <div className="bg-[#ebf5ff] py-3">
-      <div className="mx-[100px]">
+      <div className="lg:mx-[100px] mx-4">
         <AntBreadcrumb
           separator=">"
           items={generateBreadcrumbItems()}

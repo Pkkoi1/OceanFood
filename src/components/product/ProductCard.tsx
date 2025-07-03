@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   // Layout horizontal như trong hình
   if (layout === "horizontal") {
     return (
-      <div className="bg-white border p-2 border-[#F2F2F2] hover:border-[#4FB3D9]  overflow-hidden relative group hover:shadow-xl transition-all duration-300 flex max-h-full max-w-full">
+      <div className="bg-white border p-2 border-[#F2F2F2] hover:border-[#4FB3D9]  overflow-hidden relative group hover:shadow-xl transition-all duration-300 flex max-h-full lg:max-w-full">
         {/* Heart Icon */}
         {product.discount && (
           <div className="absolute top-3 left-3 bg-[#4FB3D9] text-white px-2 py-1 rounded text-[10px] font-bold z-10">

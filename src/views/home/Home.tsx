@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Banner from "../../components/home/banner/Banner";
 import FullBanner from "../../components/home/banner/FullBanner";
 import FlashSale from "../../components/home/FlashSale";
@@ -12,26 +13,61 @@ interface HomeProps {
   isSidebarOpen: boolean;
 }
 const Home: React.FC<HomeProps> = ({ isSidebarOpen }) => {
+  const [Number, setNumber] = useState(6);
+  const [layout, setLayout] = useState<"vertical" | "horizontal">("vertical");
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      console.log("width", width);
+      if (width < 700) {
+        // phone
+        setNumber(2);
+        setLayout("vertical");
+      } else if (width < 1024) {
+        // tablet/iPad
+        setNumber(3);
+        setLayout("horizontal");
+      } else {
+        // desktop
+        setNumber(6);
+        setLayout("horizontal");
+      }
+    };
+
+    handleResize(); // Set initial value
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div>
       <div className="bg-gradient-to-b from-[#6acfea] via-[#fff] via-[#fff] to-white">
         <Banner isSidebarOpen={isSidebarOpen} />
         <FlashSale></FlashSale>
         <ListCategory></ListCategory>
-        <ListProduct title="Hải sản mới về" layout="vertical"></ListProduct>
+        <ListProduct
+          titlePosition="center"
+          title="Hải sản mới về"
+          layout="vertical"
+          number={Number >= 6 ? 10 : Number}
+        ></ListProduct>
         <FullBanner image={productImg1}></FullBanner>
         <ListProduct
+          titlePosition="center"
           title="Hải sản đông lạnh"
-          layout="horizontal"
-          number={6}
+          layout={layout}
+          number={Number}
         ></ListProduct>
         <FullBanner image={productImg2}></FullBanner>
         <ListProduct
+          titlePosition="center"
           title="Hải sản nhập khẩu"
-          layout="horizontal"
-          number={6}
+          layout={layout}
+          number={Number}
         ></ListProduct>
-        <Handbook size="medium"></Handbook>
+        <Handbook maxArticles={Number}></Handbook>
         <Brand></Brand>
       </div>
     </div>

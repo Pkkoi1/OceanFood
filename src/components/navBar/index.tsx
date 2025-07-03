@@ -44,7 +44,7 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
   };
 
   return (
-    <div className="bg-white shadow-sm relative">
+    <div className="bg-white shadow-sm relative hidden lg:block">
       <div className="flex items-center justify-between px-[100px]">
         <SideMenu onToggle={handleSidebarToggle} />
 

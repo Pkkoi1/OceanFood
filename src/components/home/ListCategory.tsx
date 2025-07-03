@@ -1,4 +1,5 @@
 import React from "react";
+import { Carousel } from "antd";
 import fridge from "../../assets/images/fridge.webp";
 import fish from "../../assets/images/fish.webp";
 import airplane from "../../assets/images/airplane-mode.webp";
@@ -39,13 +40,13 @@ const ListCategory = () => {
   ];
 
   return (
-    <div className="py-8 mx-[100px]">
+    <div className="py-8 mx-4 lg:mx-[100px]">
       <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
         Danh mục sản phẩm
       </h2>
 
-      {/* Categories Grid */}
-      <div className="grid grid-cols-5 gap-8">
+      {/* Desktop Categories Grid */}
+      <div className="hidden lg:grid grid-cols-5 gap-8">
         {categories.map((category) => (
           <div
             key={category.id}
@@ -63,6 +64,34 @@ const ListCategory = () => {
             </span>
           </div>
         ))}
+      </div>
+
+      {/* Mobile Categories Carousel */}
+      <div className="lg:hidden">
+        <Carousel
+          arrows={true}
+          infinite={true}
+          dots={false}
+          autoplay={false}
+          draggable={true}
+        >
+          {categories.map((category) => (
+            <div key={category.id}>
+              <div className="flex flex-col items-center group cursor-pointer px-4">
+                <div className="bg-white w-24 h-24 rounded-full border-2 border-[#4FB3D9] flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-[#4FB3D9] group-hover:scale-110">
+                  <img
+                    src={category.icon}
+                    alt={category.name}
+                    className="w-12 h-12 object-contain group-hover:filter group-hover:brightness-0 group-hover:invert"
+                  />
+                </div>
+                <span className="text-sm font-medium text-gray-700 text-center group-hover:text-[#4FB3D9] transition-colors duration-300">
+                  {category.name}
+                </span>
+              </div>
+            </div>
+          ))}
+        </Carousel>
       </div>
     </div>
   );

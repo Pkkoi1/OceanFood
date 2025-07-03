@@ -25,8 +25,8 @@ const HandbookCard: React.FC<HandbookCardProps> = ({
     switch (size) {
       case "small":
         return {
-          container: "min-h-[40%]",
-          image: "w-24",
+          container: "lg:min-h-[40%] min-h-[50%]",
+          image: "w-1/2 lg:w-24",
           content: "p-2",
           title: "text-xs font-medium mb-1",
           date: "text-xs mb-1",
@@ -34,8 +34,8 @@ const HandbookCard: React.FC<HandbookCardProps> = ({
         };
       case "large":
         return {
-          container: "min-h-[60%] mb-6",
-          image: "w-1/4",
+          container: "lg:min-h-[60%] min-h-[50%] mb-6",
+          image: "w-1/2 lg:w-1/4",
           content: "p-4",
           title: "text-lg font-bold mb-3 max-w-[100%]",
           date: "text-sm mb-3",

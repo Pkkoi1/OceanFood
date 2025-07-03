@@ -11,6 +11,7 @@ import Login from "./views/auth/login/Login";
 import Register from "./views/auth/register/Register";
 import Contact from "./views/contact/Contact";
 import HanbookPage from "./views/handbook/HanbookPage";
+import PhoneFooter from "./components/layout/footer/PhoneFooter";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -30,6 +31,7 @@ function App() {
         <Route path="/handbooks" element={<HanbookPage />} />
 
       </Routes>
+      <PhoneFooter></PhoneFooter>
       <Footer></Footer>
     </BrowserRouter>
   );

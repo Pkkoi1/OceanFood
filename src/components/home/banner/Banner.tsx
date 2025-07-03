@@ -23,7 +23,9 @@ const Banner: React.FC<BannerProps> = ({ isSidebarOpen = true }) => (
   <div>
     <div
       className={`pt-4 transition-all duration-300 ${
-        isSidebarOpen ? "w-2/3 ml-[400px]" : "w-auto mx-[100px]"
+        isSidebarOpen
+          ? "lg:w-2/3  lg:ml-[400px] mx-4"
+          : "w-auto lg:mx-[100px] mx-4"
       }`}
     >
       <Carousel
@@ -35,32 +37,28 @@ const Banner: React.FC<BannerProps> = ({ isSidebarOpen = true }) => (
       >
         {[banner1, banner2, banner3, banner4].map((banner, index) => (
           <div key={index} className="bg-[#6acfea] overflow-hidden rounded-lg">
-            <div className={`rounded-lg`} style={{ height: "400px" }}>
+            <div className={`rounded-lg lg:h-[400px] h-full`}>
               <img
                 src={banner}
                 alt={`Banner ${index + 1}`}
-                style={bannerStyle}
+                className="w-full h-full object-fill"
               />
-              <div className={styles.imageHoverVertical}></div>
-              <div className={styles.imageHoverHorizontal}></div>
             </div>
           </div>
         ))}
       </Carousel>
     </div>
 
-    <div className="flex justify-between mt-4 mx-[100px]">
+    <div className="flex flex-col lg:flex-row justify-between mt-4 mx-2 lg:mx-[100px]">
       {[banner5, banner6].map((banner, index) => (
         <div key={index} className="p-2 overflow-hidden rounded-2xl">
           <div
             className={`${styles.imageHoverWrapper} rounded-2xl`}
-            style={{ height: "200px" }}
           >
             <img
               src={banner}
-              className="rounded-2xl"
+              className="rounded-2xl h-1 lg:w-full lg:h-full object-cover"
               alt={`Banner bottom ${index + 1}`}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
             <div className={styles.imageHoverVertical}></div>
             <div className={styles.imageHoverHorizontal}></div>
