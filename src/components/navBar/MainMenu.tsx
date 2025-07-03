@@ -9,7 +9,7 @@ const MainMenu = () => {
   const productMenuTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const menuItems = [
-    { name: "Trang chủ", href: "/OceanFood", path: "/" },
+    { name: "Trang chủ", href: "/OceanFood/", path: "/" },
     { name: "Giới thiệu", href: "/OceanFood/about", path: "/about" },
     {
       name: "Sản phẩm",
@@ -17,8 +17,12 @@ const MainMenu = () => {
       hasDropdown: true,
       path: "/products",
     },
-    { name: "Cẩm nang ẩm thực", href: "#", path: "/handbook" },
-    { name: "Liên hệ", href: "#", path: "/contact" },
+    {
+      name: "Cẩm nang ẩm thực",
+      href: "/OceanFood/handbooks",
+      path: "/handbooks",
+    },
+    { name: "Liên hệ", href: "/OceanFood/contact", path: "/contact" },
   ];
 
   // Chia đều 10 sản phẩm thành 4 cột: 3-3-2-2

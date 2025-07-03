@@ -16,7 +16,7 @@ const List: React.FC<ListProps> = ({
   console.log("List component rendered with title:", title);
   console.log("List component rendered with category:", category);
   return (
-    <div className="flex flex-row justify-between mx-[100px] mt-4">
+    <div className="flex flex-row justify-between items-start mx-[100px] mt-4 gap-6">
       <FilterSidebar></FilterSidebar>
       <ListProduct
         title={title}

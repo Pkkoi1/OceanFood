@@ -43,13 +43,13 @@ const SearchBar = () => {
       <div>
         <Image src={logo} alt="Ocean Food Logo" width={120} height={60} />
       </div>
-      <div className="flex items-center relative">
+      <div className="flex items-center relative ml-36">
         <input
-          className="border-2 border-[#37bee3] rounded-full py-3 px-6 w-96 pr-32 outline-none focus:border-[#27acd0]"
+          className="border-2 border-[#37bee3] rounded-full py-2 px-6 w-md pr-32 outline-none focus:border-[#27acd0]"
           type="text"
           placeholder={placeholder + "|"}
         />
-        <button className="absolute right-0 bg-[#37bee3] hover:bg-[#27acd0] text-white px-6 py-3 rounded-full flex items-center gap-2 transition-colors">
+        <button className="absolute right-0 bg-[#37bee3] hover:bg-[#27acd0] text-white px-3 py-2 rounded-full flex items-center gap-2 transition-colors">
           <SearchOutlined />
           <span>Tìm kiếm</span>
         </button>

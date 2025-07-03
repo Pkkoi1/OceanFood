@@ -9,6 +9,8 @@ import { useState } from "react";
 import ProductShowList from "./views/products";
 import Login from "./views/auth/login/Login";
 import Register from "./views/auth/register/Register";
+import Contact from "./views/contact/Contact";
+import HanbookPage from "./views/handbook/HanbookPage";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -24,6 +26,8 @@ function App() {
         <Route path="/products" element={<ProductShowList />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/handbooks" element={<HanbookPage />} />
 
       </Routes>
       <Footer></Footer>

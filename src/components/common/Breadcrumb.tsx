@@ -11,7 +11,7 @@ const Breadcrumb: React.FC = () => {
     "/": "Trang chủ",
     "/about": "Giới thiệu",
     "/products": "Sản phẩm",
-    "/handbook": "Cẩm nang ẩm thực",
+    "/handbooks": "Cẩm nang ẩm thực",
     "/contact": "Liên hệ",
     "/login": "Đăng nhập",
     "/register": "Đăng ký",
@@ -59,7 +59,7 @@ const Breadcrumb: React.FC = () => {
   }
 
   return (
-    <div className="bg-gray-50 py-3">
+    <div className="bg-[#ebf5ff] py-3">
       <div className="mx-[100px]">
         <AntBreadcrumb
           separator=">"

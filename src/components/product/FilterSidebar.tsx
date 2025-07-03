@@ -84,7 +84,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="bg-white p-6 w-1/3">
+    <div className="bg-white p-6 w-1/3 sticky top-4 self-start max-h-[calc(100vh-2rem)] overflow-y-auto">
       {/* Price Range Section */}
       <div className="mb-8">
         <h3 className="text-sm font-semibold text-gray-800 mb-4 pb-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-1/4 after:h-0.5 after:bg-[#4FB3D9]">
