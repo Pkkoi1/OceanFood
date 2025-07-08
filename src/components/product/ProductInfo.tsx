@@ -66,17 +66,17 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
   };
 
   return (
-    <div className="space-y-6 mr-10">
+    <div className="space-y-6 mr-0 lg:mr-10 mt-6 lg:mt-0">
       <div>
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+        <h1 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
           {product.name}
         </h1>
-        <div className="flex items-center gap-4 text-sm text-gray-600">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-600">
           <span>
             Thương hiệu:{" "}
             <span className="text-[#4FB3D9] font-medium">{product.brand}</span>
           </span>
-          <span>|</span>
+          <span className="hidden sm:inline">|</span>
           <span>
             Tình trạng:{" "}
             <span className="text-green-600 font-medium">
@@ -88,12 +88,12 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
 
       {/* Price */}
       <div className="space-y-2">
-        <div className="flex items-center gap-4">
-          <span className="text-3xl font-bold text-red-500">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+          <span className="text-2xl lg:text-3xl font-bold text-red-500">
             {formatPrice(product.currentPrice)}
           </span>
           {product.originalPrice && (
-            <span className="text-xl text-gray-400 line-through">
+            <span className="text-lg lg:text-xl text-gray-400 line-through">
               {formatPrice(product.originalPrice)}
             </span>
           )}
@@ -125,9 +125,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
 
       {/* Quantity and Add to Cart */}
       <div className="space-y-4">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
           <span className="font-medium">Số lượng:</span>
-          <div className="flex items-center border rounded">
+          <div className="flex items-center border rounded w-fit">
             <button
               className="px-3 py-2 hover:bg-gray-100"
               onClick={() => onQuantityChange("decrease")}
@@ -144,13 +144,13 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
           </div>
         </div>
 
-        <div className="flex gap-2">
-          <button className="w-fit bg-white border border-[#37bee3] py-3 px-3 rounded font-bold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <button className="w-full sm:w-fit bg-white border border-[#37bee3] py-3 px-3 rounded font-bold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
             <ShoppingCartOutlined
               style={{ color: "#37bee3", fontSize: "20px" }}
             />
           </button>
-          <button className="flex-1 w-2/3 bg-[#4FB3D9] text-white py-3 px-6 rounded font-bold hover:bg-[#3a9bc1] transition-colors flex items-center justify-center gap-2">
+          <button className="flex-1 w-full sm:w-2/3 bg-[#4FB3D9] text-white py-3 px-6 rounded font-bold hover:bg-[#3a9bc1] transition-colors flex items-center justify-center gap-2">
             MUA NGAY
           </button>
         </div>

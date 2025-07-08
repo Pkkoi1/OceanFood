@@ -27,16 +27,19 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
 
   return (
     <div className="space-y-4">
-      <div className="relative w-[33.33vw] ">
+      <div className="relative w-full lg:w-[33.33vw]">
         <Carousel
           arrows={true}
           dots={false}
-          className="w-[33.33vw] h-[33.33vw]"
+          className="w-full lg:w-[33.33vw] h-[80vw] lg:h-[33.33vw]"
           ref={carouselRef}
           afterChange={(current) => setSelectedImage(current)}
         >
           {product.images?.map((image, index) => (
-            <div key={index} className="flex w-[33.33vw] h-[33.33vw]">
+            <div
+              key={index}
+              className="flex w-full lg:w-[33.33vw] h-[80vw] lg:h-[33.33vw]"
+            >
               <img
                 src={image}
                 alt={`${product.name} ${index + 1}`}
@@ -45,7 +48,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
             </div>
           ))}
           {product.image && (
-            <div className="flex justify-center items-center w-[33.33vw] h-[33.33vw]">
+            <div className="flex justify-center items-center w-full lg:w-[33.33vw] h-[80vw] lg:h-[33.33vw]">
               <img
                 src={product.image}
                 alt={product.name}
@@ -57,14 +60,14 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
       </div>
 
       {product.images && (
-        <div className="flex flex-col gap-2 items-center w-[33.33vw] ">
-          <div className="flex gap-[6.5%] w-full">
+        <div className="flex flex-col gap-2 items-center w-full lg:w-[33.33vw]">
+          <div className="flex gap-2 lg:gap-[6.5%] w-full overflow-x-auto">
             {product.images.map((image, index) => (
               <img
                 key={index}
                 src={image}
                 alt={`${product.name} ${index + 1}`}
-                className={`w-1/5 h-1/5 object-cover rounded cursor-pointer border-2 ${
+                className={`w-16 h-16 lg:w-1/5 lg:h-1/5 object-cover rounded cursor-pointer border-2 flex-shrink-0 ${
                   selectedImage === index
                     ? "border-[#4FB3D9]"
                     : "border-gray-200"
@@ -76,16 +79,16 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
               />
             ))}
           </div>
-          <div className="flex justify-between  w-full">
+          <div className="flex justify-between w-full relative">
             <button
               onClick={handlePrev}
-              className="text-[#4FB3D9] hover:text-[#3a8cb1] w-10  bg-white bg-opacity-50 rounded-full p-2 absolute left-26 -bottom-25 cursor-pointer"
+              className="text-[#4FB3D9] hover:text-[#3a8cb1] w-10 bg-white bg-opacity-50 rounded-full p-2 absolute left-4 lg:left-26 -bottom-4 lg:-bottom-25 cursor-pointer"
             >
               <LeftOutlined />
             </button>
             <button
               onClick={handleNext}
-              className="text-[#4FB3D9] hover:text-[#3a8cb1] w-10  bg-white bg-opacity-50 rounded-full p-2 absolute left-142 -bottom-25 cursor-pointer"
+              className="text-[#4FB3D9] hover:text-[#3a8cb1] w-10 bg-white bg-opacity-50 rounded-full p-2 absolute right-4 lg:left-142 -bottom-4 lg:-bottom-25 cursor-pointer"
             >
               <RightOutlined />
             </button>

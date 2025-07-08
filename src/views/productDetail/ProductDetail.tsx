@@ -39,14 +39,14 @@ const ProductDetail: React.FC = () => {
 
   return (
     <div className="container mx-auto py-8">
-      <div className="grid grid-cols-12 px-4 lg:px-[100px]">
-        {/* Product Images - Cột 1 */}
-        <div className="col-span-12 lg:col-span-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 px-4 lg:px-[100px] gap-6 lg:gap-0">
+        {/* Product Images - Mobile: full width, Desktop: 5/12 */}
+        <div className="col-span-1 lg:col-span-5">
           <ProductImage product={product} />
         </div>
 
-        {/* Product Info - Cột 2 */}
-        <div className="col-span-12 lg:col-span-4">
+        {/* Product Info - Mobile: full width, Desktop: 4/12 */}
+        <div className="col-span-1 lg:col-span-4">
           <ProductInfo
             product={product}
             quantity={quantity}
@@ -55,23 +55,24 @@ const ProductDetail: React.FC = () => {
           />
         </div>
 
-        {/* Sidebar - Cột 3 */}
-        <div className="col-span-12 lg:col-span-3">
+        {/* Sidebar - Mobile: full width, Desktop: 3/12 */}
+        <div className="col-span-1 lg:col-span-3">
           <ProductSidebar />
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 px-4 lg:px-[100px] mt-8">
-        {/* TabField - 2/3 cột */}
-        <div className="col-span-12 lg:col-span-8">
+        {/* TabField - Mobile: full width, Desktop: 8/12 */}
+        <div className="col-span-1 lg:col-span-8">
           <TabField product={product}></TabField>
         </div>
-        {/* RecentProducts - 1/3 cột */}
-        <div className="col-span-12 lg:col-span-4">
+        {/* RecentProducts - Mobile: full width, Desktop: 4/12 */}
+        <div className="col-span-1 lg:col-span-4">
           <RecentProducts></RecentProducts>
         </div>
       </div>
       <ListProduct
         title="Tham khảo thêm các sản phẩm khác"
+        carousel={true}
         number={5}
       ></ListProduct>
       <Brand></Brand>

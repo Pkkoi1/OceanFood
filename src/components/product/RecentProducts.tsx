@@ -38,9 +38,11 @@ const RecentProducts: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <h2 className="text-xl font-bold mb-6 text-left">Sản phẩm xem gần đây</h2>
-      <div className="flex flex-col space-y-6">
+    <div className="container mx-auto py-4 lg:py-8">
+      <h2 className="text-lg lg:text-xl font-bold mb-4 lg:mb-6 text-left">
+        Sản phẩm xem gần đây
+      </h2>
+      <div className="flex flex-col space-y-4 lg:space-y-6">
         {recentProducts.map((product) => (
           <ProductCard
             key={product.id}

@@ -31,12 +31,12 @@ const TabField: React.FC<DetailInfoProps> = ({ product }) => {
   ];
   return (
     <div>
-      <div className="container mx-auto py-8 ">
+      <div className="container mx-auto py-4 lg:py-8">
         <Tabs
           defaultActiveKey="1"
           items={items}
           size="large"
-          className="custom-tabs" // Thêm class tùy chỉnh
+          className="custom-tabs"
         />
       </div>
     </div>
@@ -46,12 +46,20 @@ const TabField: React.FC<DetailInfoProps> = ({ product }) => {
 // CSS tùy chỉnh (có thể đặt trong một file CSS riêng hoặc inline)
 const styles = `
   .custom-tabs .ant-tabs-tab {
-    font-size: 1.3rem !important; 
+    font-size: 1rem !important; 
 
     font-weight: bold; 
   }
   .custom-tabs .ant-tabs-tab-active {
-    font-size: 1.3rem !important;
+    font-size: 1rem !important;
+  }
+  @media (min-width: 1024px) {
+    .custom-tabs .ant-tabs-tab {
+      font-size: 1.3rem !important; 
+    }
+    .custom-tabs .ant-tabs-tab-active {
+      font-size: 1.3rem !important;
+    }
   }
 `;
 

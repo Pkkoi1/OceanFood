@@ -153,7 +153,7 @@ const ListProduct: React.FC<ListProductProps> = ({
         <div
           className={`flex items-center gap-4 w-full  ${getTitleAlignment()}`}
         >
-          <h2 className="lg:text-3xl text-2xl font-bold lg:font-medium text-gray-800 hover:text-[#4FB3D9] transition-colors duration-300">
+          <h2 className="lg:text-3xl text-center text-2xl font-bold lg:font-medium text-gray-800 hover:text-[#4FB3D9] transition-colors duration-300">
             {displayTitle}
           </h2>
 
