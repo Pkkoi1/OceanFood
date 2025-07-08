@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   HeartOutlined,
   HeartFilled,
@@ -24,40 +25,62 @@ interface Product {
 interface ProductCardProps {
   product: Product;
   onToggleLike: (productId: number) => void;
-  layout?: "vertical" | "horizontal"; // Thêm prop để chọn layout
+  layout?: "vertical" | "horizontal";
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onToggleLike,
-  layout = "vertical", // Mặc định là vertical như hiện tại
+  layout = "vertical",
 }) => {
+  const navigate = useNavigate();
+
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
   };
 
-  // Layout horizontal như trong hình
+  const handleProductClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
+  const handleHeartClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Ngăn event bubble lên parent
+    onToggleLike(product.id);
+  };
+
+  const handleActionButtonClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Ngăn event bubble lên parent
+    // Xử lý logic cho button (add to cart, view detail, etc.)
+  };
+
+  // Layout horizontal
   if (layout === "horizontal") {
     return (
-      <div className="bg-white border p-2 border-[#F2F2F2] hover:border-[#4FB3D9]  overflow-hidden relative group hover:shadow-xl transition-all duration-300 flex max-h-full lg:max-w-full">
-        {/* Heart Icon */}
+      <div
+        className="bg-white border p-2 border-[#F2F2F2] hover:border-[#4FB3D9] overflow-hidden relative group hover:shadow-xl transition-all duration-300 flex max-h-full lg:max-w-full cursor-pointer"
+        onClick={handleProductClick}
+      >
+        {/* Discount Badge */}
         {product.discount && (
           <div className="absolute top-3 left-3 bg-[#4FB3D9] text-white px-2 py-1 rounded text-[10px] font-bold z-10">
             -{product.discount}%
           </div>
         )}
-        <div className="absolute top-3 right-4/6 z-10 cursor-pointer">
+
+        {/* Heart Icon */}
+        <div
+          className="absolute top-3 right-4/6 z-10 cursor-pointer"
+          onClick={handleHeartClick}
+        >
           {product.isLiked ? (
             <HeartFilled
               style={{ color: "#FF4D4F", fontSize: "1.2rem" }}
               className="text-red-500 text-sm"
-              onClick={() => onToggleLike(product.id)}
             />
           ) : (
             <HeartOutlined
               style={{ color: "#FF4D4F", fontSize: "1.2rem" }}
               className="text-gray-400 text-sm hover:text-red-500"
-              onClick={() => onToggleLike(product.id)}
             />
           )}
         </div>
@@ -67,7 +90,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full  object-cover transition-transform duration-300 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
           />
         </div>
 
@@ -97,9 +120,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
     );
   }
 
-  // Layout vertical (hiện tại)
+  // Layout vertical
   return (
-    <div className="bg-white border-[0.01px] border-[#F2F2F2] p-2 overflow-hidden relative group hover:shadow-xl hover:border-[#4FB3D9] transition-all duration-300">
+    <div
+      className="bg-white border-[0.01px] border-[#F2F2F2] p-2 overflow-hidden relative group hover:shadow-xl hover:border-[#4FB3D9] transition-all duration-300 cursor-pointer"
+      onClick={handleProductClick}
+    >
       {/* Discount Badge */}
       {product.discount && (
         <div className="absolute top-6 left-6 bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold z-10">
@@ -108,18 +134,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
       )}
 
       {/* Heart Icon */}
-      <div className="absolute top-6 right-6 z-10 cursor-pointer">
+      <div
+        className="absolute top-6 right-6 z-10 cursor-pointer"
+        onClick={handleHeartClick}
+      >
         {product.isLiked ? (
           <HeartFilled
             style={{ color: "#FF4D4F" }}
             className="text-red-500 text-xl"
-            onClick={() => onToggleLike(product.id)}
           />
         ) : (
           <HeartOutlined
             style={{ color: "#FF4D4F" }}
             className="text-gray-400 text-xl hover:text-red-500"
-            onClick={() => onToggleLike(product.id)}
           />
         )}
       </div>
@@ -155,11 +182,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Action Buttons */}
         <div className="flex gap-2 justify-center">
-          <button className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center">
-            <ShoppingCartOutlined></ShoppingCartOutlined>
+          <button
+            className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center"
+            onClick={handleActionButtonClick}
+          >
+            <ShoppingCartOutlined />
           </button>
-          <button className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center">
-            <EyeOutlined></EyeOutlined>
+          <button
+            className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center"
+            onClick={handleActionButtonClick}
+          >
+            <EyeOutlined />
           </button>
         </div>
       </div>

@@ -12,6 +12,7 @@ import Register from "./views/auth/register/Register";
 import Contact from "./views/contact/Contact";
 import HanbookPage from "./views/handbook/HanbookPage";
 import PhoneFooter from "./components/layout/footer/PhoneFooter";
+import ProductDetail from "./views/productDetail/ProductDetail";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -25,11 +26,12 @@ function App() {
         <Route path="/" element={<Home isSidebarOpen={isSidebarOpen} />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<ProductShowList />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/handbooks" element={<HanbookPage />} />
-
       </Routes>
       <PhoneFooter></PhoneFooter>
       <Footer></Footer>
