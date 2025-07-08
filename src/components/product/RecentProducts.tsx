@@ -39,16 +39,14 @@ const RecentProducts: React.FC = () => {
 
   return (
     <div className="container mx-auto py-8">
-      <h2 className="text-xl font-bold mb-6 text-left">
-        Sản phẩm xem gần đây
-      </h2>
+      <h2 className="text-xl font-bold mb-6 text-left">Sản phẩm xem gần đây</h2>
       <div className="flex flex-col space-y-6">
         {recentProducts.map((product) => (
           <ProductCard
             key={product.id}
             product={product}
             onToggleLike={handleToggleLike}
-            layout="horizontal" 
+            layout="horizontal"
           />
         ))}
       </div>

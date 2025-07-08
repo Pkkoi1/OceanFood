@@ -31,7 +31,7 @@ const TabField: React.FC<DetailInfoProps> = ({ product }) => {
   ];
   return (
     <div>
-      <div className="container mx-auto py-8  px-4 lg:px-[100px] ">
+      <div className="container mx-auto py-8 ">
         <Tabs
           defaultActiveKey="1"
           items={items}
