@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import type { CartItem as ImportedCartItem } from "../../data/cartItemData";
 import { useCart } from "../../hooks/useCart";
 import CartTable from "./CartTable";
@@ -12,17 +13,20 @@ interface CartData {
 
 const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
   const {
     items,
     totalAmount,
-    formatPrice,
     handleQuantityChange,
     handleSelectItem,
     handleSelectAll,
     handleDeleteItem,
   } = useCart(initialItems);
 
-  // Check if screen is mobile
+  const formatPrice = (price: number) => {
+    return price.toLocaleString("vi-VN") + "đ";
+  };
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -35,8 +39,14 @@ const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
   }, []);
 
   const handleCheckout = () => {
-    console.log("Proceeding to checkout...");
-    // Add checkout logic here
+    const selectedItems = items.filter((item) => item.selected);
+    if (selectedItems.length > 0) {
+      navigate("/cart/checkout", {
+        state: { selectedItems, totalAmount },
+      });
+    } else {
+      alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+    }
   };
 
   const selectedItems = items.filter((item) => item.selected);
@@ -44,7 +54,6 @@ const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
   return (
     <div className="bg-white">
       {isMobile ? (
-        // Mobile view - render individual CartItem components
         <div className="">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold">Giỏ hàng của bạn</h3>
@@ -78,7 +87,6 @@ const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
           ))}
         </div>
       ) : (
-        // Desktop view - render CartTable
         <CartTable
           items={items}
           onQuantityChange={handleQuantityChange}
