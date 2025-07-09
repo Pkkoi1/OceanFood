@@ -8,11 +8,7 @@ interface ListProps {
   category?: string | null;
 }
 
-const List: React.FC<ListProps> = ({
-  title = "",
-  titlePosition = "left",
-  category = null,
-}) => {
+const List: React.FC<ListProps> = ({ title = "", titlePosition = "left" }) => {
   const [Number, setNumber] = useState(10);
   const [layout, setLayout] = useState<"vertical" | "horizontal">("vertical");
 

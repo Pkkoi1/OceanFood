@@ -106,8 +106,7 @@ const ListProduct: React.FC<ListProductProps> = ({
   };
 
   // Custom arrow components
-  const CustomPrevArrow = (props: { onClick?: () => void }) => {
-    const { onClick } = props;
+  const CustomPrevArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
     return (
       <button
         className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-200 hover:bg-[#4FB3D9] cursor-pointer text-gray-600 hover:text-white rounded-full flex items-center justify-center transition-all duration-300"
@@ -120,8 +119,7 @@ const ListProduct: React.FC<ListProductProps> = ({
     );
   };
 
-  const CustomNextArrow = (props: { onClick?: () => void }) => {
-    const { onClick } = props;
+  const CustomNextArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
     return (
       <button
         className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-200 hover:bg-[#4FB3D9] cursor-pointer text-gray-600 hover:text-white rounded-full flex items-center justify-center transition-all duration-300"

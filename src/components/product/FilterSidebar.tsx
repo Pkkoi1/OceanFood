@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-interface FilterOption {
-  key: string;
-  label: string;
-  checked?: boolean;
+interface FilterOptions {
+  priceRange: string;
+  productTypes: string[];
+  origins: string[];
 }
 
 interface FilterSidebarProps {
-  onFilterChange?: (filters: any) => void;
+  onFilterChange?: (filters: FilterOptions) => void;
 }
 
 const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {

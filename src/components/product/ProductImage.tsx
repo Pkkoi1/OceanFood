@@ -1,6 +1,7 @@
 import { Carousel } from "antd";
 import React, { useState, useRef } from "react";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import type { CarouselRef } from "antd/es/carousel";
 
 interface Product {
   name: string;
@@ -11,12 +12,6 @@ interface Product {
 
 interface ProductImageProps {
   product: Product;
-}
-
-interface CarouselRef {
-  next: () => void;
-  prev: () => void;
-  goTo: (slide: number) => void;
 }
 
 const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
