@@ -1,6 +1,3 @@
-import React, { useState } from "react";
-import { MinusOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-
 interface CartItemProps {
   imageSrc: string;
   name: string;
@@ -17,8 +14,6 @@ const CartItem: React.FC<CartItemProps> = ({
   price,
   quantity = 1,
   onQuantityChange,
-  onDelete,
-  showControls = false,
 }) => {
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   EnvironmentOutlined,
   MailOutlined,
@@ -18,12 +18,14 @@ import method4 from "../../../assets/images/trustbadge_4.webp";
 import { Image } from "antd";
 
 const FooterBottom = () => {
-  const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({});
+  const [expandedSections, setExpandedSections] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [section]: !prev[section]
+      [section]: !prev[section],
     }));
   };
 
@@ -184,9 +186,9 @@ const FooterBottom = () => {
       <div className="relative z-10 h-full lg:hidden space-y-4">
         {/* Thông tin công ty */}
         <div className="border-b border-white/20 pb-4">
-          <div 
+          <div
             className="flex items-center justify-between cursor-pointer"
-            onClick={() => toggleSection('company')}
+            onClick={() => toggleSection("company")}
           >
             <h3 className="text-xl font-bold">Thông tin công ty</h3>
             {expandedSections.company ? <MinusOutlined /> : <PlusOutlined />}
@@ -194,8 +196,8 @@ const FooterBottom = () => {
           {expandedSections.company && (
             <div className="mt-4">
               <p className="text-sm mb-6 leading-relaxed">
-                Mã số thuế: 01234567891 do Sở Kế hoạch và Đầu tư Tp Hà Nội cấp ngày
-                13/02/2024
+                Mã số thuế: 01234567891 do Sở Kế hoạch và Đầu tư Tp Hà Nội cấp
+                ngày 13/02/2024
               </p>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
@@ -219,50 +221,94 @@ const FooterBottom = () => {
 
         {/* Về chúng tôi */}
         <div className="border-b border-white/20 pb-4">
-          <div 
+          <div
             className="flex items-center justify-between cursor-pointer"
-            onClick={() => toggleSection('about')}
+            onClick={() => toggleSection("about")}
           >
             <h3 className="text-xl font-bold">Về chúng tôi</h3>
             {expandedSections.about ? <MinusOutlined /> : <PlusOutlined />}
           </div>
           {expandedSections.about && (
             <ul className="space-y-3 text-sm mt-4">
-              <li><a href="#" className="hover:underline">Trang chủ</a></li>
-              <li><a href="#" className="hover:underline">Giới thiệu</a></li>
-              <li><a href="#" className="hover:underline">Sản phẩm</a></li>
-              <li><a href="#" className="hover:underline">Cẩm nang ăn thức</a></li>
-              <li><a href="#" className="hover:underline">Liên hệ</a></li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Trang chủ
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Giới thiệu
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Sản phẩm
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Cẩm nang ăn thức
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Liên hệ
+                </a>
+              </li>
             </ul>
           )}
         </div>
 
         {/* Chính sách */}
         <div className="border-b border-white/20 pb-4">
-          <div 
+          <div
             className="flex items-center justify-between cursor-pointer"
-            onClick={() => toggleSection('policy')}
+            onClick={() => toggleSection("policy")}
           >
             <h3 className="text-xl font-bold">Chính sách</h3>
             {expandedSections.policy ? <MinusOutlined /> : <PlusOutlined />}
           </div>
           {expandedSections.policy && (
             <ul className="space-y-3 text-sm mt-4">
-              <li><a href="#" className="hover:underline">Chính sách đổi trả</a></li>
-              <li><a href="#" className="hover:underline">Chính sách mua hàng</a></li>
-              <li><a href="#" className="hover:underline">Chính sách bán hàng</a></li>
-              <li><a href="#" className="hover:underline">Chính sách giao hàng</a></li>
-              <li><a href="#" className="hover:underline">Hướng dẫn mua hàng</a></li>
-              <li><a href="#" className="hover:underline">Bảo mật thông tin cá nhân</a></li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Chính sách đổi trả
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Chính sách mua hàng
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Chính sách bán hàng
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Chính sách giao hàng
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Hướng dẫn mua hàng
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Bảo mật thông tin cá nhân
+                </a>
+              </li>
             </ul>
           )}
         </div>
 
         {/* Hình thức thanh toán */}
         <div className="border-b border-white/20 pb-4">
-          <div 
+          <div
             className="flex items-center justify-between cursor-pointer"
-            onClick={() => toggleSection('payment')}
+            onClick={() => toggleSection("payment")}
           >
             <h3 className="text-xl font-bold">Hình thức thanh toán</h3>
             {expandedSections.payment ? <MinusOutlined /> : <PlusOutlined />}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
-import OrderItem from "./OrderItem";
 import type { CartItem } from "../../data/cartItemData";
+import OrderItem from "./OrderItem";
 
 interface OrderSummaryProps {
   items: Array<CartItem & { key: string; selected?: boolean }>;
