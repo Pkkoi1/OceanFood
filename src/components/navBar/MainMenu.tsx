@@ -9,20 +9,20 @@ const MainMenu = () => {
   const productMenuTimeout = useRef<number | null>(null);
 
   const menuItems = [
-    { name: "Trang chủ", href: "/OceanFood/", path: "/" },
-    { name: "Giới thiệu", href: "/OceanFood/about", path: "/about" },
+    { name: "Trang chủ", href: "/", path: "/" },
+    { name: "Giới thiệu", href: "/about", path: "/about" },
     {
       name: "Sản phẩm",
-      href: "/OceanFood/products",
+      href: "/products",
       hasDropdown: true,
       path: "/products",
     },
     {
       name: "Cẩm nang ẩm thực",
-      href: "/OceanFood/handbooks",
+      href: "/handbooks",
       path: "/handbooks",
     },
-    { name: "Liên hệ", href: "/OceanFood/contact", path: "/contact" },
+    { name: "Liên hệ", href: "/contact", path: "/contact" },
   ];
 
   // Chia đều 10 sản phẩm thành 4 cột: 3-3-2-2
@@ -94,7 +94,7 @@ const MainMenu = () => {
                           {getColumnItems(colIndex).map((item) => (
                             <a
                               key={item.key}
-                              href={`/OceanFood/products?category=${item.key}`}
+                              href={`/products?category=${item.key}`}
                               className="block hover:text-[#49c9ea] cursor-pointer py-1 transition-colors"
                             >
                               {item.label}

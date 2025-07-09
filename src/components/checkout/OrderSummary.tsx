@@ -71,7 +71,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
       {/* Back to Cart Link */}
       <div className="mb-4">
         <a
-          href="/OceanFood/cart"
+          href="/cart"
           className="text-[#37bee3] text-sm flex items-center gap-1"
         >
           ← Quay về giỏ hàng

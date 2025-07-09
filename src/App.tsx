@@ -23,7 +23,7 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   console.log("isSidebarOpen", isSidebarOpen);
   return (
-    <BrowserRouter basename="/OceanFood">
+    <BrowserRouter>
       <Header />
       <NavBar onSidebarToggle={setIsSidebarOpen} />
       <Breadcrumb />

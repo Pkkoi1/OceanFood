@@ -19,7 +19,7 @@ const accountItems: MenuProps["items"] = [
     key: "1",
     label: (
       <a
-        href="/OceanFood/login"
+        href="/login"
         className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-[#37bee3] transition-colors"
       >
         Đăng nhập
@@ -30,7 +30,7 @@ const accountItems: MenuProps["items"] = [
     key: "2",
     label: (
       <a
-        href="/OceanFood/register"
+        href="/register"
         className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-[#37bee3] transition-colors"
       >
         Đăng ký
@@ -105,7 +105,7 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
             )}
           >
             <a
-              href="/OceanFood/cart"
+              href="/cart"
               className="flex items-center gap-2 cursor-pointer hover:text-[#37bee3] transition-colors"
             >
               <div className="relative">

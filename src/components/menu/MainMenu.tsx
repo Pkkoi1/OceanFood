@@ -15,20 +15,20 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
   // Route mapping for Vietnamese labels
 
   const menuItems = [
-    { key: "home", label: "Trang chủ", href: "/OceanFood/" },
-    { key: "about", label: "Giới thiệu", href: "/OceanFood/about" },
+    { key: "home", label: "Trang chủ", href: "/" },
+    { key: "about", label: "Giới thiệu", href: "/about" },
     {
       key: "products",
       label: "Sản phẩm",
-      href: "/OceanFood/products",
+      href: "/products",
       hasIcon: true,
     },
     {
       key: "handbooks",
       label: "Cẩm nang ẩm thực",
-      href: "/OceanFood/handbooks",
+      href: "/handbooks",
     },
-    { key: "contact", label: "Liên hệ", href: "/OceanFood/contact" },
+    { key: "contact", label: "Liên hệ", href: "/contact" },
   ];
 
   const handleMenuClick = (menuKey: string, href: string) => {
@@ -50,13 +50,13 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
           <div className="flex-1">
             <div
               className="font-semibold cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => handleMenuClick("login", "/OceanFood/login")}
+              onClick={() => handleMenuClick("login", "/login")}
             >
               Đăng nhập
             </div>
             <div
               className="text-sm opacity-90 cursor-pointer hover:opacity-70 transition-opacity"
-              onClick={() => handleMenuClick("register", "/OceanFood/register")}
+              onClick={() => handleMenuClick("register", "/register")}
             >
               Đăng ký
             </div>
@@ -68,7 +68,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
         <div
           key={item.key}
           className={`${
-            location.pathname === item.href.replace("/OceanFood", "")
+            location.pathname === item.href.replace("", "")
               ? "text-[#37bee3]"
               : "bg-white"
           }`}
@@ -76,7 +76,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
           <button
             onClick={() => handleMenuClick(item.key, item.href)}
             className={`w-full text-left pl-4 lg:pl-0 pr-4 py-1 flex items-center justify-between  hover:text-[#37bee3] cursor-pointer transition-colors ${
-              location.pathname === item.href.replace("/OceanFood", "")
+              location.pathname === item.href.replace("", "")
                 ? "text-[#37bee3]"
                 : "text-gray-700"
             }`}
@@ -105,7 +105,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
                   onClick={() =>
                     handleMenuClick(
                       category.key,
-                      `/OceanFood/products/${category.key}`
+                      `/products/${category.key}`
                     )
                   }
                   className="w-full text-left py-1 text-sm text-gray-600 hover:text-[#37bee3] cursor-pointer transition-colors"
