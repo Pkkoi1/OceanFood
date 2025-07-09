@@ -8,14 +8,14 @@ interface OrderItemProps {
 
 const OrderItem: React.FC<OrderItemProps> = ({ item, formatPrice }) => {
   return (
-    <div className="flex items-center gap-3 p-3 border border-gray-200 rounded">
+    <div className="flex items-center gap-3 p-0">
       <div className="relative">
         <img
           src={item.image}
           alt={item.name}
           className="w-16 h-16 object-cover rounded"
         />
-        <span className="absolute -top-2 -right-2 bg-gray-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+        <span className="absolute -top-2 -right-2 bg-[#2a9dcc] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
           {item.quantity}
         </span>
       </div>
