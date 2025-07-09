@@ -1,5 +1,5 @@
 import { Table, Button, InputNumber, Checkbox } from "antd";
-import { DeleteOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import type { ColumnsType } from "antd/es/table";
 import type { CartItem as ImportedCartItem } from "../../data/cartItemData";
