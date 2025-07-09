@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 
 const Header = () => {
   return (
-    <div>
+    <div className="lg:fixed z-[1000]">
       <div className="hidden lg:block">
         <Location></Location>
       </div>

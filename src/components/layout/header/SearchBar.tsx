@@ -41,7 +41,7 @@ const SearchBar = () => {
   }, [placeholder, currentIndex, isDeleting]);
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between gap-3 px-4 lg:px-[100px] my-3">
+    <div className="flex flex-col bg-white lg:shadow  lg:flex-row items-center justify-between gap-3 px-4 lg:px-[100px] w-screen lg:my-0 my-3">
       <div className="flex-shrink-0">
         <Image src={logo} alt="Ocean Food Logo" width={120} height={60} />
       </div>

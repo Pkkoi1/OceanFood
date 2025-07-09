@@ -82,7 +82,7 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
   const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="bg-white shadow-sm relative hidden lg:block">
+    <div className="bg-white shadow-sm relative hidden lg:block pt-32">
       <div className="flex items-center justify-between px-[100px]">
         <SideMenu onToggle={handleSidebarToggle} />
 
