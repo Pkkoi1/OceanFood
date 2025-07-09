@@ -13,6 +13,9 @@ import Contact from "./views/contact/Contact";
 import HanbookPage from "./views/handbook/HanbookPage";
 import PhoneFooter from "./components/layout/footer/PhoneFooter";
 import ProductDetail from "./views/productDetail/ProductDetail";
+import BellButton from "./components/popupButtons/bellButton/BellButton";
+import ContactButton from "./components/popupButtons/contactButton/ContactButton";
+import MessengerButton from "./components/popupButtons/messenger/MessengerButton";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -33,6 +36,9 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/handbooks" element={<HanbookPage />} />
       </Routes>
+      <BellButton></BellButton>
+      <ContactButton></ContactButton>
+      <MessengerButton></MessengerButton>
       <PhoneFooter></PhoneFooter>
       <Footer></Footer>
     </BrowserRouter>
