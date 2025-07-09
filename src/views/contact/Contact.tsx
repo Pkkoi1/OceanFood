@@ -1,4 +1,4 @@
-import { EnvironmentFilled, EnvironmentOutlined, MailFilled, PhoneFilled } from "@ant-design/icons";
+import { EnvironmentFilled, MailFilled, PhoneFilled } from "@ant-design/icons";
 import React from "react";
 
 const Contact: React.FC = () => {

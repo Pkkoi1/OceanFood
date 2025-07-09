@@ -11,7 +11,7 @@ interface ListProps {
 const List: React.FC<ListProps> = ({ title = "", titlePosition = "left" }) => {
   const [Number, setNumber] = useState(10);
   const [layout, setLayout] = useState<"vertical" | "horizontal">("vertical");
-
+  
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -20,6 +20,7 @@ const List: React.FC<ListProps> = ({ title = "", titlePosition = "left" }) => {
         // phone
         setNumber(2);
         setLayout("vertical");
+        console.log(layout);
       } else if (width < 1024) {
         // tablet/iPad
         setNumber(3);

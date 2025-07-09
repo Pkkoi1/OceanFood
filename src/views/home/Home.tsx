@@ -9,7 +9,10 @@ import productImg2 from "../../assets/images/product-image-2.webp";
 import Handbook from "../../components/handbook/Handbook";
 import Brand from "../../components/home/Brand";
 
-const Home: React.FC = () => {
+interface HomeProps {
+  isSidebarOpen: boolean;
+}
+const Home: React.FC<HomeProps> = ({ isSidebarOpen }) => {
   const [Number, setNumber] = useState(6);
   const [layout, setLayout] = useState<"vertical" | "horizontal">("vertical");
 
@@ -41,7 +44,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <div className="bg-gradient-to-b from-[#6acfea] via-[#fff] via-[#fff] to-white">
-        <Banner />
+        <Banner isSidebarOpen={isSidebarOpen} />
         <FlashSale></FlashSale>
         <ListCategory></ListCategory>
         <ListProduct

@@ -57,7 +57,6 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const location = useLocation();
   const [items, setItems] = useState<CartItem[]>([]);
 
@@ -69,12 +68,10 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
   // Auto toggle sidebar based on route
   useEffect(() => {
     const isHomePage = location.pathname === "/";
-    setIsSidebarOpen(isHomePage);
     onSidebarToggle?.(isHomePage);
   }, [location.pathname, onSidebarToggle]);
 
   const handleSidebarToggle = (isOpen: boolean) => {
-    setIsSidebarOpen(isOpen);
     onSidebarToggle?.(isOpen);
   };
 

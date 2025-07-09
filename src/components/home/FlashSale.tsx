@@ -208,7 +208,7 @@ const FlashSale: React.FC = () => {
             autoplay={false}
             draggable={true}
             className="flash-sale-carousel"
-            beforeChange={(from, to) => setCurrentSlide(to)}
+            beforeChange={(to) => setCurrentSlide(to)}
           >
             {allProducts.map((productSet, index) => (
               <div key={index}>
@@ -236,7 +236,7 @@ const FlashSale: React.FC = () => {
             autoplay={false}
             draggable={true}
             className="flash-sale-carousel"
-            beforeChange={(from, to) => setCurrentSlide(to)}
+            beforeChange={(to) => setCurrentSlide(to)}
           >
             {mobileProducts.map((productSet, index) => (
               <div key={index}>

@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from "react";
 import { CloseOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 
 interface OptionProps {
   isOpen: boolean;
@@ -9,7 +8,6 @@ interface OptionProps {
 
 const Option: React.FC<OptionProps> = ({ isOpen, onClose }) => {
   const menuRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
 
   // Handle click outside to close menu
   useEffect(() => {

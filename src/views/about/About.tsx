@@ -1,5 +1,3 @@
-import React from "react";
-
 const About = () => {
   return (
     <div className="bg-white">
@@ -7,13 +5,13 @@ const About = () => {
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="space-y-2">
             <p className="text-sm">
-             <strong> Lofi Seafood</strong> là một hệ thống bán lẻ hải sản online. Dự án được bắt
-              đầu triển khai từ đầu 01/2024 với mục tiêu trở thành một trong
-              những kênh bán lẻ online lớn nhất Việt Nam.<strong> Lofi Seafood</strong> chuyên
-              bán hải sản tươi sống các loại: nhum biển, bào ngư, sam biển, ruột
-              ốc, cá ninja, tôm hùm, tôm mũ ni,… và thực phẩm: trứng non, ngọc
-              kê, gà muối tiêu, gà xông khói, chân giò xông khói, lườn ngỗng,
-              lưỡi heo xông khói,...
+              <strong> Lofi Seafood</strong> là một hệ thống bán lẻ hải sản
+              online. Dự án được bắt đầu triển khai từ đầu 01/2024 với mục tiêu
+              trở thành một trong những kênh bán lẻ online lớn nhất Việt Nam.
+              <strong> Lofi Seafood</strong> chuyên bán hải sản tươi sống các
+              loại: nhum biển, bào ngư, sam biển, ruột ốc, cá ninja, tôm hùm,
+              tôm mũ ni,… và thực phẩm: trứng non, ngọc kê, gà muối tiêu, gà
+              xông khói, chân giò xông khói, lườn ngỗng, lưỡi heo xông khói,...
             </p>
             <p>
               Ngành bán lẻ hải sản là một trong những ngành nghề có sự dịch
@@ -33,9 +31,9 @@ const About = () => {
             </p>
 
             <p>
-              Dựa trên những phân tích trên,<strong> Lofi Seafood</strong> được ra đời và nhanh
-              chóng được vận hành triển khai nhằm đáp ứng với sự thay đổi của
-              thị trường.
+              Dựa trên những phân tích trên,<strong> Lofi Seafood</strong> được
+              ra đời và nhanh chóng được vận hành triển khai nhằm đáp ứng với sự
+              thay đổi của thị trường.
             </p>
 
             <h3 className="text-2xl font-semibold mt-8 mb-4">
@@ -62,14 +60,13 @@ const About = () => {
               Seafood.
             </p>
 
-            <h3 className="text-2xl font-semibold mt-8 mb-4">
-              Sứ mệnh
-            </h3>
+            <h3 className="text-2xl font-semibold mt-8 mb-4">Sứ mệnh</h3>
             <p>
-              Sứ mệnh của chúng tôi là xây dựng<strong> Lofi Seafood</strong> trở thành một kênh
-              bán lẻ hải sản online lớn nhất Việt Nam. Giúp cho các cửa hàng đơn
-              vị bán lẻ hải sản không có kinh nghiệm triển khai các kênh bán
-              hàng trực tuyến kinh doanh có lợi nhuận trên nền tảng số.
+              Sứ mệnh của chúng tôi là xây dựng<strong> Lofi Seafood</strong>{" "}
+              trở thành một kênh bán lẻ hải sản online lớn nhất Việt Nam. Giúp
+              cho các cửa hàng đơn vị bán lẻ hải sản không có kinh nghiệm triển
+              khai các kênh bán hàng trực tuyến kinh doanh có lợi nhuận trên nền
+              tảng số.
             </p>
 
             <p>
@@ -83,13 +80,11 @@ const About = () => {
               dàng hơn qua kênh phân phối và giá thành sản phẩm.
             </p>
 
-            <h3 className="text-2xl font-semibold mt-8 mb-4">
-              Tầm nhìn
-            </h3>
+            <h3 className="text-2xl font-semibold mt-8 mb-4">Tầm nhìn</h3>
             <p>
-              Trong 3 năm tới<strong> Lofi Seafood</strong> sẽ trở thành kênh bán lẻ hải sản
-              online lớn nhất Việt Nam. Có mạng lưới cửa hàng liên kết phủ rộng
-              hầu hết các thành phố lớn.
+              Trong 3 năm tới<strong> Lofi Seafood</strong> sẽ trở thành kênh
+              bán lẻ hải sản online lớn nhất Việt Nam. Có mạng lưới cửa hàng
+              liên kết phủ rộng hầu hết các thành phố lớn.
             </p>
           </div>
         </div>

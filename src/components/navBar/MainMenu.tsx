@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import { productCategories } from "../../constants/productCategories";
@@ -6,7 +6,7 @@ import { productCategories } from "../../constants/productCategories";
 const MainMenu = () => {
   const [showProductMenu, setShowProductMenu] = useState(false);
   const location = useLocation();
-  const productMenuTimeout = useRef<NodeJS.Timeout | null>(null);
+  const productMenuTimeout = useRef<number | null>(null);
 
   const menuItems = [
     { name: "Trang chủ", href: "/OceanFood/", path: "/" },
@@ -50,7 +50,7 @@ const MainMenu = () => {
   };
 
   const handleProductMouseLeave = () => {
-    productMenuTimeout.current = setTimeout(() => {
+    productMenuTimeout.current = window.setTimeout(() => {
       setShowProductMenu(false);
     }, 200); // 200ms delay
   };
