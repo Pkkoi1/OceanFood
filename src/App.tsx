@@ -5,7 +5,6 @@ import Header from "./components/layout/header";
 import Footer from "./components/layout/footer/Footer";
 import NavBar from "./components/navBar";
 import Breadcrumb from "./components/common/Breadcrumb";
-import { useState } from "react";
 import ProductShowList from "./views/products";
 import Login from "./views/auth/login/Login";
 import Register from "./views/auth/register/Register";
@@ -20,15 +19,13 @@ import CartView from "./views/cart/CartView";
 import CheckoutView from "./views/checkout/CheckoutView";
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  console.log("isSidebarOpen", isSidebarOpen);
   return (
     <BrowserRouter basename="/OceanFood">
       <Header />
-      <NavBar onSidebarToggle={setIsSidebarOpen} />
+      <NavBar />
       <Breadcrumb />
       <Routes>
-        <Route path="/" element={<Home isSidebarOpen={isSidebarOpen} />} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<ProductShowList />} />
         <Route path="/product/:id" element={<ProductDetail />} />

@@ -1,4 +1,3 @@
-import React from "react";
 import Location from "./Location";
 import SearchBar from "./SearchBar";
 

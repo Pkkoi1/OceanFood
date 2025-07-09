@@ -1,4 +1,3 @@
-import React from "react";
 import { Carousel } from "antd";
 import fridge from "../../assets/images/fridge.webp";
 import fish from "../../assets/images/fish.webp";

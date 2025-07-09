@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Carousel } from "antd";
 import SaleProductCard from "./SaleProductCard";
 import flashSale from "../../assets/images/save-icon.webp";
+import type { CarouselRef } from "antd/es/carousel";
 
 interface Product {
   id: number;
@@ -25,121 +26,99 @@ const FlashSale: React.FC = () => {
     seconds: 51,
   });
 
-  const [products, setProducts] = useState<Product[]>([
+  // Sample flash sale products data
+  const flashSaleProducts: Product[] = [
     {
       id: 1,
-      name: "Cá Hồi Phi Lê Tươi Nguyên...",
-      origin: "Xuất xứ: Nauy",
-      currentPrice: 1350000,
-      originalPrice: 1600000,
-      discount: 16,
-      sold: 174,
-      image: "../../assets/images/ca-hoi.webp",
+      name: "Tôm hùm Canada tươi sống",
+      origin: "Canada",
+      currentPrice: 1200000,
+      originalPrice: 1500000,
+      discount: 20,
+      sold: 45,
+      image: "https://picsum.photos/300/200?random=1",
       isLiked: false,
-      badge: "BÁN CHẠY",
+      badge: "HOT",
+      stockStatus: "Còn hàng",
     },
     {
       id: 2,
-      name: "Tôm Càng Xanh Sống",
-      origin: "Xuất xứ: Việt Nam",
-      currentPrice: 330000,
-      originalPrice: 400000,
-      discount: 18,
-      sold: 0,
-      image: "../../assets/images/tom-cang.jpg",
+      name: "Cá hồi Na Uy phi lê",
+      origin: "Na Uy",
+      currentPrice: 800000,
+      originalPrice: 1000000,
+      discount: 20,
+      sold: 32,
+      image: "https://picsum.photos/300/200?random=2",
       isLiked: false,
-      badge: "BÁN CHẠY",
-      stockStatus: "Sắp hết hàng",
+      badge: "SALE",
+      stockStatus: "Còn hàng",
     },
-  ]);
+    {
+      id: 3,
+      name: "Cua king crab Alaska",
+      origin: "Alaska",
+      currentPrice: 2400000,
+      originalPrice: 3000000,
+      discount: 20,
+      sold: 18,
+      image: "https://picsum.photos/300/200?random=3",
+      isLiked: false,
+      badge: "LIMITED",
+      stockStatus: "Còn hàng",
+    },
+    {
+      id: 4,
+      name: "Bào ngư tươi sống",
+      origin: "Úc",
+      currentPrice: 1600000,
+      originalPrice: 2000000,
+      discount: 20,
+      sold: 28,
+      image: "https://picsum.photos/300/200?random=4",
+      isLiked: false,
+      badge: "FRESH",
+      stockStatus: "Còn hàng",
+    },
+    {
+      id: 5,
+      name: "Ốc hương nướng mỡ hành",
+      origin: "Việt Nam",
+      currentPrice: 320000,
+      originalPrice: 400000,
+      discount: 20,
+      sold: 67,
+      image: "https://picsum.photos/300/200?random=5",
+      isLiked: false,
+      badge: "BEST SELLER",
+      stockStatus: "Còn hàng",
+    },
+    {
+      id: 6,
+      name: "Sò huyết rang me",
+      origin: "Việt Nam",
+      currentPrice: 240000,
+      originalPrice: 300000,
+      discount: 20,
+      sold: 89,
+      image: "https://picsum.photos/300/200?random=6",
+      isLiked: false,
+      badge: "HOT",
+      stockStatus: "Còn hàng",
+    },
+  ];
 
-  const [allProducts] = useState<Product[][]>([
-    [
-      {
-        id: 1,
-        name: "Cá Hồi Phi Lê Tươi Nguyên...",
-        origin: "Xuất xứ: Nauy",
-        currentPrice: 1350000,
-        originalPrice: 1600000,
-        discount: 16,
-        sold: 174,
-        image: "../../assets/images/ca-hoi.webp",
-        isLiked: false,
-        badge: "BÁN CHẠY",
-      },
-      {
-        id: 2,
-        name: "Tôm Càng Xanh Sống",
-        origin: "Xuất xứ: Việt Nam",
-        currentPrice: 330000,
-        originalPrice: 400000,
-        discount: 18,
-        sold: 0,
-        image: "../../assets/images/tom-cang-xanh.webp",
-        isLiked: false,
-        badge: "BÁN CHẠY",
-        stockStatus: "Sắp hết hàng",
-      },
-    ],
-    [
-      {
-        id: 3,
-        name: "Cua Hoàng Đế Alaska",
-        origin: "Xuất xứ: Alaska",
-        currentPrice: 2500000,
-        originalPrice: 3000000,
-        discount: 17,
-        sold: 89,
-        image: "../../assets/images/cua-hoang-de.jpg",
-        isLiked: false,
-        badge: "MỚI",
-      },
-      {
-        id: 4,
-        name: "Bạch Tuộc Baby",
-        origin: "Xuất xứ: Việt Nam",
-        currentPrice: 180000,
-        originalPrice: 220000,
-        discount: 18,
-        sold: 156,
-        image: "../../assets/images/bach-tuoc.jpg",
-        isLiked: false,
-        badge: "BÁN CHẠY",
-      },
-    ],
-    [
-      {
-        id: 5,
-        name: "Sò Điệp Tươi Sống",
-        origin: "Xuất xứ: Nha Trang",
-        currentPrice: 450000,
-        originalPrice: 550000,
-        discount: 18,
-        sold: 67,
-        image: "../../assets/images/so-diep.jpg",
-        isLiked: false,
-        badge: "HOT",
-      },
-      {
-        id: 6,
-        name: "Ghẹ Xanh Tươi Sống",
-        origin: "Xuất xứ: Cà Mau",
-        currentPrice: 320000,
-        originalPrice: 400000,
-        discount: 20,
-        sold: 124,
-        image: "../../assets/images/ghe-xanh.jpg",
-        isLiked: false,
-        stockStatus: "Chỉ còn 5 con",
-      },
-    ],
-  ]);
+  // Group products for desktop view (2 products per slide)
+  const allProducts: Product[][] = [];
+  for (let i = 0; i < flashSaleProducts.length; i += 2) {
+    allProducts.push(flashSaleProducts.slice(i, i + 2));
+  }
 
   // Flatten products for mobile view (one product per slide)
-  const mobileProducts = allProducts.flat().map((product) => [product]);
+  const mobileProducts = flashSaleProducts.map((product) => [product]);
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const carouselRef = useRef<any>(null);
+  const carouselRef = useRef<CarouselRef>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -167,9 +146,8 @@ const FlashSale: React.FC = () => {
   }, []);
 
   const toggleLike = (productId: number) => {
-    // Update the like status in allProducts instead of products
-    // This is a simplified version - you might want to implement proper state management
     console.log(`Toggle like for product ${productId}`);
+    // Implement like functionality here
   };
 
   const goToSlide = (slideIndex: number) => {
@@ -184,7 +162,7 @@ const FlashSale: React.FC = () => {
         <div className="flex flex-col lg:flex-row items-center">
           <div className="gap-2 flex-col lg:flex-row text-white lg:mr-6 flex items-center">
             <div className="text-4xl font-bold">
-              <img src={flashSale} alt="" />
+              <img src={flashSale} alt="Flash Sale" className="w-12 h-12" />
             </div>
             <div className="text-2xl text-center justify-around my-2 font-bold lg:ml-4">
               GIỜ VÀNG GIẢM GIÁ!

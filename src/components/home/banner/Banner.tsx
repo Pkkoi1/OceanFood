@@ -12,13 +12,6 @@ interface BannerProps {
   isSidebarOpen?: boolean;
 }
 
-const bannerStyle: React.CSSProperties = {
-  width: "100%",
-  height: "400px",
-  objectFit: "fill",
-  borderRadius: "8px",
-};
-
 const Banner: React.FC<BannerProps> = ({ isSidebarOpen = true }) => (
   <div>
     <div
@@ -52,9 +45,7 @@ const Banner: React.FC<BannerProps> = ({ isSidebarOpen = true }) => (
     <div className="flex flex-col lg:flex-row justify-between mt-4 mx-2 lg:mx-[100px]">
       {[banner5, banner6].map((banner, index) => (
         <div key={index} className="p-2 overflow-hidden rounded-2xl">
-          <div
-            className={`${styles.imageHoverWrapper} rounded-2xl`}
-          >
+          <div className={`${styles.imageHoverWrapper} rounded-2xl`}>
             <img
               src={banner}
               className="rounded-2xl h-1 lg:w-full lg:h-full object-cover"
