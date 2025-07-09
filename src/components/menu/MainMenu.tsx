@@ -13,15 +13,6 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
   const location = useLocation();
 
   // Route mapping for Vietnamese labels
-  const routeMap: Record<string, string> = {
-    "/": "Trang chủ",
-    "/about": "Giới thiệu",
-    "/products": "Sản phẩm",
-    "/handbooks": "Cẩm nang ẩm thực",
-    "/contact": "Liên hệ",
-    "/login": "Đăng nhập",
-    "/register": "Đăng ký",
-  };
 
   const menuItems = [
     { key: "home", label: "Trang chủ", href: "/OceanFood/" },

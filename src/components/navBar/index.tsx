@@ -96,7 +96,10 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
               </div>
             )}
           >
-            <div className="flex items-center gap-2 cursor-pointer hover:text-[#37bee3] transition-colors">
+            <a
+              href="/OceanFood/cart"
+              className="flex items-center gap-2 cursor-pointer hover:text-[#37bee3] transition-colors"
+            >
               <div className="relative">
                 <ShoppingCartOutlined className="text-xl text-gray-600" />
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -104,7 +107,7 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
                 </span>
               </div>
               <span className="text-gray-600">Giỏ hàng</span>
-            </div>
+            </a>
           </Dropdown>
 
           {/* Account */}

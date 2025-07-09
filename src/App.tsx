@@ -16,6 +16,7 @@ import ProductDetail from "./views/productDetail/ProductDetail";
 import BellButton from "./components/popupButtons/bellButton/BellButton";
 import ContactButton from "./components/popupButtons/contactButton/ContactButton";
 import MessengerButton from "./components/popupButtons/messenger/MessengerButton";
+import CartView from "./views/cart/CartView";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -35,6 +36,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/handbooks" element={<HanbookPage />} />
+        <Route path="/cart" element={<CartView />} />
       </Routes>
       <BellButton></BellButton>
       <ContactButton></ContactButton>
