@@ -1,0 +1,190 @@
+import React, { useState } from "react";
+import { Select, Input } from "antd";
+import vietnamAddresses from "../../data/vietnam_addresses.json";
+
+const { TextArea } = Input;
+
+interface CustomerInfoSectionProps {
+  formData: {
+    email: string;
+    lastName: string;
+    phone: string;
+    address: string;
+    province: string;
+    district: string;
+    ward: string;
+    note: string;
+  };
+  onChange: (field: string, value: string) => void;
+}
+
+const CustomerInfoSection: React.FC<CustomerInfoSectionProps> = ({
+  formData,
+  onChange,
+}) => {
+  const [districts, setDistricts] = useState<any[]>([]);
+  const [wards, setWards] = useState<any[]>([]);
+
+  // Get provinces from JSON data
+  const provinces = vietnamAddresses.map((province) => ({
+    value: province.code.toString(),
+    label: province.name,
+  }));
+
+  const handleProvinceChange = (value: string) => {
+    onChange("province", value);
+    onChange("district", "");
+    onChange("ward", "");
+
+    // Find selected province and set its districts
+    const selectedProvince = vietnamAddresses.find(
+      (province) => province.code.toString() === value
+    );
+
+    if (selectedProvince) {
+      const provinceDistricts = selectedProvince.districts.map((district) => ({
+        value: district.code.toString(),
+        label: district.name,
+      }));
+      setDistricts(provinceDistricts);
+      setWards([]);
+    }
+  };
+
+  const handleDistrictChange = (value: string) => {
+    onChange("district", value);
+    onChange("ward", "");
+
+    // Find selected district and set its wards
+    const selectedProvince = vietnamAddresses.find(
+      (province) => province.code.toString() === formData.province
+    );
+
+    if (selectedProvince) {
+      const selectedDistrict = selectedProvince.districts.find(
+        (district) => district.code.toString() === value
+      );
+
+      if (selectedDistrict && selectedDistrict.wards) {
+        const districtWards = selectedDistrict.wards.map((ward, index) => ({
+          value: index.toString(),
+          label: ward.short_codename
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase()),
+        }));
+        setWards(districtWards);
+      }
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-medium">Thông tin nhận hàng</h2>
+        <a href="#" className="text-[#37bee3] text-sm flex items-center gap-1">
+          <span className="w-4 h-4 rounded-full bg-[#37bee3] text-white text-xs flex items-center justify-center">
+            👤
+          </span>
+          Đăng nhập
+        </a>
+      </div>
+
+      <div className="space-y-6 flex gap-2 flex-col">
+        <Input
+          placeholder="Email"
+          value={formData.email}
+          onChange={(e) => onChange("email", e.target.value)}
+          className="w-full h-12"
+          size="large"
+        />
+
+        <Input
+          placeholder="Họ và tên"
+          value={formData.lastName}
+          onChange={(e) => onChange("lastName", e.target.value)}
+          className="w-full h-12"
+          size="large"
+        />
+
+        <div className="flex gap-2 mb-0">
+          <div className=" border rounded-[8px] border-[#d9d9d9] ">
+            <Select
+              defaultValue="+84"
+              size="large"
+              options={[{ value: "+84", label: "🇻🇳 +84" }]}
+              bordered={false}
+            />
+          </div>
+
+          <Input
+            placeholder="Số điện thoại (tùy chọn)"
+            value={formData.phone}
+            onChange={(e) => onChange("phone", e.target.value)}
+            className="flex-1 h-12"
+            size="large"
+          />
+        </div>
+
+        <Input
+          placeholder="Địa chỉ (tùy chọn)"
+          value={formData.address}
+          onChange={(e) => onChange("address", e.target.value)}
+          className="w-full h-12"
+          size="large"
+        />
+
+        <Select
+          placeholder="Tỉnh thành"
+          value={formData.province}
+          onChange={handleProvinceChange}
+          options={provinces}
+          className="w-full"
+          size="large"
+          showSearch
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+        />
+
+        <Select
+          placeholder="Quận huyện (tùy chọn)"
+          value={formData.district}
+          onChange={handleDistrictChange}
+          options={districts}
+          className="w-full"
+          size="large"
+          disabled={!formData.province}
+          showSearch
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+        />
+
+        <Select
+          placeholder="Phường xã (tùy chọn)"
+          value={formData.ward}
+          onChange={(value) => onChange("ward", value)}
+          options={wards}
+          className="w-full"
+          size="large"
+          disabled={!formData.district}
+          showSearch
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+        />
+
+        <TextArea
+          placeholder="Ghi chú (tùy chọn)"
+          value={formData.note}
+          onChange={(e) => onChange("note", e.target.value)}
+          rows={4}
+          className="w-full"
+          size="large"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default CustomerInfoSection;
