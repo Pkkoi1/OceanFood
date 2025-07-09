@@ -4,6 +4,37 @@ import vietnamAddresses from "../../data/vietnam_addresses.json";
 
 const { TextArea } = Input;
 
+interface District {
+  name: string;
+  code: number;
+  codename: string;
+  division_type: string;
+  short_codename: string;
+  wards?: Ward[];
+}
+
+interface Ward {
+  name?: string;
+  code?: number;
+  codename?: string;
+  division_type?: string;
+  short_codename: string;
+}
+
+interface Province {
+  name: string;
+  code: number;
+  codename: string;
+  division_type: string;
+  phone_code: number;
+  districts: District[];
+}
+
+interface SelectOption {
+  value: string;
+  label: string;
+}
+
 interface CustomerInfoSectionProps {
   formData: {
     email: string;
@@ -22,14 +53,16 @@ const CustomerInfoSection: React.FC<CustomerInfoSectionProps> = ({
   formData,
   onChange,
 }) => {
-  const [districts, setDistricts] = useState<any[]>([]);
-  const [wards, setWards] = useState<any[]>([]);
+  const [districts, setDistricts] = useState<SelectOption[]>([]);
+  const [wards, setWards] = useState<SelectOption[]>([]);
 
   // Get provinces from JSON data
-  const provinces = vietnamAddresses.map((province) => ({
-    value: province.code.toString(),
-    label: province.name,
-  }));
+  const provinces: SelectOption[] = (vietnamAddresses as Province[]).map(
+    (province) => ({
+      value: province.code.toString(),
+      label: province.name,
+    })
+  );
 
   const handleProvinceChange = (value: string) => {
     onChange("province", value);
@@ -37,15 +70,17 @@ const CustomerInfoSection: React.FC<CustomerInfoSectionProps> = ({
     onChange("ward", "");
 
     // Find selected province and set its districts
-    const selectedProvince = vietnamAddresses.find(
+    const selectedProvince = (vietnamAddresses as Province[]).find(
       (province) => province.code.toString() === value
     );
 
     if (selectedProvince) {
-      const provinceDistricts = selectedProvince.districts.map((district) => ({
-        value: district.code.toString(),
-        label: district.name,
-      }));
+      const provinceDistricts: SelectOption[] = selectedProvince.districts.map(
+        (district) => ({
+          value: district.code.toString(),
+          label: district.name,
+        })
+      );
       setDistricts(provinceDistricts);
       setWards([]);
     }
@@ -56,7 +91,7 @@ const CustomerInfoSection: React.FC<CustomerInfoSectionProps> = ({
     onChange("ward", "");
 
     // Find selected district and set its wards
-    const selectedProvince = vietnamAddresses.find(
+    const selectedProvince = (vietnamAddresses as Province[]).find(
       (province) => province.code.toString() === formData.province
     );
 
@@ -66,12 +101,14 @@ const CustomerInfoSection: React.FC<CustomerInfoSectionProps> = ({
       );
 
       if (selectedDistrict && selectedDistrict.wards) {
-        const districtWards = selectedDistrict.wards.map((ward, index) => ({
-          value: index.toString(),
-          label: ward.short_codename
-            .replace(/_/g, " ")
-            .replace(/\b\w/g, (l) => l.toUpperCase()),
-        }));
+        const districtWards: SelectOption[] = selectedDistrict.wards.map(
+          (ward, index) => ({
+            value: index.toString(),
+            label: ward.short_codename
+              .replace(/_/g, " ")
+              .replace(/\b\w/g, (l) => l.toUpperCase()),
+          })
+        );
         setWards(districtWards);
       }
     }

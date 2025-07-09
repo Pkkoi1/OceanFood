@@ -1,7 +1,4 @@
-
-
 import { ShoppingOutlined } from "@ant-design/icons";
-import React from "react";
 
 const CartDropdownEmpty = () => {
   return (

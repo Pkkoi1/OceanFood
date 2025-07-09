@@ -106,7 +106,7 @@ const ListProduct: React.FC<ListProductProps> = ({
   };
 
   // Custom arrow components
-  const CustomPrevArrow = (props: any) => {
+  const CustomPrevArrow = (props: { onClick?: () => void }) => {
     const { onClick } = props;
     return (
       <button
@@ -120,7 +120,7 @@ const ListProduct: React.FC<ListProductProps> = ({
     );
   };
 
-  const CustomNextArrow = (props: any) => {
+  const CustomNextArrow = (props: { onClick?: () => void }) => {
     const { onClick } = props;
     return (
       <button

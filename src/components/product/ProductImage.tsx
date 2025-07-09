@@ -13,9 +13,15 @@ interface ProductImageProps {
   product: Product;
 }
 
+interface CarouselRef {
+  next: () => void;
+  prev: () => void;
+  goTo: (slide: number) => void;
+}
+
 const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
   const [selectedImage, setSelectedImage] = useState<number>(0);
-  const carouselRef = useRef<any>(null);
+  const carouselRef = useRef<CarouselRef>(null);
 
   const handleNext = () => {
     carouselRef.current?.next();

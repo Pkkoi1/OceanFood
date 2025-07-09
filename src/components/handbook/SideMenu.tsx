@@ -1,5 +1,5 @@
 import React from "react";
-import { handbookArticles } from "../../data/handBookData";
+import { handbookArticles } from "../../data/handbookData";
 import MainMenu from "../menu/MainMenu";
 
 interface SideMenuProps {
