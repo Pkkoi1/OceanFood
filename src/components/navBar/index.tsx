@@ -8,7 +8,9 @@ import { useLocation } from "react-router-dom";
 import MainMenu from "./MainMenu";
 import SideMenu from "./SideMenu";
 import { Dropdown, type MenuProps } from "antd";
-import CartDropdownEmpty from "../cart/CartDropdownEmpty";
+import { cartItems } from "../../data/cartItemData";
+import type { CartItem } from "../../data/cartItemData";
+
 import CartDropdown from "../cart/CartDropdown";
 
 // Menu cho Tài khoản
@@ -38,7 +40,7 @@ const accountItems: MenuProps["items"] = [
 ];
 
 // Menu cho Giỏ hàng (dùng CartDropdownEmpty)
-const cartItems: MenuProps["items"] = [
+const cartItemsMenu: MenuProps["items"] = [
   {
     key: "1",
     label: (
@@ -57,6 +59,12 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const location = useLocation();
+  const [items, setItems] = useState<CartItem[]>([]);
+
+  // Load cart items
+  useEffect(() => {
+    setItems(cartItems);
+  }, []);
 
   // Auto toggle sidebar based on route
   useEffect(() => {
@@ -69,6 +77,9 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
     setIsSidebarOpen(isOpen);
     onSidebarToggle?.(isOpen);
   };
+
+  // Calculate total quantity
+  const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="bg-white shadow-sm relative hidden lg:block">
@@ -87,7 +98,7 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
 
           {/* Cart */}
           <Dropdown
-            menu={{ items: cartItems }}
+            menu={{ items: cartItemsMenu }}
             trigger={["hover"]}
             placement="bottomRight"
             dropdownRender={(menu) => (
@@ -103,7 +114,7 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
               <div className="relative">
                 <ShoppingCartOutlined className="text-xl text-gray-600" />
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  0
+                  {totalQuantity}
                 </span>
               </div>
               <span className="text-gray-600">Giỏ hàng</span>

@@ -21,7 +21,7 @@ const items: MenuProps["items"] = [
 ];
 const DateFilter: React.FC = () => {
   return (
-    <div className="bg-[#f8f8f8] w-fit flex flex-col gap-4 p-4 rounded-lg shadow-md">
+    <div className="bg-[#f8f8f8] w-fit flex flex-col gap-4 p-4 rounded-lg shadow-md ">
       <h1 className="font-bold text-xl">Thời gian giao hàng</h1>
       <div className="flex items-center gap-4">
         <DatePicker placeholder="Chọn ngày" />

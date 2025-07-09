@@ -4,22 +4,27 @@ interface CartItemProps {
   imageSrc: string;
   name: string;
   price: number;
+  quantity?: number;
 }
 
-const CartItem: React.FC<CartItemProps> = ({ imageSrc, name, price }) => {
-  const [quantity, setQuantity] = useState(1);
-
+const CartItem: React.FC<CartItemProps> = ({
+  imageSrc,
+  name,
+  price,
+  quantity,
+}) => {
+  const [quant, setQuant] = useState<number>(quantity || 1);
   const handleIncrease = () => {
-    setQuantity((prev) => prev + 1);
+    setQuant((prev) => prev + 1);
   };
 
   const handleDecrease = () => {
-    if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
+    if (quant > 1) {
+      setQuant((prev) => prev - 1);
     }
   };
 
-  const totalPrice = price * quantity;
+  const totalPrice = price * quant;
 
   return (
     <div className="flex items-center gap-4 p-4 border-b border-gray-200">
@@ -47,7 +52,7 @@ const CartItem: React.FC<CartItemProps> = ({ imageSrc, name, price }) => {
           </button>
         </div>
       </div>
-      <p className="text-sm font-semibold text-gray-900">
+      <p className="text-sm font-bold text-[#ff4440]">
         {totalPrice.toLocaleString("vi-VN")}đ
       </p>
     </div>

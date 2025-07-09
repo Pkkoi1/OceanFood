@@ -9,8 +9,8 @@ const CartSummary: React.FC<CartSummaryProps> = ({ total, onCheckout }) => {
   return (
     <div className="p-4 border-t border-gray-200">
       <div className="flex justify-between items-center mb-4">
-        <span className="text-sm text-gray-600">Tổng tiền:</span>
-        <span className="text-sm font-semibold text-gray-900">
+        <span className="text-sm font-bold text-gray-600">Tổng tiền:</span>
+        <span className="text-sm font-bold text-[#ff4440]">
           {total.toLocaleString("vi-VN")}đ
         </span>
       </div>
