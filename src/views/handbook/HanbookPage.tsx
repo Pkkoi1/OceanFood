@@ -1,4 +1,3 @@
-import React from "react";
 import SideMenu from "../../components/handbook/SideMenu";
 import HandbookList from "../../components/handbook/ListHandBook";
 
