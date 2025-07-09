@@ -82,13 +82,13 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
           <div className="flex justify-between w-full relative">
             <button
               onClick={handlePrev}
-              className="text-[#4FB3D9] hover:text-[#3a8cb1] w-10 bg-white bg-opacity-50 rounded-full p-2 absolute left-4 lg:left-26 -bottom-4 lg:-bottom-25 cursor-pointer"
+              className="text-[#4FB3D9] hover:text-[#3a8cb1] w-10 bg-white bg-opacity-50 rounded-full p-2 absolute left-1 lg:left-1 bottom-5 lg:bottom-[22px] cursor-pointer"
             >
               <LeftOutlined />
             </button>
             <button
               onClick={handleNext}
-              className="text-[#4FB3D9] hover:text-[#3a8cb1] w-10 bg-white bg-opacity-50 rounded-full p-2 absolute right-4 lg:left-142 -bottom-4 lg:-bottom-25 cursor-pointer"
+              className="text-[#4FB3D9] hover:text-[#3a8cb1] w-10 bg-white bg-opacity-50 rounded-full p-2 absolute right-1 lg:left-116 bottom-5 lg:bottom-[22px] cursor-pointer"
             >
               <RightOutlined />
             </button>
