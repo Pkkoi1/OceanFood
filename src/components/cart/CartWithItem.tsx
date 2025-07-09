@@ -88,7 +88,12 @@ const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
           />
           <div className="flex-1">
             <h4 className="font-medium text-gray-800">{record.name}</h4>
-            <p className="text-red-500 text-sm">Xóa</p>
+            <button
+              onClick={() => handleDeleteItem(record.key)}
+              className="text-red-500 text-sm cursor-pointer hover:text-red-700"
+            >
+              Xóa
+            </button>
           </div>
         </div>
       ),
@@ -144,20 +149,6 @@ const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
         </span>
       ),
     },
-    // {
-    //   title: "",
-    //   key: "action",
-    //   width: "10%",
-    //   align: "center",
-    //   render: (_, record) => (
-    //     <Button
-    //       type="text"
-    //       icon={<DeleteOutlined />}
-    //       onClick={() => handleDeleteItem(record.key)}
-    //       className="text-gray-400 hover:text-red-500"
-    //     />
-    //   ),
-    // },
   ];
 
   return (
@@ -181,7 +172,7 @@ const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
               {formatPrice(totalAmount)}
             </span>
           </div>
-          <button className="mt-4 bg-[#4FB3D9] hover:bg-[#3a9bc1] border-[#4FB3D9] w-72 py-3 rounded-sm px-8 text-white">
+          <button className="mt-4 bg-[#37bee3] hover:bg-[#3a9bc1] border-[#4FB3D9] w-72 py-3 rounded-sm px-8 text-white font-md cursor-pointer">
             Thanh toán
           </button>
         </div>

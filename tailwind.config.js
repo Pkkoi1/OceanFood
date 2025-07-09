@@ -6,7 +6,9 @@ module.exports = {
       fontFamily: {
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        primary: "#ff4440",
+      },
     },
   },
-  // ...
 };

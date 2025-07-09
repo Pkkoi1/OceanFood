@@ -16,7 +16,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({ total, onCheckout }) => {
       </div>
       <button
         onClick={onCheckout}
-        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+        className="w-full bg-[#37bee3] hover:bg-[#3a9bc1] text-white py-2 rounded cursor-pointer transition-colors"
       >
         Thanh toán
       </button>
