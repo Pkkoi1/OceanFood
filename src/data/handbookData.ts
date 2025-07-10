@@ -1,7 +1,13 @@
 export interface HandbookArticleSection {
   heading: string;
-  content: string | { subTitle: string; content: string; img?: string }[];
-  img?: string;
+  content:
+    | string
+    | {
+        subTitle: string;
+        content: string;
+        img?: { url: string; caption: string };
+      }[];
+  img?: { url: string; caption: string };
 }
 
 export interface HandbookArticle {
@@ -30,7 +36,11 @@ export const handbookArticles: HandbookArticle[] = [
             subTitle: "Tôm hùm Canada",
             content:
               "Tôm hùm Canada là loài hải sản nổi tiếng đến từ vùng biển Đại Tây Dương thuộc Canada, đặc biệt là khu vực Nova Scotia – nơi nổi tiếng có môi trường nước lạnh, sạch và rất giàu khoáng chất tự nhiên. Nhờ điều kiện sống lý tưởng này, tôm hùm Canada phát triển có vỏ cứng, thịt săn chắc, vị ngọt thanh và đậm đà.",
-            img: "https://picsum.photos/600/400?random=201",
+            img: {
+              url: "https://picsum.photos/600/400?random=201",
+              caption:
+                "Tôm hùm Canada trong môi trường tự nhiên vùng biển Nova Scotia",
+            },
           },
           {
             subTitle: "Quá trình đánh bắt",
@@ -46,7 +56,10 @@ export const handbookArticles: HandbookArticle[] = [
             subTitle: "Chuẩn bị trước khi sơ chế",
             content:
               "Đặt tôm còn sống vào ngăn mát tủ lạnh khoảng 10–15 phút hoặc ngâm trong nước đá để làm dịu và hạn chế chuyển động mạnh. Sử dụng bàn chải mềm để chà nhẹ toàn bộ phần vỏ bên ngoài, đặc biệt là các khe kẽ ở càng, chân và phần đầu – nơi thường tích tụ cặn bẩn và cát biển.",
-            img: "https://picsum.photos/600/400?random=202",
+            img: {
+              url: "https://picsum.photos/600/400?random=202",
+              caption: "Quá trình làm sạch và sơ chế tôm hùm Canada",
+            },
           },
           {
             subTitle: "Sơ chế tôm đông lạnh",
@@ -77,7 +90,10 @@ export const handbookArticles: HandbookArticle[] = [
             subTitle: "Đặc điểm nổi bật",
             content:
               "Tôm hùm từ vùng Nova Scotia thuộc Canada không chỉ nổi tiếng bởi kích thước lớn mà còn vì hương vị thịt ngọt, giàu độ đạm và ít cholesterol. Loài tôm này sống trong vùng biển có dòng hải lưu lạnh, nên quá trình phát triển chậm nhưng bù lại chất lượng thịt vượt trội.",
-            img: "https://picsum.photos/600/400?random=203",
+            img: {
+              url: "https://picsum.photos/600/400?random=203",
+              caption: "Tôm hùm Nova Scotia với chất lượng thịt vượt trội",
+            },
           },
           {
             subTitle: "Giá trị dinh dưỡng",
@@ -98,7 +114,10 @@ export const handbookArticles: HandbookArticle[] = [
             subTitle: "Hấp tôm hùm",
             content:
               "Cách chế biến phổ biến nhất với tôm hùm Nova Scotia là hấp nguyên con. Thêm vài lát chanh, gừng và lá nguyệt quế để tạo hương thơm. Thời gian hấp trung bình từ 12–15 phút cho tôm khoảng 1kg.",
-            img: "https://picsum.photos/600/400?random=204",
+            img: {
+              url: "https://picsum.photos/600/400?random=204",
+              caption: "Món tôm hùm hấp nguyên con với gia vị thơm ngon",
+            },
           },
           {
             subTitle: "Nướng bơ tỏi",

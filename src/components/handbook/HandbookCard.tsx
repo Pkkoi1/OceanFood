@@ -1,6 +1,7 @@
 import React from "react";
 import { CalendarOutlined } from "@ant-design/icons";
 import { type HandbookArticle } from "../../data/handbookData";
+import { useNavigate } from "react-router-dom";
 
 interface HandbookCardProps {
   article: HandbookArticle;
@@ -13,6 +14,7 @@ const HandbookCard: React.FC<HandbookCardProps> = ({
   onClick,
   size = "medium",
 }) => {
+  const navigate = useNavigate();
   const getSizeClasses = () => {
     switch (size) {
       case "small":
@@ -48,7 +50,7 @@ const HandbookCard: React.FC<HandbookCardProps> = ({
   const sizeClasses = getSizeClasses();
 
   // Use the first section's content as the description for display
-  const displayDescription = (() => {
+const displayDescription = (() => {
     const firstSection = article.description[0];
     if (!firstSection?.content) return "";
     if (typeof firstSection.content === "string") {
@@ -57,10 +59,15 @@ const HandbookCard: React.FC<HandbookCardProps> = ({
     // If content is an array, use the first item's content
     return firstSection.content[0]?.content || "";
   })();
+
+  const handleCardClick = () => {
+    navigate(`/handbook/${article.id}`);
+    if (onClick) onClick(article);
+  };
   return (
     <div
       className={`bg-white overflow-hidden duration-300 cursor-pointer group flex ${sizeClasses.container}`}
-      onClick={() => onClick?.(article)}
+      onClick={handleCardClick}
     >
       {/* Article Image */}
       <div

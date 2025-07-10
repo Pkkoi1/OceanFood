@@ -18,6 +18,7 @@ import ContactButton from "./components/popupButtons/contactButton/ContactButton
 import MessengerButton from "./components/popupButtons/messenger/MessengerButton";
 import CartView from "./views/cart/CartView";
 import CheckoutView from "./views/checkout/CheckoutView";
+import HandbookDetail from "./views/handbook/HandbookDetail";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -39,6 +40,7 @@ function App() {
         <Route path="/handbooks" element={<HanbookPage />} />
         <Route path="/cart" element={<CartView />} />
         <Route path="/cart/checkout" element={<CheckoutView />} />
+        <Route path="/handbook/:id" element={<HandbookDetail />} />
       </Routes>
       <BellButton></BellButton>
       <ContactButton></ContactButton>

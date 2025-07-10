@@ -1,7 +1,7 @@
 import React from "react";
 import { List } from "antd";
 import HandbookCard from "./HandbookCard";
-import { handbookArticles, type HandbookArticle } from "../../data/handbookData";
+import { handbookArticles } from "../../data/handbookData";
 
 const HandbookList: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ const HandbookList: React.FC = () => {
           pageSize: 6,
         }}
         dataSource={handbookArticles}
-        renderItem={(article: HandbookArticle) => (
+        renderItem={(article) => (
           <HandbookCard
             key={article.id}
             article={article}
