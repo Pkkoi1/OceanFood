@@ -128,11 +128,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
       onClick={handleProductClick}
     >
       {/* Discount Badge */}
-      {product.discount && (
-        <div className="absolute top-6 left-6 bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold z-10">
-          -{product.discount}%
-        </div>
-      )}
+      <div className="absolute top-6 left-6 z-10">
+        {product.discount ? (
+          <div className="bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold">
+            -{product.discount}%
+          </div>
+        ) : (
+          <div className="invisible px-2 py-1 rounded text-sm font-bold">
+            {/* Placeholder giữ khoảng trống */}
+          </div>
+        )}
+      </div>
 
       {/* Heart Icon */}
       <div
@@ -163,18 +169,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Product Info */}
       <div className="p-4 items-center text-center">
-        <h3 className="font-bold text-lg mb-2 line-clamp-2 h-14">
+        <h3 className="font-bold lg:text-lg text-md mb-2 line-clamp-1 h-6">
           {product.name}
         </h3>
         <p className="text-gray-600 text-sm mb-3">{product.origin}</p>
 
         <div className="mb-4">
-          <div className="flex items-center gap-2 mb-1 justify-center">
-            <span className="text-red-500 font-bold text-xl">
+          <div className="flex  items-center gap-2 mb-1 justify-center">
+            <span className="text-red-500 font-bold lg:text-xl text-md">
               {formatPrice(product.currentPrice)}
             </span>
             {product.originalPrice && (
-              <span className="text-gray-400 line-through text-sm">
+              <span className="text-gray-400 line-through text-xs lg:text-sm">
                 {formatPrice(product.originalPrice)}
               </span>
             )}
@@ -182,7 +188,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-2 justify-center">
+        <div className="flex gap-4 justify-center mt-4">
           <button
             className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center"
             onClick={handleActionButtonClick}

@@ -30,7 +30,7 @@ const FooterBottom = () => {
   };
 
   return (
-    <div className="bg-[#0282a5] text-white text-[14px] py-12 px-4 lg:px-[100px] relative overflow-hidden border-t border-white/20">
+    <div className="bg-[#0282a5] text-white text-[14px] py-12 px-4 mb-10 lg:px-[100px] relative overflow-hidden border-t border-white/20">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-20 text-6xl">🐟</div>
