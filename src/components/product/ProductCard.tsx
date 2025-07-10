@@ -40,6 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const handleProductClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
     navigate(`/product/${product.id}`);
   };
 

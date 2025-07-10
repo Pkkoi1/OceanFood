@@ -1,14 +1,6 @@
 import React from "react";
 import { CalendarOutlined } from "@ant-design/icons";
-
-interface HandbookArticle {
-  id: number;
-  title: string;
-  image: string;
-  category: string;
-  date: string;
-  description: string;
-}
+import { type HandbookArticle } from "../../data/handbookData";
 
 interface HandbookCardProps {
   article: HandbookArticle;
@@ -55,6 +47,16 @@ const HandbookCard: React.FC<HandbookCardProps> = ({
 
   const sizeClasses = getSizeClasses();
 
+  // Use the first section's content as the description for display
+  const displayDescription = (() => {
+    const firstSection = article.description[0];
+    if (!firstSection?.content) return "";
+    if (typeof firstSection.content === "string") {
+      return firstSection.content;
+    }
+    // If content is an array, use the first item's content
+    return firstSection.content[0]?.content || "";
+  })();
   return (
     <div
       className={`bg-white overflow-hidden duration-300 cursor-pointer group flex ${sizeClasses.container}`}
@@ -90,7 +92,7 @@ const HandbookCard: React.FC<HandbookCardProps> = ({
         <p
           className={`text-gray-600 ${sizeClasses.description} line-clamp-2 leading-relaxed`}
         >
-          {article.description}
+          {displayDescription}
         </p>
       </div>
     </div>

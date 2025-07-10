@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { handbookArticles } from "../../data/handbookData";
+import {
+  handbookArticles,
+  type HandbookArticle,
+} from "../../data/handbookData";
 import HandbookCard from "./HandbookCard";
-
-interface HandbookArticle {
-  id: number;
-  title: string;
-  image: string;
-  category: string;
-  date: string;
-  description: string;
-}
 
 interface HandbookProps {
   title?: string;
@@ -43,7 +37,7 @@ const Handbook: React.FC<HandbookProps> = ({
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [maxArticles]);
+  }, []);
 
   return (
     <div className="py-8 mx-4 lg:mx-[100px] mb-6">
@@ -56,7 +50,7 @@ const Handbook: React.FC<HandbookProps> = ({
 
       {/* Articles Grid */}
       <div className={`grid ${gridCols} gap-6`}>
-        {handbookArticles.map((article) => (
+        {handbookArticles.slice(0, maxArticles).map((article) => (
           <HandbookCard
             key={article.id}
             article={article}
