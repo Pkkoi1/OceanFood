@@ -7,9 +7,11 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { Badge } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const PhoneFooter: React.FC = () => {
   const [showCategories, setShowCategories] = useState(false);
+  const navigate = useNavigate();
 
   const productCategories = [
     { key: "hai-san-dong-lanh", label: "Hải sản đông lạnh" },
@@ -25,11 +27,21 @@ const PhoneFooter: React.FC = () => {
   ];
 
   const menuItems = [
-    { icon: <HomeOutlined />, label: "Trang chủ", key: "trang-chu" },
-    { icon: <AppstoreOutlined />, label: "Danh mục", key: "danh-muc", hasDropdown: true },
+    { icon: <HomeOutlined />, label: "Trang chủ", key: "" },
+    {
+      icon: <AppstoreOutlined />,
+      label: "Danh mục",
+      key: "danh-muc",
+      hasDropdown: true,
+    },
     { icon: <ShopOutlined />, label: "Hệ thống", key: "he-thong" },
     { icon: <HeartOutlined />, label: "Yêu thích", key: "yeu-thich", badge: 0 },
-    { icon: <ShoppingCartOutlined />, label: "Giỏ hàng", key: "gio-hang", badge: 1 },
+    {
+      icon: <ShoppingCartOutlined />,
+      label: "Giỏ hàng",
+      key: "cart",
+      badge: 1,
+    },
   ];
 
   const toggleCategories = () => {
@@ -42,14 +54,14 @@ const PhoneFooter: React.FC = () => {
       toggleCategories();
     } else {
       setShowCategories(false);
-      // Handle navigation here
+      navigate(`/${key}`); // Navigate to the selected menu item's route
     }
   };
 
   const handleCategoryClick = (categoryKey: string) => {
     console.log("Chọn danh mục:", categoryKey);
     setShowCategories(false);
-    // Handle category navigation here
+    navigate(`/products?category=${categoryKey}`); // Navigate to the selected category
   };
 
   return (
@@ -60,7 +72,11 @@ const PhoneFooter: React.FC = () => {
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
           onClick={() => setShowCategories(false)}
         >
-          <div className={`absolute bottom-0 left-0 w-80 h-full bg-white transform transition-transform duration-300 ${showCategories ? 'translate-x-0' : '-translate-x-full'}`}>
+          <div
+            className={`absolute bottom-0 left-0 w-80 h-full bg-white transform transition-transform duration-300 ${
+              showCategories ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
             <div className="p-4 border-b bg-[#4FB3D9] text-white">
               <h3 className="text-lg font-semibold">≡ Danh mục sản phẩm</h3>
             </div>
