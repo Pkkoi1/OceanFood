@@ -3,19 +3,21 @@ import { Carousel } from "antd";
 import SaleProductCard from "./SaleProductCard";
 import flashSale from "../../assets/images/save-icon.webp";
 import type { CarouselRef } from "antd/es/carousel";
+import { newProducts } from "../../data/mockData";
 
 interface Product {
   id: number;
   name: string;
   origin: string;
   currentPrice: number;
-  originalPrice: number;
-  discount: number;
-  sold: number;
+  originalPrice?: number;
+  discount?: number;
+  sold?: number;
   image: string;
   isLiked: boolean;
   badge?: string;
   stockStatus?: string;
+  flashSale?: boolean;
 }
 
 const FlashSale: React.FC = () => {
@@ -26,99 +28,32 @@ const FlashSale: React.FC = () => {
     seconds: 51,
   });
 
-  // Sample flash sale products data
-  const flashSaleProducts: Product[] = [
-    {
-      id: 1,
-      name: "Tôm hùm Canada tươi sống",
-      origin: "Canada",
-      currentPrice: 1200000,
-      originalPrice: 1500000,
-      discount: 20,
-      sold: 45,
-      image: "https://picsum.photos/300/200?random=1",
-      isLiked: false,
-      badge: "HOT",
-      stockStatus: "Còn hàng",
-    },
-    {
-      id: 2,
-      name: "Cá hồi Na Uy phi lê",
-      origin: "Na Uy",
-      currentPrice: 800000,
-      originalPrice: 1000000,
-      discount: 20,
-      sold: 32,
-      image: "https://picsum.photos/300/200?random=2",
-      isLiked: false,
-      badge: "SALE",
-      stockStatus: "Còn hàng",
-    },
-    {
-      id: 3,
-      name: "Cua king crab Alaska",
-      origin: "Alaska",
-      currentPrice: 2400000,
-      originalPrice: 3000000,
-      discount: 20,
-      sold: 18,
-      image: "https://picsum.photos/300/200?random=3",
-      isLiked: false,
-      badge: "LIMITED",
-      stockStatus: "Còn hàng",
-    },
-    {
-      id: 4,
-      name: "Bào ngư tươi sống",
-      origin: "Úc",
-      currentPrice: 1600000,
-      originalPrice: 2000000,
-      discount: 20,
-      sold: 28,
-      image: "https://picsum.photos/300/200?random=4",
-      isLiked: false,
-      badge: "FRESH",
-      stockStatus: "Còn hàng",
-    },
-    {
-      id: 5,
-      name: "Ốc hương nướng mỡ hành",
-      origin: "Việt Nam",
-      currentPrice: 320000,
-      originalPrice: 400000,
-      discount: 20,
-      sold: 67,
-      image: "https://picsum.photos/300/200?random=5",
-      isLiked: false,
-      badge: "BEST SELLER",
-      stockStatus: "Còn hàng",
-    },
-    {
-      id: 6,
-      name: "Sò huyết rang me",
-      origin: "Việt Nam",
-      currentPrice: 240000,
-      originalPrice: 300000,
-      discount: 20,
-      sold: 89,
-      image: "https://picsum.photos/300/200?random=6",
-      isLiked: false,
-      badge: "HOT",
-      stockStatus: "Còn hàng",
-    },
-  ];
+  // Filter products with flashSale: true from mockData
+  const [products, setProducts] = useState<Product[]>(
+    newProducts.filter((product) => product.flashSale)
+  );
 
   // Group products for desktop view (2 products per slide)
   const allProducts: Product[][] = [];
-  for (let i = 0; i < flashSaleProducts.length; i += 2) {
-    allProducts.push(flashSaleProducts.slice(i, i + 2));
+  for (let i = 0; i < products.length; i += 2) {
+    allProducts.push(products.slice(i, i + 2));
   }
 
   // Flatten products for mobile view (one product per slide)
-  const mobileProducts = flashSaleProducts.map((product) => [product]);
+  const mobileProducts = products.map((product) => [product]);
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const carouselRef = useRef<CarouselRef>(null);
+
+  const toggleLike = (productId: number) => {
+    setProducts((prev) =>
+      prev.map((product) =>
+        product.id === productId
+          ? { ...product, isLiked: !product.isLiked }
+          : product
+      )
+    );
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -144,11 +79,6 @@ const FlashSale: React.FC = () => {
 
     return () => clearInterval(timer);
   }, []);
-
-  const toggleLike = (productId: number) => {
-    console.log(`Toggle like for product ${productId}`);
-    // Implement like functionality here
-  };
 
   const goToSlide = (slideIndex: number) => {
     setCurrentSlide(slideIndex);

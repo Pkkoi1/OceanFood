@@ -17,6 +17,7 @@ export interface Product {
   commitment?: string;
   description: { title: string; content: string }[];
   images?: string[];
+  flashSale?: boolean; // Added flashSale field
 }
 
 export const newProducts: Product[] = [
@@ -25,6 +26,8 @@ export const newProducts: Product[] = [
     name: "Cá Hồi Xông Khói Vị Truyền Thống",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 269000,
+    originalPrice: 320000,
+    discount: 16,
     image: "https://picsum.photos/300/200?random=1",
     isLiked: false,
     isNew: true,
@@ -33,6 +36,8 @@ export const newProducts: Product[] = [
     weight: "200g/hộp",
     condition: "Bảo quản lạnh",
     commitment: "Đảm bảo VSATTP, sản phẩm tươi ngon",
+    flashSale: true,
+    badge: "HOT",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -77,6 +82,8 @@ export const newProducts: Product[] = [
     name: "Cá Hồi Cắt Khoanh",
     origin: "Xuất xứ: Chile",
     currentPrice: 195000,
+    originalPrice: 230000,
+    discount: 15,
     image: "https://picsum.photos/300/200?random=2",
     isLiked: false,
     isNew: true,
@@ -85,6 +92,8 @@ export const newProducts: Product[] = [
     weight: "500g/khoanh",
     condition: "Giao tươi sống",
     commitment: "Cam kết chất lượng, nhập khẩu chính ngạch",
+    flashSale: true,
+    badge: "SALE",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -129,6 +138,8 @@ export const newProducts: Product[] = [
     name: "Cá Hồi Nguyên Con Tươi",
     origin: "Xuất xứ: Nauy",
     currentPrice: 590000,
+    originalPrice: 700000,
+    discount: 16,
     image: "https://picsum.photos/300/200?random=3",
     isLiked: false,
     isNew: true,
@@ -137,6 +148,8 @@ export const newProducts: Product[] = [
     weight: "1-2kg/con",
     condition: "Giao sống",
     commitment: "Sản phẩm đạt chuẩn xuất khẩu",
+    flashSale: true,
+    badge: "LIMITED",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -192,6 +205,7 @@ export const newProducts: Product[] = [
     weight: "1kg/miếng",
     condition: "Bảo quản lạnh",
     commitment: "Đảm bảo an toàn thực phẩm",
+    flashSale: true,
     description: [
       {
         title: "Thông tin chi tiết",
@@ -236,6 +250,8 @@ export const newProducts: Product[] = [
     name: "Thân Cá Hồi Phile Tươi",
     origin: "Xuất xứ: Nauy",
     currentPrice: 175000,
+    originalPrice: 210000,
+    discount: 17,
     image: "https://picsum.photos/300/200?random=5",
     isLiked: false,
     badge: "BÁN CHẠY",
@@ -245,6 +261,7 @@ export const newProducts: Product[] = [
     weight: "300g/thân",
     condition: "Giao lạnh",
     commitment: "Chất lượng cao, đảm bảo tươi",
+    flashSale: true,
     description: [
       {
         title: "Thông tin chi tiết",
@@ -300,6 +317,7 @@ export const newProducts: Product[] = [
     weight: "500g/gói",
     condition: "Giao sống",
     commitment: "Sản phẩm sạch, an toàn",
+    flashSale: true,
     description: [
       {
         title: "Thông tin chi tiết",
@@ -355,6 +373,7 @@ export const newProducts: Product[] = [
     weight: "700g/gói",
     condition: "Giao sống",
     commitment: "Đảm bảo chất lượng",
+    flashSale: false,
     description: [
       {
         title: "Thông tin chi tiết",
@@ -407,6 +426,7 @@ export const newProducts: Product[] = [
     weight: "1kg/gói",
     condition: "Giao sống",
     commitment: "Sản phẩm tươi sống",
+    flashSale: false,
     description: [
       {
         title: "Thông tin chi tiết",
@@ -459,6 +479,7 @@ export const newProducts: Product[] = [
     weight: "500g/gói",
     condition: "Giao sống",
     commitment: "Cam kết chất lượng cao",
+    flashSale: false,
     description: [
       {
         title: "Thông tin chi tiết",
@@ -511,6 +532,7 @@ export const newProducts: Product[] = [
     weight: "800g/con",
     condition: "Giao sống",
     commitment: "Sản phẩm đạt chuẩn",
+    flashSale: false,
     description: [
       {
         title: "Thông tin chi tiết",

@@ -1,18 +1,19 @@
 import React from "react";
-import FavoriteButton from "../common/FavoriteButton"; // Import the updated component
+import FavoriteButton from "../common/FavoriteButton";
 
 interface Product {
   id: number;
   name: string;
   origin: string;
   currentPrice: number;
-  originalPrice: number;
-  discount: number;
-  sold: number;
+  originalPrice?: number; // Changed to optional
+  discount?: number; // Changed to optional
+  sold?: number; // Changed to optional
   image: string;
   isLiked: boolean;
   badge?: string;
   stockStatus?: string;
+  flashSale?: boolean;
 }
 
 interface ProductCardProps {
@@ -50,9 +51,11 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
         {/* Product Image Container with overlays */}
         <div className="lg:w-1/2 w-full p-4 relative group">
           {/* Discount Badge */}
-          <div className="absolute top-7 left-7 bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold z-10">
-            -{product.discount}%
-          </div>
+          {product.discount && (
+            <div className="absolute top-7 left-7 bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold z-10">
+              -{product.discount}%
+            </div>
+          )}
 
           {/* Heart Icon */}
           <FavoriteButton
@@ -72,7 +75,7 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Product Info */}
-        <div className="w-full lg:w-1/2 p-4 flex flex-col lg:text-left text-center  lg:justify-normal  mb-10">
+        <div className="w-full lg:w-1/2 p-4 flex flex-col lg:text-left text-center lg:justify-normal mb-10">
           <div>
             <h3 className="font-bold text-lg mb-2 line-clamp-2">
               {product.name}
@@ -84,9 +87,11 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
                 <span className="text-red-500 font-bold text-xl">
                   {formatPrice(product.currentPrice)}
                 </span>
-                <span className="text-gray-400 line-through text-sm">
-                  {formatPrice(product.originalPrice)}
-                </span>
+                {product.originalPrice && (
+                  <span className="text-gray-400 line-through text-sm">
+                    {formatPrice(product.originalPrice)}
+                  </span>
+                )}
               </div>
               <div className="flex items-center justify-center lg:justify-start">
                 {product.stockStatus ? (
@@ -94,14 +99,14 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
                     <span className="mr-1">⚡</span>
                     {product.stockStatus}
                   </div>
-                ) : (
+                ) : product.sold ? (
                   <div className="flex items-center text-sm bg-[#f0f7ff] w-fit p-2 font-bold lg:justify-start justify-center">
                     Đã bán{" "}
                     <strong className="text-red-500 ml-1">
                       {product.sold}
                     </strong>
                   </div>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
