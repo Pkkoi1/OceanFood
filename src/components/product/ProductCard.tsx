@@ -161,13 +161,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Action Buttons */}
         <div className="flex gap-4 justify-center mt-4">
           <button
-            className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center"
+            className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center cursor-pointer"
             onClick={handleActionButtonClick}
           >
             <ShoppingCartOutlined />
           </button>
           <button
-            className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center"
+            className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center cursor-pointer"
             onClick={handleActionButtonClick}
           >
             <EyeOutlined />
