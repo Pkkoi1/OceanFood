@@ -4,8 +4,10 @@ import {
   HeartFilled,
 } from "@ant-design/icons";
 import { Badge } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const Location = () => {
+  const navigate = useNavigate(); // Add navigation hook
   return (
     <div className="flex flex-row items-center justify-between gap-2 py-2 bg-[#0282a5] text-white px-[100px] text-[14px]">
       <div className="flex items-center gap-2">
@@ -26,7 +28,12 @@ const Location = () => {
           <Badge count={5} color="#27acd0" size="small">
             <HeartFilled style={{ color: "#fff" }} />
           </Badge>
-          <span className="cursor-pointer ">Yêu thích</span>
+          <span
+            className="cursor-pointer"
+            onClick={() => navigate("/favorites")} // Navigate to favorites page
+          >
+            Yêu thích
+          </span>
         </div>
         <div className="flex items-center gap-1 ">
           <span className="cursor-pointer">Hệ thống cửa hàng</span>

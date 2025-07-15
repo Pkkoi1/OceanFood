@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Carousel, Select } from "antd";
 import ProductCard from "../product/ProductCard";
 import { newProducts } from "../../data/mockData";
+import { favoriteProductIds } from "../../data/mockFavoriteProducts";
 
 interface Product {
   id: number;
@@ -35,7 +36,12 @@ const ListProduct: React.FC<ListProductProps> = ({
   container = true,
   titlePosition = "center",
 }) => {
-  const [products, setProducts] = useState<Product[]>(newProducts);
+  const [products, setProducts] = useState<Product[]>(
+    newProducts.map((product) => ({
+      ...product,
+      isLiked: favoriteProductIds.includes(product.id),
+    }))
+  );
   const [visibleCount, setVisibleCount] = useState(number);
   const [sortOption, setSortOption] = useState("default");
   const [displayTitle, setDisplayTitle] = useState(title);

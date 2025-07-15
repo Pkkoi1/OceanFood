@@ -4,9 +4,11 @@ import { favoriteProductIds } from "../../data/mockFavoriteProducts";
 import { newProducts } from "../../data/mockData"; // Import all products
 
 const FavoriteProducts: React.FC = () => {
-  // Filter products based on favoriteProductIds
+  // Filter products based on favoriteProductIds and set isLiked to true
   const [products, setProducts] = useState(
-    newProducts.filter((product) => favoriteProductIds.includes(product.id))
+    newProducts
+      .filter((product) => favoriteProductIds.includes(product.id))
+      .map((product) => ({ ...product, isLiked: true }))
   );
 
   const toggleLike = (productId: number) => {

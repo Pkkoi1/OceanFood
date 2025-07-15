@@ -4,6 +4,7 @@ import SaleProductCard from "./SaleProductCard";
 import flashSale from "../../assets/images/save-icon.webp";
 import type { CarouselRef } from "antd/es/carousel";
 import { newProducts } from "../../data/mockData";
+import { favoriteProductIds } from "../../data/mockFavoriteProducts";
 
 interface Product {
   id: number;
@@ -30,7 +31,12 @@ const FlashSale: React.FC = () => {
 
   // Filter products with flashSale: true from mockData
   const [products, setProducts] = useState<Product[]>(
-    newProducts.filter((product) => product.flashSale)
+    newProducts
+      .filter((product) => product.flashSale)
+      .map((product) => ({
+        ...product,
+        isLiked: favoriteProductIds.includes(product.id),
+      }))
   );
 
   // Group products for desktop view (2 products per slide)
