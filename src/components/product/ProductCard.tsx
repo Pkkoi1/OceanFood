@@ -1,11 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  HeartOutlined,
-  HeartFilled,
-  ShoppingCartOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
+import FavoriteButton from "../common/FavoriteButton"; // Import the updated component
 
 interface Product {
   id: number;
@@ -44,11 +40,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
     navigate(`/product/${product.id}`);
   };
 
-  const handleHeartClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Ngăn event bubble lên parent
-    onToggleLike(product.id);
-  };
-
   const handleActionButtonClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Ngăn event bubble lên parent
     // Xử lý logic cho button (add to cart, view detail, etc.)
@@ -69,22 +60,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
         )}
 
         {/* Heart Icon */}
-        <div
+        <FavoriteButton
+          isLiked={product.isLiked}
+          onToggleLike={onToggleLike}
+          productId={product.id}
           className="absolute top-3 right-4/6 z-10 cursor-pointer"
-          onClick={handleHeartClick}
-        >
-          {product.isLiked ? (
-            <HeartFilled
-              style={{ color: "#FF4D4F", fontSize: "1.2rem" }}
-              className="text-red-500 text-sm"
-            />
-          ) : (
-            <HeartOutlined
-              style={{ color: "#FF4D4F", fontSize: "1.2rem" }}
-              className="text-gray-400 text-sm hover:text-red-500"
-            />
-          )}
-        </div>
+        />
 
         {/* Product Image */}
         <div className="w-1/3 relative overflow-hidden flex-shrink-0">
@@ -141,25 +122,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Heart Icon */}
-      <div
+      <FavoriteButton
+        isLiked={product.isLiked}
+        onToggleLike={onToggleLike}
+        productId={product.id}
         className="absolute top-6 right-6 z-10 cursor-pointer"
-        onClick={handleHeartClick}
-      >
-        {product.isLiked ? (
-          <HeartFilled
-            style={{ color: "#FF4D4F" }}
-            className="text-red-500 text-xl"
-          />
-        ) : (
-          <HeartOutlined
-            style={{ color: "#FF4D4F" }}
-            className="text-gray-400 text-xl hover:text-red-500"
-          />
-        )}
-      </div>
+      />
 
       {/* Product Image */}
-      <div className="relative overflow-hidden p-2">
+      <div className="relative  overflow-hidden flex-shrink-0">
         <img
           src={product.image}
           alt={product.name}

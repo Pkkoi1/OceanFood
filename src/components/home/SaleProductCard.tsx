@@ -1,5 +1,5 @@
 import React from "react";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";
+import FavoriteButton from "../common/FavoriteButton"; // Import the updated component
 
 interface Product {
   id: number;
@@ -29,7 +29,7 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className="bg-white h-full overflow-hidden shadow-lg relative">
+    <div className="bg-white h-full overflow-hidden group shadow-lg relative cursor-grab">
       {/* Corner Badge */}
       {product.badge && (
         <div className="absolute top-4 -right-1 z-20">
@@ -48,34 +48,27 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
 
       <div className="flex lg:flex-row flex-col h-full w-full">
         {/* Product Image Container with overlays */}
-        <div className="lg:w-1/2 w-full p-4 relative">
+        <div className="lg:w-1/2 w-full p-4 relative group">
           {/* Discount Badge */}
           <div className="absolute top-7 left-7 bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold z-10">
             -{product.discount}%
           </div>
 
           {/* Heart Icon */}
-          <div className="absolute top-7 right-7 z-10 cursor-pointer">
-            {product.isLiked ? (
-              <HeartFilled
-                className="text-red-500 text-xl"
-                onClick={() => onToggleLike(product.id)}
-                style={{ color: "red" }}
-              />
-            ) : (
-              <HeartOutlined
-                className="text-gray-400 text-xl hover:text-red-500"
-                onClick={() => onToggleLike(product.id)}
-                style={{ color: "red" }}
-              />
-            )}
-          </div>
-
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full object-cover rounded-lg"
+          <FavoriteButton
+            isLiked={product.isLiked}
+            onToggleLike={onToggleLike}
+            productId={product.id}
+            className="absolute top-7 right-7 z-10 cursor-pointer"
           />
+
+          <div className="w-full h-full overflow-hidden ">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
         </div>
 
         {/* Product Info */}
