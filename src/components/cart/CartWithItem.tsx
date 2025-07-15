@@ -5,10 +5,17 @@ import { useCart } from "../../hooks/useCart";
 import CartTable from "./CartTable";
 import CartTotal from "./CartTotal";
 import CartItem from "./CartItem";
+import { getAllCartItems } from "../../controller/CartController";
 
 interface CartData {
   items: ImportedCartItem[];
   total?: number;
+}
+
+// Extend CartItem type to include 'key'
+interface CartItem extends ImportedCartItem {
+  key?: string;
+  selected?: boolean; // Optional for selection state
 }
 
 const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
@@ -22,6 +29,16 @@ const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
     handleSelectAll,
     handleDeleteItem,
   } = useCart(initialItems);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    // ✅ Lấy dữ liệu giỏ hàng từ controller
+    const fetchedItems = setInterval(() => {
+      const cartItems = getAllCartItems();
+      setCartItems(cartItems);
+    }, 500);
+    return () => clearInterval(fetchedItems);
+  }, []);
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
@@ -62,13 +79,15 @@ const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
             </span>
           </div>
 
-          {items.map((item) => (
+          {cartItems.map((item) => (
             <div key={item.key}>
               <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
                   checked={item.selected}
-                  onChange={(e) => handleSelectItem(item.key, e.target.checked)}
+                  onChange={(e) =>
+                    handleSelectItem(item.key ?? "", e.target.checked)
+                  } // Ensure item.key is a string
                   className="mt-1"
                 />
                 <CartItem
@@ -76,10 +95,11 @@ const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
                   name={item.name}
                   price={item.price}
                   quantity={item.quantity}
-                  onQuantityChange={(newQuantity) =>
-                    handleQuantityChange(item.key, newQuantity)
+                  onQuantityChange={
+                    (newQuantity) =>
+                      handleQuantityChange(item.key ?? "", newQuantity) // Ensure item.key is a string
                   }
-                  onDelete={() => handleDeleteItem(item.key)}
+                  onDelete={() => handleDeleteItem(item.key ?? "")} // Ensure item.key is a string
                   showControls={true}
                 />
               </div>

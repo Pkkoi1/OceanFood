@@ -8,10 +8,10 @@ import { useLocation } from "react-router-dom";
 import MainMenu from "./MainMenu";
 import SideMenu from "./SideMenu";
 import { Dropdown, type MenuProps } from "antd";
-import { cartItems } from "../../data/cartItemData";
 import type { CartItem } from "../../data/cartItemData";
 
 import CartDropdown from "../cart/CartDropdown";
+import { getAllCartItems } from "../../controller/CartController";
 
 // Menu cho Tài khoản
 const accountItems: MenuProps["items"] = [
@@ -59,10 +59,14 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
   const location = useLocation();
   const [items, setItems] = useState<CartItem[]>([]);
-
-  // Load cart items
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  // Load cart items from controller
   useEffect(() => {
-    setItems(cartItems);
+    const fetchedItems = setInterval(() => {
+      const cartItems = getAllCartItems();
+      setItems(cartItems);
+    }, 500);
+    return () => clearInterval(fetchedItems);
   }, []);
 
   // Auto toggle sidebar based on route
@@ -75,8 +79,12 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
     onSidebarToggle?.(isOpen);
   };
 
-  // Calculate total quantity
-  const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+  // Calculate total quantity dynamically
+  useEffect(() => {
+    const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+    setTotalQuantity(totalQuantity);
+    // You can use totalQuantity for any additional logic if needed
+  }, [items]);
 
   return (
     <div className="bg-white shadow-sm relative hidden lg:block pt-32">

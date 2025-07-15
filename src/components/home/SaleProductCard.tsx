@@ -1,5 +1,6 @@
 import React from "react";
 import FavoriteButton from "../common/FavoriteButton";
+import { addToCart } from "../../controller/CartController";
 
 interface Product {
   id: number;
@@ -27,6 +28,18 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.currentPrice,
+      quantity: 1, // Mặc định thêm 1
+    });
+    alert("Đã thêm sản phẩm vào giỏ hàng!"); // Có thể thay bằng toast
   };
 
   return (
@@ -111,7 +124,10 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
             </div>
           </div>
 
-          <button className="bg-[#37bee3] border-none hover:bg-[#0282a5] w-fit py-2 px-3 rounded-full font-bold text-sm text-white lg:self-start self-center">
+          <button
+            onClick={handleAddToCart}
+            className="bg-[#37bee3] cursor-pointer border-none hover:bg-[#0282a5] w-fit py-2 px-3 rounded-full font-bold text-sm text-white lg:self-start self-center"
+          >
             THÊM VÀO GIỎ HÀNG
           </button>
         </div>

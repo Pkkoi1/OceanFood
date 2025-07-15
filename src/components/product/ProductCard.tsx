@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
 import FavoriteButton from "../common/FavoriteButton"; // Import the updated component
+import { addToCart } from "../../controller/CartController";
 
 interface Product {
   id: number;
@@ -43,6 +44,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const handleActionButtonClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Ngăn event bubble lên parent
     // Xử lý logic cho button (add to cart, view detail, etc.)
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.currentPrice,
+      quantity: 1, // Mặc định thêm 1
+    });
+    alert("Đã thêm sản phẩm vào giỏ hàng!"); // Có thể thay bằng toast
   };
 
   // Layout horizontal
@@ -162,7 +175,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex gap-4 justify-center mt-4">
           <button
             className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center cursor-pointer"
-            onClick={handleActionButtonClick}
+            onClick={handleAddToCart}
           >
             <ShoppingCartOutlined />
           </button>

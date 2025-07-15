@@ -1,16 +1,21 @@
+// src/components/CartDropdown.tsx
 import React, { useState, useEffect } from "react";
 import CartSummary from "./CartSummary";
 import CartItem from "./CartItem";
-import { cartItems } from "../../data/cartItemData";
 import type { CartItem as CartItemType } from "../../data/cartItemData";
 import { ShoppingOutlined } from "@ant-design/icons";
+import { getAllCartItems } from "../../controller/CartController";
 
 const CartDropdown: React.FC = () => {
   const [items, setItems] = useState<CartItemType[]>([]);
 
   useEffect(() => {
-    // Load cart items from data
-    setItems(cartItems);
+    // ✅ Lấy dữ liệu giỏ hàng từ controller
+    const fetchedItems = setInterval(() => {
+      const cartItems = getAllCartItems();
+      setItems(cartItems);
+    }, 500);
+    return () => clearInterval(fetchedItems);
   }, []);
 
   const handleCheckout = () => {
@@ -18,7 +23,7 @@ const CartDropdown: React.FC = () => {
     // Thêm logic thanh toán ở đây
   };
 
-  // Calculate total price
+  // Tính tổng tiền
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
