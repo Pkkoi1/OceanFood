@@ -5,6 +5,10 @@ import flashSale from "../../assets/images/save-icon.webp";
 import type { CarouselRef } from "antd/es/carousel";
 import { newProducts } from "../../data/mockData";
 import { favoriteProductIds } from "../../data/mockFavoriteProducts";
+import {
+  addFavorite,
+  removeFavorite,
+} from "../../controller/FavoriteController";
 
 interface Product {
   id: number;
@@ -53,11 +57,15 @@ const FlashSale: React.FC = () => {
 
   const toggleLike = (productId: number) => {
     setProducts((prev) =>
-      prev.map((product) =>
-        product.id === productId
-          ? { ...product, isLiked: !product.isLiked }
-          : product
-      )
+      prev.map((product) => {
+        const isLiked = !product.isLiked;
+        if (isLiked) {
+          addFavorite(productId);
+        } else {
+          removeFavorite(productId);
+        }
+        return product.id === productId ? { ...product, isLiked } : product;
+      })
     );
   };
 

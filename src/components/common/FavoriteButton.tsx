@@ -1,5 +1,9 @@
 import React from "react";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
+import {
+  addFavorite,
+  removeFavorite,
+} from "../../controller/FavoriteController";
 
 interface FavoriteButtonProps {
   isLiked: boolean;
@@ -16,6 +20,11 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
 }) => {
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent event bubbling
+    if (isLiked) {
+      removeFavorite(productId);
+    } else {
+      addFavorite(productId);
+    }
     onToggleLike(productId);
   };
 

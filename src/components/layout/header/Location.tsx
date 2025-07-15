@@ -5,9 +5,21 @@ import {
 } from "@ant-design/icons";
 import { Badge } from "antd";
 import { useNavigate } from "react-router-dom";
+import { getAllFavorites } from "../../../controller/FavoriteController";
+import { useEffect, useState } from "react";
 
 const Location = () => {
-  const navigate = useNavigate(); // Add navigation hook
+  const navigate = useNavigate();
+  const [favoriteCount, setFavoriteCount] = useState(getAllFavorites().length);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFavoriteCount(getAllFavorites().length); // Update favorite count periodically
+    }, 500); // Poll every 500ms
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, []);
+
   return (
     <div className="flex flex-row items-center justify-between gap-2 py-2 bg-[#0282a5] text-white px-[100px] text-[14px]">
       <div className="flex items-center gap-2">
@@ -25,7 +37,7 @@ const Location = () => {
           </a>
         </div>
         <div className="flex items-center gap-1 border-r-2 border-white pr-2">
-          <Badge count={5} color="#27acd0" size="small">
+          <Badge count={favoriteCount} color="#27acd0" size="small">
             <HeartFilled style={{ color: "#fff" }} />
           </Badge>
           <span

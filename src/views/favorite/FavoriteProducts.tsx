@@ -1,24 +1,30 @@
 import React, { useState } from "react";
 import ProductCard from "../../components/product/ProductCard";
-import { favoriteProductIds } from "../../data/mockFavoriteProducts";
 import { newProducts } from "../../data/mockData"; // Import all products
+import {
+  getAllFavorites,
+  removeFavorite,
+} from "../../controller/FavoriteController";
 
 const FavoriteProducts: React.FC = () => {
   // Filter products based on favoriteProductIds and set isLiked to true
   const [products, setProducts] = useState(
     newProducts
-      .filter((product) => favoriteProductIds.includes(product.id))
+      .filter((product) => getAllFavorites().includes(product.id))
       .map((product) => ({ ...product, isLiked: true }))
   );
 
   const toggleLike = (productId: number) => {
-    setProducts((prev) =>
-      prev.map((product) =>
-        product.id === productId
-          ? { ...product, isLiked: !product.isLiked }
-          : product
-      )
-    );
+    setProducts((prev) => {
+      const updatedProducts = prev.filter((product) => {
+        if (product.id === productId) {
+          removeFavorite(productId); // Remove from favorites
+          return false; // Exclude from the list
+        }
+        return true;
+      });
+      return updatedProducts;
+    });
   };
 
   return (
