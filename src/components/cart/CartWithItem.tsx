@@ -1,71 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useCartController from "../../controller/CartController";
+import type { CartItem as ImportedCartItem } from "../../data/cartItemData";
+import { useCart } from "../../hooks/useCart";
 import CartTable from "./CartTable";
-import CartItem from "./CartItem";
-import type { CartItem as CartItemType } from "../../data/cartItemData"; // Import CartItem as a type
 import CartTotal from "./CartTotal";
+import CartItem from "./CartItem";
 
-const CartWithItem: React.FC<{ items: CartItemType[] }> = ({ items }) => {
+interface CartData {
+  items: ImportedCartItem[];
+  total?: number;
+}
+
+const CartWithItem: React.FC<CartData> = ({ items: initialItems }) => {
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
-  const { removeFromCart } = useCartController();
-
-  const [cartItems, setCartItems] = useState(
-    items.map((item) => ({
-      ...item,
-      selected: false,
-      key: item.id.toString(),
-    }))
-  );
-
-  useEffect(() => {
-    setCartItems(
-      items.map((item) => ({
-        ...item,
-        selected: false,
-        key: item.id.toString(),
-      }))
-    );
-  }, [items]);
+  const {
+    items,
+    totalAmount,
+    handleQuantityChange,
+    handleSelectItem,
+    handleSelectAll,
+    handleDeleteItem,
+  } = useCart(initialItems);
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
-  };
-
-  const handleQuantityChange = (key: string, newQuantity: number) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.key === key ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const handleSelectItem = (itemId: number, checked: boolean) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId ? { ...item, selected: checked } : item
-      )
-    );
-  };
-
-  const handleDeleteItem = (itemId: number) => {
-    removeFromCart(itemId);
-  };
-
-  const totalAmount = cartItems
-    .filter((item) => item.selected)
-    .reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-  const handleCheckout = () => {
-    const selectedItems = cartItems.filter((item) => item.selected);
-    if (selectedItems.length > 0) {
-      navigate("/cart/checkout", {
-        state: { selectedItems, totalAmount },
-      });
-    } else {
-      alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
-    }
   };
 
   useEffect(() => {
@@ -79,6 +38,19 @@ const CartWithItem: React.FC<{ items: CartItemType[] }> = ({ items }) => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  const handleCheckout = () => {
+    const selectedItems = items.filter((item) => item.selected);
+    if (selectedItems.length > 0) {
+      navigate("/cart/checkout", {
+        state: { selectedItems, totalAmount },
+      });
+    } else {
+      alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+    }
+  };
+
+  const selectedItems = items.filter((item) => item.selected);
+
   return (
     <div className="bg-white">
       {isMobile ? (
@@ -86,17 +58,17 @@ const CartWithItem: React.FC<{ items: CartItemType[] }> = ({ items }) => {
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold">Giỏ hàng của bạn</h3>
             <span className="text-sm text-gray-600">
-              {cartItems.filter((item) => item.selected).length}/
-              {cartItems.length} sản phẩm đã chọn
+              {selectedItems.length}/{items.length} sản phẩm đã chọn
             </span>
           </div>
-          {cartItems.map((item) => (
-            <div key={item.id}>
+
+          {items.map((item) => (
+            <div key={item.key}>
               <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
-                  checked={item.selected || false}
-                  onChange={(e) => handleSelectItem(item.id, e.target.checked)}
+                  checked={item.selected}
+                  onChange={(e) => handleSelectItem(item.key, e.target.checked)}
                   className="mt-1"
                 />
                 <CartItem
@@ -107,7 +79,7 @@ const CartWithItem: React.FC<{ items: CartItemType[] }> = ({ items }) => {
                   onQuantityChange={(newQuantity) =>
                     handleQuantityChange(item.key, newQuantity)
                   }
-                  onDelete={() => handleDeleteItem(item.id)}
+                  onDelete={() => handleDeleteItem(item.key)}
                   showControls={true}
                 />
               </div>
@@ -116,28 +88,15 @@ const CartWithItem: React.FC<{ items: CartItemType[] }> = ({ items }) => {
         </div>
       ) : (
         <CartTable
-          items={cartItems}
+          items={items}
           onQuantityChange={handleQuantityChange}
-          onSelectItem={(key, checked) =>
-            setCartItems((prevItems) =>
-              prevItems.map((item) =>
-                item.key === key ? { ...item, selected: checked } : item
-              )
-            )
-          }
-          onSelectAll={(checked) =>
-            setCartItems((prevItems) =>
-              prevItems.map((item) => ({ ...item, selected: checked }))
-            )
-          }
-          onDeleteItem={(key) =>
-            setCartItems((prevItems) =>
-              prevItems.filter((item) => item.key !== key)
-            )
-          }
+          onSelectItem={handleSelectItem}
+          onSelectAll={handleSelectAll}
+          onDeleteItem={handleDeleteItem}
           formatPrice={formatPrice}
         />
       )}
+
       <CartTotal
         totalAmount={totalAmount}
         formatPrice={formatPrice}
