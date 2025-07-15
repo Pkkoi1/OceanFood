@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import DateFilter from "../../components/cart/DateFilter";
 import CartWithItem from "../../components/cart/CartWithItem";
-import { cartItems } from "../../data/cartItemData";
-import type { CartItem } from "../../data/cartItemData";
+import useCartController from "../../controller/CartController";
 
 const CartView: React.FC = () => {
-  const [products, setProducts] = useState<CartItem[]>(cartItems);
-
-  useEffect(() => {
-    // Simulate fetching cart items from an API or local storage
-    setProducts(cartItems);
-  }, []);
+  const { cartItems } = useCartController(); // Use cartItems from the controller
 
   return (
     <div className="lg:px-[100px] px-4 flex flex-col lg:flex-row gap-6 my-6">
       <div className="w-full lg:w-3/4">
-        <CartWithItem items={products} />
+        <CartWithItem items={cartItems} />{" "}
+        {/* Pass cartItems to CartWithItem */}
       </div>
       <div className="w-full lg:w-1/4 items-baseline flex justify-end">
         <DateFilter />

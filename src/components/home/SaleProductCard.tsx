@@ -1,19 +1,20 @@
 import React from "react";
 import FavoriteButton from "../common/FavoriteButton";
-
+import useCartController from "../../controller/CartController";
 interface Product {
   id: number;
   name: string;
   origin: string;
   currentPrice: number;
-  originalPrice?: number; // Changed to optional
-  discount?: number; // Changed to optional
-  sold?: number; // Changed to optional
+  originalPrice?: number;
+  discount?: number;
+  sold?: number;
   image: string;
   isLiked: boolean;
   badge?: string;
   stockStatus?: string;
   flashSale?: boolean;
+  description: { title: string; content: string }[];
 }
 
 interface ProductCardProps {
@@ -25,13 +26,18 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
   product,
   onToggleLike,
 }) => {
+  const { addToCart } = useCartController();
+
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
   };
 
+  const handleAddToCart = () => {
+    addToCart(product);
+  };
+
   return (
-    <div className="bg-white overflow-hidden group shadow-lg lg:h-72 relative cursor-grab">
-      {/* Corner Badge */}
+    <div className="bg-white h-full overflow-hidden group shadow-lg relative cursor-grab">
       {product.badge && (
         <div className="absolute top-4 -right-1 z-20">
           <div
@@ -46,26 +52,20 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
       )}
-
       <div className="flex lg:flex-row flex-col h-full w-full">
-        {/* Product Image Container with overlays */}
         <div className="lg:w-1/2 w-full p-4 relative group">
-          {/* Discount Badge */}
           {product.discount && (
             <div className="absolute top-7 left-7 bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold z-10">
               -{product.discount}%
             </div>
           )}
-
-          {/* Heart Icon */}
           <FavoriteButton
             isLiked={product.isLiked}
             onToggleLike={onToggleLike}
             productId={product.id}
             className="absolute top-7 right-7 z-10 cursor-pointer"
           />
-
-          <div className="w-full h-full overflow-hidden ">
+          <div className="w-full h-full overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
@@ -73,15 +73,12 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
             />
           </div>
         </div>
-
-        {/* Product Info */}
         <div className="w-full lg:w-1/2 p-4 flex flex-col lg:text-left text-center lg:justify-normal mb-10">
           <div>
             <h3 className="font-bold text-lg mb-2 line-clamp-2">
               {product.name}
             </h3>
             <p className="text-gray-600 text-sm mb-3">{product.origin}</p>
-
             <div className="mb-3">
               <div className="flex items-center lg:justify-normal justify-center gap-2 mb-1">
                 <span className="text-red-500 font-bold text-xl">
@@ -110,8 +107,10 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
               </div>
             </div>
           </div>
-
-          <button className="bg-[#37bee3] border-none hover:bg-[#0282a5] w-fit py-2 px-3 rounded-full font-bold text-sm text-white lg:self-start self-center">
+          <button
+            className="bg-[#37bee3] border-none hover:bg-[#0282a5] w-fit py-2 px-3 rounded-full font-bold text-sm text-white lg:self-start self-center"
+            onClick={handleAddToCart}
+          >
             THÊM VÀO GIỎ HÀNG
           </button>
         </div>
