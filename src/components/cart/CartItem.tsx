@@ -33,7 +33,10 @@ const CartItem: React.FC<CartItemProps> = ({
       />
       <div className="flex-1">
         <h3 className="text-sm font-medium text-gray-900">{name}</h3>
-        <p className="text-sm text-gray-600">Số lượng</p>
+        <p className="text-xs text-gray-600">Số lượng</p>
+        <button className="text-red-500 text-sm cursor-pointer font-medium hover:text-red-700">
+          Xóa
+        </button>
         <div className="flex items-center gap-2 mt-1">
           <button
             onClick={() => handleQuantityChange(quantity - 1)}

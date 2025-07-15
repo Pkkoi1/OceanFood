@@ -3,6 +3,7 @@ import CartSummary from "./CartSummary";
 import CartItem from "./CartItem";
 import { cartItems } from "../../data/cartItemData";
 import type { CartItem as CartItemType } from "../../data/cartItemData";
+import { ShoppingOutlined } from "@ant-design/icons";
 
 const CartDropdown: React.FC = () => {
   const [items, setItems] = useState<CartItemType[]>([]);
@@ -39,7 +40,14 @@ const CartDropdown: React.FC = () => {
           <CartSummary total={total} onCheckout={handleCheckout} />
         </>
       ) : (
-        <div className="p-4 text-center text-gray-500">Giỏ hàng trống</div>
+        <div className="flex flex-col items-center justify-center py-4 w-auto">
+          <div>
+            <ShoppingOutlined style={{ fontSize: 30 }} />
+          </div>
+          <span className="mt-6">
+            Không có sản phẩm nào trong giỏ hàng của bạn
+          </span>
+        </div>
       )}
     </div>
   );

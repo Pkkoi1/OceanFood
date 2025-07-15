@@ -29,19 +29,29 @@ const FavoriteProducts: React.FC = () => {
 
   return (
     <div className="py-8 mx-4 lg:mx-[100px]">
-      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
-        Sản phẩm yêu thích
+      <h2 className="text-3xl font-bold  mb-8 text-gray-800">
+        Danh sách yêu thích của tôi
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onToggleLike={toggleLike}
-            layout="vertical"
-          />
-        ))}
-      </div>
+      {products.length === 0 ? (
+        <div className="">
+          Bạn chưa có sản phẩm yêu thích,{" "}
+          <a href="/products" className="cursor-pointer text-blue-600">
+            vào đây
+          </a>{" "}
+          để thêm thật nhiều sản phẩm vào yêu thích nào.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onToggleLike={toggleLike}
+              layout="vertical"
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
