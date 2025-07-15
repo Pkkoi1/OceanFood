@@ -30,7 +30,7 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className="bg-white h-full overflow-hidden group shadow-lg relative cursor-grab">
+    <div className="bg-white overflow-hidden group shadow-lg lg:h-72 relative cursor-grab">
       {/* Corner Badge */}
       {product.badge && (
         <div className="absolute top-4 -right-1 z-20">
