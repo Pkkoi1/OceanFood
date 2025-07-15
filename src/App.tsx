@@ -19,6 +19,7 @@ import MessengerButton from "./components/popupButtons/messenger/MessengerButton
 import CartView from "./views/cart/CartView";
 import CheckoutView from "./views/checkout/CheckoutView";
 import HandbookDetail from "./views/handbook/HandbookDetail";
+import FavoriteProducts from "./views/favorite/FavoriteProducts";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -33,7 +34,6 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<ProductShowList />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
@@ -41,6 +41,8 @@ function App() {
         <Route path="/cart" element={<CartView />} />
         <Route path="/cart/checkout" element={<CheckoutView />} />
         <Route path="/handbook/:id" element={<HandbookDetail />} />
+        <Route path="/favorites" element={<FavoriteProducts />} />{" "}
+        {/* Add route for favorite products */}
       </Routes>
       <BellButton></BellButton>
       <ContactButton></ContactButton>
