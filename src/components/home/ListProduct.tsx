@@ -36,15 +36,22 @@ const ListProduct: React.FC<ListProductProps> = ({
   container = true,
   titlePosition = "center",
 }) => {
-  const [products, setProducts] = useState<Product[]>(
-    newProducts.map((product) => ({
-      ...product,
-      isLiked: favoriteProductIds.includes(product.id),
-    }))
-  );
+  const [products, setProducts] = useState<Product[]>([]);
   const [visibleCount, setVisibleCount] = useState(number);
   const [sortOption, setSortOption] = useState("default");
   const [displayTitle, setDisplayTitle] = useState(title);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProducts(
+        newProducts.map((product) => ({
+          ...product,
+          isLiked: favoriteProductIds.includes(product.id),
+        }))
+      );
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
   const sortOptions = [
     { value: "default", label: "Mặc định" },

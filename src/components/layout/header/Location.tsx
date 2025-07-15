@@ -16,7 +16,6 @@ const Location = () => {
     const interval = setInterval(() => {
       setFavoriteCount(getAllFavorites().length); // Update favorite count periodically
     }, 500); // Poll every 500ms
-
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
 

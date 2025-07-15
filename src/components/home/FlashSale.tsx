@@ -34,14 +34,7 @@ const FlashSale: React.FC = () => {
   });
 
   // Filter products with flashSale: true from mockData
-  const [products, setProducts] = useState<Product[]>(
-    newProducts
-      .filter((product) => product.flashSale)
-      .map((product) => ({
-        ...product,
-        isLiked: favoriteProductIds.includes(product.id),
-      }))
-  );
+  const [products, setProducts] = useState<Product[]>([]);
 
   // Group products for desktop view (2 products per slide)
   const allProducts: Product[][] = [];
@@ -68,6 +61,20 @@ const FlashSale: React.FC = () => {
       })
     );
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProducts(
+        newProducts
+          .filter((product) => product.flashSale)
+          .map((product) => ({
+            ...product,
+            isLiked: favoriteProductIds.includes(product.id),
+          }))
+      );
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
