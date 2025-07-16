@@ -18,8 +18,8 @@ const SearchResults: React.FC = () => {
   }, [location.search]);
 
   return (
-    <div className="mx-4 lg:mx-[100px] mt-4">
-      <h1 className="text-2xl font-bold mb-6">Kết quả tìm kiếm</h1>
+    <div>
+      <h1 className="text-2xl font-bold lg:px-[100px] mt-6">Kết quả tìm kiếm</h1>
       <ListProduct products={products} />
     </div>
   );

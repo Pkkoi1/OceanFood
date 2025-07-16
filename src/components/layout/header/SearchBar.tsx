@@ -59,7 +59,13 @@ const SearchBar = () => {
     }
   };
 
+  const handleSuggestionClick = (productId: number) => {
+    setSuggestions([]); // Hide suggestions
+    navigate(`/product/${productId}`);
+  };
+
   const handleSearchSubmit = () => {
+    setSuggestions([]); // Hide suggestions
     navigate(`/search?query=${searchTerm}`);
   };
 
@@ -102,6 +108,7 @@ const SearchBar = () => {
           <SearchSuggestions
             suggestions={suggestions}
             onSearchSubmit={handleSearchSubmit}
+            onSuggestionClick={handleSuggestionClick} // Pass click handler
           />
         )}
       </div>

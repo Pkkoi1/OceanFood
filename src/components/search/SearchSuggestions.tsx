@@ -5,16 +5,19 @@ import type { Product } from "../../data/mockData";
 interface SearchSuggestionsProps {
   suggestions: Product[];
   onSearchSubmit: () => void;
+  onSuggestionClick: (productId: number) => void; // Add prop for suggestion click
 }
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
   suggestions,
   onSearchSubmit,
+  onSuggestionClick,
 }) => {
   const navigate = useNavigate();
 
   const handleSuggestionClick = (productId: number) => {
     navigate(`/product/${productId}`);
+    onSuggestionClick(productId); // Call handler
   };
 
   const formatPrice = (price: number) => {
