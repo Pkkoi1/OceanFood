@@ -1,16 +1,24 @@
 import { Drawer, Image } from "antd";
 import { MenuOutlined, SearchOutlined } from "@ant-design/icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo.webp";
 import timeWork from "../../../assets/images/time-work.webp";
 import ship from "../../../assets/images/free-ship-2h.webp";
 import MainMenu from "../../menu/MainMenu";
+import { searchProductsByName } from "../../../controller/ProductController";
+import type { Product } from "../../../data/mockData";
+import SearchSuggestions from "../../search/SearchSuggestions";
 
 const SearchBar = () => {
   const [placeholder, setPlaceholder] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [openDrawer, setOpenDrawer] = useState(false); // <-- thêm trạng thái
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [suggestions, setSuggestions] = useState<Product[]>([]);
+  const navigate = useNavigate();
+  const searchRef = useRef<HTMLDivElement>(null);
 
   const texts = ["Cá hồi", "Bạn muốn chọn gì"];
 
@@ -40,8 +48,37 @@ const SearchBar = () => {
     return () => clearTimeout(timeout);
   }, [placeholder, currentIndex, isDeleting]);
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    if (value) {
+      const results = searchProductsByName(value);
+      setSuggestions(results.slice(0, 4)); // Limit to 4 suggestions
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    navigate(`/search?query=${searchTerm}`);
+  };
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+      setSuggestions([]); // Hide suggestions when clicking outside
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className="flex flex-col bg-white lg:shadow  lg:flex-row items-center justify-between gap-3 px-4 lg:px-[100px] w-screen lg:my-0 my-3">
+    <div
+      ref={searchRef}
+      className="flex flex-col bg-white lg:shadow lg:flex-row items-center justify-between gap-3 px-4 lg:px-[100px] w-screen lg:my-0 my-3"
+    >
       <div className="flex-shrink-0">
         <Image src={logo} alt="Ocean Food Logo" width={120} height={60} />
       </div>
@@ -51,11 +88,22 @@ const SearchBar = () => {
           className="border-2 border-[#37bee3] rounded-full py-2 px-6 w-full lg:w-md pr-32 outline-none focus:border-[#27acd0]"
           type="text"
           placeholder={placeholder + "|"}
+          value={searchTerm}
+          onChange={handleSearchChange}
         />
-        <button className="absolute right-0 bg-[#37bee3] hover:bg-[#27acd0] text-white px-3 py-2 rounded-full flex items-center gap-2 transition-colors">
+        <button
+          className="absolute right-0 bg-[#37bee3] hover:bg-[#27acd0] text-white px-3 py-2 rounded-full flex items-center gap-2 transition-colors"
+          onClick={handleSearchSubmit}
+        >
           <SearchOutlined />
           <span className="">Tìm kiếm</span>
         </button>
+        {suggestions.length > 0 && (
+          <SearchSuggestions
+            suggestions={suggestions}
+            onSearchSubmit={handleSearchSubmit}
+          />
+        )}
       </div>
 
       <div className="hidden lg:flex items-center gap-4 order-2 lg:order-3">
@@ -78,15 +126,13 @@ const SearchBar = () => {
         </div>
       </div>
 
-      {/* Button mở menu */}
       <button
-        className="lg:hidden order-1 top-10  left-2 absolute z-0 text-white p-2 flex items-center justify-center transition-colors"
+        className="lg:hidden order-1 top-10 left-2 absolute z-0 text-white p-2 flex items-center justify-center transition-colors"
         onClick={() => setOpenDrawer(true)}
       >
         <MenuOutlined style={{ color: "#37bee3" }} />
       </button>
 
-      {/* Drawer menu chính */}
       <Drawer
         placement="left"
         closable={false}
@@ -97,8 +143,8 @@ const SearchBar = () => {
       >
         <MainMenu
           onMenuClick={(key) => {
-            console.log("Người dùng đã chọn:", key); // Xử lý tùy ý
-            setOpenDrawer(false); // Đóng Drawer
+            console.log("Người dùng đã chọn:", key);
+            setOpenDrawer(false);
           }}
         />
       </Drawer>

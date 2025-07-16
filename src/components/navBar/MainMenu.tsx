@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
-import { productCategories } from "../../constants/productCategories";
+import { productCategories } from "../../data/categoryData";
 
 const MainMenu = () => {
   const [showProductMenu, setShowProductMenu] = useState(false);

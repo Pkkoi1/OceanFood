@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import FavoriteButton from "../common/FavoriteButton";
 import { addToCart } from "../../controller/CartController";
 
@@ -7,9 +8,9 @@ interface Product {
   name: string;
   origin: string;
   currentPrice: number;
-  originalPrice?: number; // Changed to optional
-  discount?: number; // Changed to optional
-  sold?: number; // Changed to optional
+  originalPrice?: number;
+  discount?: number;
+  sold?: number;
   image: string;
   isLiked: boolean;
   badge?: string;
@@ -26,25 +27,31 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
   product,
   onToggleLike,
 }) => {
+  const navigate = useNavigate();
+
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
   };
 
+  const handleNameClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top
+    navigate(`/product/${product.id}`); // Navigate to product detail page
+  };
+
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent event bubbling
     addToCart({
       id: product.id,
       name: product.name,
       image: product.image,
       price: product.currentPrice,
-      quantity: 1, // Mặc định thêm 1
+      quantity: 1, // Default quantity
     });
-    alert("Đã thêm sản phẩm vào giỏ hàng!"); // Có thể thay bằng toast
+    alert("Đã thêm sản phẩm vào giỏ hàng!"); // Optional toast
   };
 
   return (
-    <div className="bg-white overflow-hidden group shadow-lg lg:h-72 relative cursor-grab">
-      {/* Corner Badge */}
+    <div className="bg-white overflow-hidden group shadow-lg lg:h-72 relative">
       {product.badge && (
         <div className="absolute top-4 -right-1 z-20">
           <div
@@ -61,16 +68,13 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
       )}
 
       <div className="flex lg:flex-row flex-col h-full w-full">
-        {/* Product Image Container with overlays */}
         <div className="lg:w-1/2 w-full p-4 relative group">
-          {/* Discount Badge */}
           {product.discount && (
             <div className="absolute top-7 left-7 bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold z-10">
               -{product.discount}%
             </div>
           )}
 
-          {/* Heart Icon */}
           <FavoriteButton
             isLiked={product.isLiked}
             onToggleLike={onToggleLike}
@@ -90,7 +94,10 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
         {/* Product Info */}
         <div className="w-full lg:w-1/2 p-4 flex flex-col lg:text-left text-center lg:justify-normal mb-10">
           <div>
-            <h3 className="font-bold text-lg mb-2 line-clamp-2">
+            <h3
+              className="font-bold text-lg mb-2 line-clamp-2 cursor-pointer hover:text-[#4FB3D9] transition-colors"
+              onClick={handleNameClick} // Add click handler for navigation
+            >
               {product.name}
             </h3>
             <p className="text-gray-600 text-sm mb-3">{product.origin}</p>

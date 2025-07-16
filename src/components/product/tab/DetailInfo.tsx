@@ -9,7 +9,6 @@ interface DetailInfoProps {
 }
 
 const DetailInfo: React.FC<DetailInfoProps> = ({ product }) => {
-  // Render description array
   const renderDescription = (
     descriptions: { title: string; content: string }[]
   ) => {

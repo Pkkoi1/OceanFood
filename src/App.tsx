@@ -20,6 +20,7 @@ import CartView from "./views/cart/CartView";
 import CheckoutView from "./views/checkout/CheckoutView";
 import HandbookDetail from "./views/handbook/HandbookDetail";
 import FavoriteProducts from "./views/favorite/FavoriteProducts";
+import SearchResults from "./views/search/SearchResults";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -45,6 +46,7 @@ function App() {
         <Route path="/cart/checkout" element={<CheckoutView />} />
         <Route path="/handbook/:id" element={<HandbookDetail />} />
         <Route path="/favorites" element={<FavoriteProducts />} />
+        <Route path="/search" element={<SearchResults />} />
       </Routes>
       <BellButton />
       <ContactButton />
