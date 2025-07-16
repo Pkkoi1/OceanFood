@@ -9,7 +9,7 @@ interface ListProps {
 }
 
 const List: React.FC<ListProps> = ({ title = "", titlePosition = "left" }) => {
-  const [Number, setNumber] = useState(10);
+  const [Number, setNumber] = useState(9);
   const [layout, setLayout] = useState<"vertical" | "horizontal">("vertical");
   
   useEffect(() => {

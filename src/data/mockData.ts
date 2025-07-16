@@ -1,3 +1,5 @@
+import { productCategories } from "./categoryData";
+
 export interface Product {
   id: number;
   name: string;
@@ -17,7 +19,9 @@ export interface Product {
   commitment?: string;
   description: { title: string; content: string }[];
   images?: string[];
-  flashSale?: boolean; // Added flashSale field
+  flashSale?: boolean;
+  category?: string;
+  type?: string;
 }
 
 export const newProducts: Product[] = [
@@ -38,11 +42,13 @@ export const newProducts: Product[] = [
     commitment: "Đảm bảo VSATTP, sản phẩm tươi ngon",
     flashSale: true,
     badge: "HOT",
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Cá",
     description: [
       {
         title: "Thông tin chi tiết",
         content:
-          "Cá hồi xông khói vị truyền thống là sản phẩm cao cấp được chế biến từ cá hồi nuôi tại vùng nước sạch của Việt Nam, giàu protein, omega-3 và vitamin D, hỗ trợ sức khỏe tim mạch và phát triển trí não. Sản phẩm được xử lý khói tự nhiên, giữ nguyên hương vị đậm đà và chất lượng cao, không chứa chất bảo quản nhân tạo. Đây là lựa chọn lý tưởng cho bữa ăn nhẹ hoặc món khai vị sang trọng.",
+          "Cá hồi xông khói vị truyền thống là sản phẩm cao cấp được chế biến từ cá hồi nuôi tại vùng nước sạch của Việt Nam, giàu protein, omega-3 và vitamin D, hỗ trợ sức khỏe tim mạch và phát triển trí não.",
       },
       {
         title: "Hướng dẫn mua hàng",
@@ -94,6 +100,8 @@ export const newProducts: Product[] = [
     commitment: "Cam kết chất lượng, nhập khẩu chính ngạch",
     flashSale: true,
     badge: "SALE",
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Cá",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -150,6 +158,8 @@ export const newProducts: Product[] = [
     commitment: "Sản phẩm đạt chuẩn xuất khẩu",
     flashSale: true,
     badge: "LIMITED",
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Cá",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -206,6 +216,8 @@ export const newProducts: Product[] = [
     condition: "Bảo quản lạnh",
     commitment: "Đảm bảo an toàn thực phẩm",
     flashSale: true,
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Cá",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -262,6 +274,8 @@ export const newProducts: Product[] = [
     condition: "Giao lạnh",
     commitment: "Chất lượng cao, đảm bảo tươi",
     flashSale: true,
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Cá",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -318,6 +332,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Sản phẩm sạch, an toàn",
     flashSale: true,
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Tôm",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -374,6 +390,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Đảm bảo chất lượng",
     flashSale: false,
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Tôm",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -427,6 +445,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Sản phẩm tươi sống",
     flashSale: false,
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Tôm",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -480,6 +500,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Cam kết chất lượng cao",
     flashSale: false,
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Tôm",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -533,6 +555,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Sản phẩm đạt chuẩn",
     flashSale: false,
+    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
+    type: "Cá",
     description: [
       {
         title: "Thông tin chi tiết",
@@ -572,4 +596,271 @@ export const newProducts: Product[] = [
       "https://picsum.photos/300/200?random=40",
     ],
   },
+  {
+    id: 11,
+    name: "Hàu sữa Pháp",
+    origin: "Xuất xứ: Pháp",
+    currentPrice: 250000,
+    originalPrice: 300000,
+    discount: 17,
+    image: "https://picsum.photos/300/200?random=41",
+    isLiked: false,
+    category: "hau-sua",
+    type: "Hàu",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Hàu sữa Pháp tươi ngon, giàu dinh dưỡng, hỗ trợ sức khỏe.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=41"],
+  },
+  {
+    id: 12,
+    name: "Ngao trắng New Zealand",
+    origin: "Xuất xứ: New Zealand",
+    currentPrice: 180000,
+    originalPrice: 220000,
+    discount: 18,
+    image: "https://picsum.photos/300/200?random=42",
+    isLiked: false,
+    category: "ngao-so-oc",
+    type: "Ngao",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Ngao trắng nhập khẩu, thịt ngọt, giàu protein.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=42"],
+  },
+  {
+    id: 13,
+    name: "Cua Hoàng Đế Alaska",
+    origin: "Xuất xứ: Alaska",
+    currentPrice: 1200000,
+    originalPrice: 1500000,
+    discount: 20,
+    image: "https://picsum.photos/300/200?random=43",
+    isLiked: false,
+    category: "cua-ghe",
+    type: "Cua",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Cua Hoàng Đế Alaska, thịt chắc, giàu dinh dưỡng.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=43"],
+  },
+  {
+    id: 14,
+    name: "Tôm Sú Tươi",
+    origin: "Xuất xứ: Việt Nam",
+    currentPrice: 350000,
+    originalPrice: 400000,
+    discount: 12,
+    image: "https://picsum.photos/300/200?random=44",
+    isLiked: false,
+    category: "tom-cac-loai",
+    type: "Tôm",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Tôm sú tươi sống, thịt ngọt, giàu canxi.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=44"],
+  },
+  {
+    id: 15,
+    name: "Mực ống tươi",
+    origin: "Xuất xứ: Việt Nam",
+    currentPrice: 220000,
+    originalPrice: 260000,
+    discount: 15,
+    image: "https://picsum.photos/300/200?random=45",
+    isLiked: false,
+    category: "muc",
+    type: "Mực",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Mực ống tươi, thịt giòn, dễ chế biến.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=45"],
+  },
+  {
+    id: 16,
+    name: "Sốt Teriyaki Nhật Bản",
+    origin: "Xuất xứ: Nhật Bản",
+    currentPrice: 120000,
+    originalPrice: 150000,
+    discount: 20,
+    image: "https://picsum.photos/300/200?random=46",
+    isLiked: false,
+    category: "gia-vi-sot",
+    type: "Sốt",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Sốt Teriyaki Nhật Bản, hương vị đậm đà.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=46"],
+  },
+  {
+    id: 17,
+    name: "Hàu sữa Canada",
+    origin: "Xuất xứ: Canada",
+    currentPrice: 280000,
+    originalPrice: 320000,
+    discount: 12,
+    image: "https://picsum.photos/300/200?random=47",
+    isLiked: false,
+    category: "oyster",
+    type: "Hàu",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Hàu sữa Canada tươi ngon, giàu dinh dưỡng, hỗ trợ sức khỏe.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=47"],
+  },
+  {
+    id: 18,
+    name: "Ngao vàng Úc",
+    origin: "Xuất xứ: Úc",
+    currentPrice: 190000,
+    originalPrice: 240000,
+    discount: 21,
+    image: "https://picsum.photos/300/200?random=48",
+    isLiked: false,
+    category: "clam-scallop-snail",
+    type: "Ngao",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Ngao vàng Úc, thịt ngọt, giàu protein và khoáng chất.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=48"],
+  },
+  {
+    id: 19,
+    name: "Cua biển Việt Nam",
+    origin: "Xuất xứ: Việt Nam",
+    currentPrice: 450000,
+    originalPrice: 500000,
+    discount: 10,
+    image: "https://picsum.photos/300/200?random=49",
+    isLiked: false,
+    category: "crab-lobster",
+    type: "Cua",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Cua biển Việt Nam, thịt chắc, giàu dinh dưỡng.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=49"],
+  },
+  {
+    id: 20,
+    name: "Tôm hùm Alaska",
+    origin: "Xuất xứ: Alaska",
+    currentPrice: 1500000,
+    originalPrice: 1800000,
+    discount: 17,
+    image: "https://picsum.photos/300/200?random=50",
+    isLiked: false,
+    category: "shrimp",
+    type: "Tôm",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Tôm hùm Alaska, thịt ngọt, giàu canxi và protein.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=50"],
+  },
+  {
+    id: 21,
+    name: "Mực lá tươi",
+    origin: "Xuất xứ: Việt Nam",
+    currentPrice: 250000,
+    originalPrice: 300000,
+    discount: 17,
+    image: "https://picsum.photos/300/200?random=51",
+    isLiked: false,
+    category: "squid",
+    type: "Mực",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Mực lá tươi, thịt giòn, dễ chế biến.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=51"],
+  },
+  {
+    id: 22,
+    name: "Sốt BBQ Mỹ",
+    origin: "Xuất xứ: Mỹ",
+    currentPrice: 120000,
+    originalPrice: 150000,
+    discount: 20,
+    image: "https://picsum.photos/300/200?random=52",
+    isLiked: false,
+    category: "spices-sauce",
+    type: "Sốt",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Sốt BBQ Mỹ, hương vị đậm đà, phù hợp cho các món nướng.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=52"],
+  },
+  {
+    id: 23,
+    name: "Muối biển Pháp",
+    origin: "Xuất xứ: Pháp",
+    currentPrice: 80000,
+    originalPrice: 100000,
+    discount: 20,
+    image: "https://picsum.photos/300/200?random=53",
+    isLiked: false,
+    category: "spices-sauce",
+    type: "Gia vị",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Muối biển Pháp, tinh khiết, phù hợp cho mọi món ăn.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=53"],
+  },
+  {
+    id: 24,
+    name: "Sốt Mayonnaise Nhật Bản",
+    origin: "Xuất xứ: Nhật Bản",
+    currentPrice: 110000,
+    originalPrice: 140000,
+    discount: 21,
+    image: "https://picsum.photos/300/200?random=54",
+    isLiked: false,
+    category: "spices-sauce",
+    type: "Sốt",
+    description: [
+      {
+        title: "Thông tin chi tiết",
+        content: "Sốt Mayonnaise Nhật Bản, béo ngậy, phù hợp cho salad.",
+      },
+    ],
+    images: ["https://picsum.photos/300/200?random=54"],
+  },
 ];
+
