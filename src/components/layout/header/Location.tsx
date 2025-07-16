@@ -13,11 +13,32 @@ const Location = () => {
   const [favoriteCount, setFavoriteCount] = useState(getAllFavorites().length);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFavoriteCount(getAllFavorites().length); // Update favorite count periodically
-    }, 500); // Poll every 500ms
-    return () => clearInterval(interval); // Cleanup interval on unmount
-  }, []);
+    const updateInterval = 500; // Thiết lập thời gian cập nhật (ms)
+
+    const updateFavoriteCount = () => {
+      const newCount = getAllFavorites().length;
+      if (favoriteCount !== newCount) {
+        setFavoriteCount(newCount);
+      }
+    };
+
+    // Cập nhật định kỳ theo interval
+    const intervalId = setInterval(updateFavoriteCount, updateInterval);
+
+    // Lắng nghe sự kiện storage để cập nhật khi localStorage thay đổi
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "favoriteProductIds") {
+        updateFavoriteCount();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [favoriteCount]);
 
   return (
     <div className="flex flex-row items-center justify-between gap-2 py-2 bg-[#0282a5] text-white px-[100px] text-[14px]">
@@ -41,7 +62,7 @@ const Location = () => {
           </Badge>
           <span
             className="cursor-pointer"
-            onClick={() => navigate("/favorites")} // Navigate to favorites page
+            onClick={() => navigate("/favorites")}
           >
             Yêu thích
           </span>

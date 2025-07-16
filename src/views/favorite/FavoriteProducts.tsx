@@ -1,25 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/product/ProductCard";
-import { newProducts } from "../../data/mockData"; // Import all products
+import { newProducts } from "../../data/mockData";
 import {
   getAllFavorites,
   removeFavorite,
 } from "../../controller/FavoriteController";
 
 const FavoriteProducts: React.FC = () => {
-  // Filter products based on favoriteProductIds and set isLiked to true
   const [products, setProducts] = useState(
     newProducts
       .filter((product) => getAllFavorites().includes(product.id))
       .map((product) => ({ ...product, isLiked: true }))
   );
 
+  useEffect(() => {
+    // Lắng nghe sự kiện storage để cập nhật khi localStorage thay đổi
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "favoriteProductIds") {
+        setProducts(
+          newProducts
+            .filter((product) => getAllFavorites().includes(product.id))
+            .map((product) => ({ ...product, isLiked: true }))
+        );
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
   const toggleLike = (productId: number) => {
     setProducts((prev) => {
       const updatedProducts = prev.filter((product) => {
         if (product.id === productId) {
-          removeFavorite(productId); // Remove from favorites
-          return false; // Exclude from the list
+          removeFavorite(productId);
+          return false;
         }
         return true;
       });
@@ -29,7 +44,7 @@ const FavoriteProducts: React.FC = () => {
 
   return (
     <div className="py-8 mx-4 lg:mx-[100px]">
-      <h2 className="text-3xl font-bold  mb-8 text-gray-800">
+      <h2 className="text-3xl font-bold mb-8 text-gray-800">
         Danh sách yêu thích của tôi
       </h2>
       {products.length === 0 ? (
