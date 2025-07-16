@@ -60,8 +60,8 @@ const SearchBar = () => {
       setSuggestions(productResults.slice(0, 4)); // Limit to 4 product suggestions
       setArticles(articleResults.slice(0, 4)); // Limit to 4 article suggestions
     } else {
-      setSuggestions([]);
-      setArticles([]);
+      setSuggestions([]); // Clear product suggestions
+      setArticles([]); // Clear article suggestions
     }
   };
 
@@ -116,7 +116,7 @@ const SearchBar = () => {
           <SearchOutlined />
           <span className="">Tìm kiếm</span>
         </button>
-        {suggestions.length > 0 && (
+        {(suggestions.length > 0 || articles.length > 0) && ( // Check both suggestions and articles
           <SearchSuggestions
             suggestions={suggestions}
             articles={articles} // Pass articles to suggestions

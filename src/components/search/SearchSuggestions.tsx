@@ -4,10 +4,10 @@ import type { HandbookArticle } from "../../data/handbookData";
 
 interface SearchSuggestionsProps {
   suggestions: Product[];
-  articles: HandbookArticle[]; // Add articles to props
+  articles: HandbookArticle[];
   onSearchSubmit: () => void;
   onSuggestionClick: (productId: number) => void;
-  onArticleClick: (articleId: number) => void; // Add handler for article click
+  onArticleClick: (articleId: number) => void;
 }
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
@@ -22,8 +22,12 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
   };
 
   return (
-    <div className="absolute top-full left-0 w-full bg-white shadow-lg rounded mt-2 z-50">
-      <div className="px-4 py-2 border-b font-bold text-gray-800">Sản phẩm</div>
+    <div className="absolute top-full left-0 w-full bg-white shadow-lg rounded mt-2 z-50 max-h-96 overflow-y-auto">
+      {suggestions.length > 0 && (
+        <div className="px-4 py-2 border-b font-bold text-gray-800">
+          Sản phẩm
+        </div>
+      )}
       {suggestions.map((product) => (
         <div
           key={product.id}
@@ -48,9 +52,11 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
           </div>
         </div>
       ))}
-      <div className="px-4 py-2 border-b font-bold text-gray-800">
-        Cẩm nang ẩm thực
-      </div>
+      {articles.length > 0 && (
+        <div className="px-4 py-2 border-b font-bold text-gray-800">
+          Cẩm nang ẩm thực
+        </div>
+      )}
       {articles.map((article) => (
         <div
           key={article.id}
