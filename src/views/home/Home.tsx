@@ -8,6 +8,7 @@ import productImg1 from "../../assets/images/product-image-1.webp";
 import productImg2 from "../../assets/images/product-image-2.webp";
 import Handbook from "../../components/handbook/Handbook";
 import Brand from "../../components/home/Brand";
+import { getProductsByCategory } from "../../controller/ProductController";
 
 interface HomeProps {
   isSidebarOpen: boolean;
@@ -59,11 +60,13 @@ const Home: React.FC<HomeProps> = ({ isSidebarOpen }) => {
           title="Hải sản đông lạnh"
           layout={layout}
           number={Number}
+          products={getProductsByCategory("frozen-seafood")}
         ></ListProduct>
         <FullBanner image={productImg2}></FullBanner>
         <ListProduct
           titlePosition="center"
           title="Hải sản nhập khẩu"
+          products={getProductsByCategory("imported-seafood")}
           layout={layout}
           number={Number}
         ></ListProduct>

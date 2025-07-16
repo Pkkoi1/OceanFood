@@ -14,6 +14,7 @@ interface Category {
   id: number;
   name: string;
   icon: string;
+  key: string;
 }
 
 const ListCategory = () => {
@@ -22,21 +23,28 @@ const ListCategory = () => {
       id: 1,
       name: "Hải sản đông lạnh",
       icon: fridge,
+      key: "frozen-seafood",
     },
-    { id: 2, name: "100% tươi sống", icon: fish },
+    { id: 2, name: "100% tươi sống", icon: fish, key: "fresh-live" },
     {
       id: 3,
       name: "Hải sản nhập khẩu",
       icon: airplane,
+      key: "imported-seafood",
     },
-    { id: 4, name: "Cá hồi", icon: salmon },
-    { id: 5, name: "Hàu sữa", icon: oyster },
-    { id: 6, name: "Ngao, sò, ốc", icon: seashell },
-    { id: 7, name: "Cua - ghẹ", icon: crab },
-    { id: 8, name: "Tôm các loại", icon: shrimp },
-    { id: 9, name: "Mực", icon: squid },
-    { id: 10, name: "Gia vị - sốt", icon: spices },
+    { id: 4, name: "Cá hồi", icon: salmon, key: "salmon" },
+    { id: 5, name: "Hàu sữa", icon: oyster, key: "oyster" },
+    { id: 6, name: "Ngao, sò, ốc", icon: seashell, key: "clam-scallop-snail" },
+    { id: 7, name: "Cua - ghẹ", icon: crab, key: "crab-lobster" },
+    { id: 8, name: "Tôm các loại", icon: shrimp, key: "shrimp" },
+    { id: 9, name: "Mực", icon: squid, key: "squid" },
+    { id: 10, name: "Gia vị - sốt", icon: spices, key: "spices-sauce" },
   ];
+
+  const handleClick = (categoryKey: string) => {
+    // Navigate to the category page
+    window.location.href = `/products?category=${categoryKey}`;
+  };
 
   return (
     <div className="py-8 mx-4 lg:mx-[100px]">
@@ -47,7 +55,8 @@ const ListCategory = () => {
       {/* Desktop Categories Grid */}
       <div className="hidden lg:grid grid-cols-5 gap-8">
         {categories.map((category) => (
-          <div
+          <button
+            onClick={() => handleClick(category.key)}
             key={category.id}
             className="flex flex-col items-center group cursor-pointer"
           >
@@ -61,7 +70,7 @@ const ListCategory = () => {
             <span className="text-sm font-medium text-gray-700 text-center group-hover:text-[#4FB3D9] transition-colors duration-300">
               {category.name}
             </span>
-          </div>
+          </button>
         ))}
       </div>
 

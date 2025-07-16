@@ -40,7 +40,7 @@ const Handbook: React.FC<HandbookProps> = ({
   }, []);
 
   return (
-    <div className="min-h-full bg-gray-50 py-8 mx-4 lg:mx-[100px] mb-6">
+    <div className="min-h-full bg-gray-50 py-8 mx-4 mb-6">
       <div className="container mx-auto px-4 lg:px-[100px] py-8">
         {/* Title */}
         <div className="text-center mb-8">

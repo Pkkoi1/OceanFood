@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Carousel, Select } from "antd";
 import ProductCard from "../product/ProductCard";
-import { newProducts } from "../../data/mockData";
 import { favoriteProductIds } from "../../data/mockFavoriteProducts";
+import { getAllProducts } from "../../controller/ProductController";
 
 interface Product {
   id: number;
@@ -26,6 +26,7 @@ interface ListProductProps {
   carousel?: boolean;
   container?: boolean;
   titlePosition?: "left" | "center" | "right";
+  products?: Product[]; // New optional products prop
 }
 
 const ListProduct: React.FC<ListProductProps> = ({
@@ -35,23 +36,24 @@ const ListProduct: React.FC<ListProductProps> = ({
   carousel = false,
   container = true,
   titlePosition = "center",
+  products = getAllProducts(), // Default to fetching all products
 }) => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [displayProducts, setDisplayProducts] = useState<Product[]>([]);
   const [visibleCount, setVisibleCount] = useState(number);
   const [sortOption, setSortOption] = useState("default");
   const [displayTitle, setDisplayTitle] = useState(title);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProducts(
-        newProducts.map((product) => ({
+      setDisplayProducts(
+        products.map((product) => ({
           ...product,
           isLiked: favoriteProductIds.includes(product.id),
         }))
       );
     }, 500);
     return () => clearInterval(interval);
-  }, []);
+  }, [products]);
 
   const sortOptions = [
     { value: "default", label: "Mặc định" },
@@ -62,6 +64,7 @@ const ListProduct: React.FC<ListProductProps> = ({
     { value: "newest", label: "Hàng mới nhất" },
     { value: "oldest", label: "Hàng cũ nhất" },
   ];
+
   useEffect(() => {
     setDisplayTitle(title);
   }, [title]);
@@ -78,7 +81,7 @@ const ListProduct: React.FC<ListProductProps> = ({
   };
 
   const toggleLike = (productId: number) => {
-    setProducts((prev) =>
+    setDisplayProducts((prev) =>
       prev.map((product) =>
         product.id === productId
           ? { ...product, isLiked: !product.isLiked }
@@ -93,16 +96,16 @@ const ListProduct: React.FC<ListProductProps> = ({
 
   // If carousel mode, show all products; otherwise use existing logic
   const visibleProducts = carousel
-    ? products
+    ? displayProducts
     : number === 3
-    ? products.slice(0, 3)
-    : products.slice(0, visibleCount);
+    ? displayProducts.slice(0, 3)
+    : displayProducts.slice(0, visibleCount);
 
   const hasMore = carousel
     ? false
     : number === 3
     ? false
-    : visibleCount < products.length;
+    : visibleCount < displayProducts.length;
 
   // Tính toán số cột grid dựa trên layout và số lượng sản phẩm
   const getGridCols = () => {
@@ -162,7 +165,7 @@ const ListProduct: React.FC<ListProductProps> = ({
     <div className={`py-8 mb-6 ${container ? "mx-4 lg:mx-[100px]" : ""}`}>
       <div className={`flex w-full items-center mb-8`}>
         <div
-          className={`flex items-center gap-4 w-full  ${getTitleAlignment()}`}
+          className={`flex items-center gap)||<|A|> gap-4 w-full  ${getTitleAlignment()}`}
         >
           <h2 className="lg:text-3xl text-center text-2xl font-bold lg:font-medium text-gray-800 hover:text-[#4FB3D9] transition-colors duration-300">
             {displayTitle}
@@ -231,7 +234,7 @@ const ListProduct: React.FC<ListProductProps> = ({
               key={product.id}
               product={product}
               onToggleLike={toggleLike}
-              layout={layout} // Truyền prop layout vào ProductCard
+              layout={layout}
             />
           ))}
         </div>

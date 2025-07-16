@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { productTypes } from "../../data/typeData";
+import { getProductsByCategory } from "../../controller/ProductController";
 
 interface FilterOptions {
   priceRange: string;
@@ -11,11 +14,13 @@ interface FilterSidebarProps {
 }
 
 const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
+  const location = useLocation();
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>("");
   const [selectedProductTypes, setSelectedProductTypes] = useState<string[]>(
     []
   );
   const [selectedOrigins, setSelectedOrigins] = useState<string[]>([]);
+  const [availableTypes, setAvailableTypes] = useState(productTypes);
 
   const priceRanges = [
     { key: "under-500k", label: "Giá dưới 500.000đ" },
@@ -24,17 +29,6 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
     { key: "3m-5m", label: "3.000.000đ - 5.000.000đ" },
     { key: "5m-7m", label: "5.000.000đ - 7.000.000đ" },
     { key: "over-7m", label: "Giá trên 7.000.000đ" },
-  ];
-
-  const productTypes = [
-    { key: "muc", label: "Mực" },
-    { key: "oc", label: "Ốc" },
-    { key: "ca", label: "Cá" },
-    { key: "cua", label: "Cua" },
-    { key: "tom", label: "Tôm" },
-    { key: "ngao", label: "Ngao" },
-    { key: "so", label: "Sò" },
-    { key: "hau", label: "Hàu" },
   ];
 
   const origins = [
@@ -49,6 +43,23 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
     { key: "thai-lan", label: "Thái Lan" },
     { key: "trung-quoc", label: "Trung Quốc" },
   ];
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const category = urlParams.get("category");
+
+    if (category) {
+      const products = getProductsByCategory(category);
+      const types = Array.from(
+        new Set(products.map((product) => product.type).filter(Boolean))
+      );
+      setAvailableTypes(
+        productTypes.filter((type) => types.includes(type.key))
+      );
+    } else {
+      setAvailableTypes(productTypes); // Default to all types
+    }
+  }, [location.search]);
 
   const handlePriceRangeChange = (value: string) => {
     setSelectedPriceRange(value);
@@ -113,7 +124,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
           Loại hàng
         </h3>
         <div className="space-y-1">
-          {productTypes.map((type) => (
+          {availableTypes.map((type) => (
             <label key={type.key} className="flex items-center cursor-pointer">
               <input
                 type="checkbox"

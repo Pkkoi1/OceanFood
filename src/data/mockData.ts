@@ -1,5 +1,3 @@
-import { productCategories } from "./categoryData";
-
 export interface Product {
   id: number;
   name: string;
@@ -20,7 +18,7 @@ export interface Product {
   description: { title: string; content: string }[];
   images?: string[];
   flashSale?: boolean;
-  category?: string;
+  categories?: string[]; // Updated to allow multiple categories
   type?: string;
 }
 
@@ -42,8 +40,8 @@ export const newProducts: Product[] = [
     commitment: "Đảm bảo VSATTP, sản phẩm tươi ngon",
     flashSale: true,
     badge: "HOT",
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Cá",
+    categories: ["salmon", "imported-seafood"], // Updated to include multiple categories
+    type: "fish", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -100,8 +98,8 @@ export const newProducts: Product[] = [
     commitment: "Cam kết chất lượng, nhập khẩu chính ngạch",
     flashSale: true,
     badge: "SALE",
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Cá",
+    categories: ["salmon", "imported-seafood", "frozen-seafood"], // Updated to include multiple categories
+    type: "fish", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -158,8 +156,8 @@ export const newProducts: Product[] = [
     commitment: "Sản phẩm đạt chuẩn xuất khẩu",
     flashSale: true,
     badge: "LIMITED",
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Cá",
+    categories: ["salmon", "fresh-live"], // Updated to include multiple categories
+    type: "fish", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -216,8 +214,8 @@ export const newProducts: Product[] = [
     condition: "Bảo quản lạnh",
     commitment: "Đảm bảo an toàn thực phẩm",
     flashSale: true,
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Cá",
+    categories: ["salmon"], // Updated to include multiple categories
+    type: "fish", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -259,7 +257,7 @@ export const newProducts: Product[] = [
   },
   {
     id: 5,
-    name: "Thân Cá Hồi Phile Tươi",
+    name: "Thân Cá Hồi Phile",
     origin: "Xuất xứ: Nauy",
     currentPrice: 175000,
     originalPrice: 210000,
@@ -274,8 +272,8 @@ export const newProducts: Product[] = [
     condition: "Giao lạnh",
     commitment: "Chất lượng cao, đảm bảo tươi",
     flashSale: true,
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Cá",
+    categories: ["salmon", "frozen-seafood"], // Updated to include multiple categories
+    type: "fish", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -332,8 +330,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Sản phẩm sạch, an toàn",
     flashSale: true,
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Tôm",
+    categories: ["shrimp", "fresh-live"], // Updated to include multiple categories
+    type: "shrimp", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -390,8 +388,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Đảm bảo chất lượng",
     flashSale: false,
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Tôm",
+    categories: ["shrimp"], // Updated to include multiple categories
+    type: "shrimp", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -445,8 +443,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Sản phẩm tươi sống",
     flashSale: false,
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Tôm",
+    categories: ["shrimp"], // Updated to include multiple categories
+    type: "shrimp", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -500,8 +498,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Cam kết chất lượng cao",
     flashSale: false,
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Tôm",
+    categories: ["shrimp"], // Updated to include multiple categories
+    type: "shrimp", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -555,8 +553,8 @@ export const newProducts: Product[] = [
     condition: "Giao sống",
     commitment: "Sản phẩm đạt chuẩn",
     flashSale: false,
-    category: productCategories.find((c) => c.key === "frozen-seafood")?.key,
-    type: "Cá",
+    categories: ["fresh-live"], // Updated to include multiple categories
+    type: "fish", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -605,8 +603,8 @@ export const newProducts: Product[] = [
     discount: 17,
     image: "https://picsum.photos/300/200?random=41",
     isLiked: false,
-    category: "hau-sua",
-    type: "Hàu",
+    categories: ["oyster", "frozen-seafood"],
+    type: "clam", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -624,8 +622,8 @@ export const newProducts: Product[] = [
     discount: 18,
     image: "https://picsum.photos/300/200?random=42",
     isLiked: false,
-    category: "ngao-so-oc",
-    type: "Ngao",
+    categories: ["clam-scallop-snail", "frozen-seafood"],
+    type: "clam", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -643,8 +641,8 @@ export const newProducts: Product[] = [
     discount: 20,
     image: "https://picsum.photos/300/200?random=43",
     isLiked: false,
-    category: "cua-ghe",
-    type: "Cua",
+    categories: ["crab-lobster"],
+    type: "crab", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -662,8 +660,8 @@ export const newProducts: Product[] = [
     discount: 12,
     image: "https://picsum.photos/300/200?random=44",
     isLiked: false,
-    category: "tom-cac-loai",
-    type: "Tôm",
+    categories: ["shrimp"],
+    type: "shrimp", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -681,8 +679,8 @@ export const newProducts: Product[] = [
     discount: 15,
     image: "https://picsum.photos/300/200?random=45",
     isLiked: false,
-    category: "muc",
-    type: "Mực",
+    categories: ["squid"],
+    type: "squid", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -700,8 +698,8 @@ export const newProducts: Product[] = [
     discount: 20,
     image: "https://picsum.photos/300/200?random=46",
     isLiked: false,
-    category: "gia-vi-sot",
-    type: "Sốt",
+    categories: ["spices-sauce"],
+    type: "spices", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -719,8 +717,8 @@ export const newProducts: Product[] = [
     discount: 12,
     image: "https://picsum.photos/300/200?random=47",
     isLiked: false,
-    category: "oyster",
-    type: "Hàu",
+    categories: ["oyster"],
+    type: "clam", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -738,8 +736,8 @@ export const newProducts: Product[] = [
     discount: 21,
     image: "https://picsum.photos/300/200?random=48",
     isLiked: false,
-    category: "clam-scallop-snail",
-    type: "Ngao",
+    categories: ["clam-scallop-snail"],
+    type: "clam", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -757,8 +755,8 @@ export const newProducts: Product[] = [
     discount: 10,
     image: "https://picsum.photos/300/200?random=49",
     isLiked: false,
-    category: "crab-lobster",
-    type: "Cua",
+    categories: ["crab-lobster"],
+    type: "crab", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -776,8 +774,8 @@ export const newProducts: Product[] = [
     discount: 17,
     image: "https://picsum.photos/300/200?random=50",
     isLiked: false,
-    category: "shrimp",
-    type: "Tôm",
+    categories: ["shrimp"],
+    type: "shrimp", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -795,8 +793,8 @@ export const newProducts: Product[] = [
     discount: 17,
     image: "https://picsum.photos/300/200?random=51",
     isLiked: false,
-    category: "squid",
-    type: "Mực",
+    categories: ["squid"],
+    type: "squid", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -814,8 +812,8 @@ export const newProducts: Product[] = [
     discount: 20,
     image: "https://picsum.photos/300/200?random=52",
     isLiked: false,
-    category: "spices-sauce",
-    type: "Sốt",
+    categories: ["spices-sauce"],
+    type: "spices", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -833,8 +831,8 @@ export const newProducts: Product[] = [
     discount: 20,
     image: "https://picsum.photos/300/200?random=53",
     isLiked: false,
-    category: "spices-sauce",
-    type: "Gia vị",
+    categories: ["spices-sauce"],
+    type: "spices", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -852,8 +850,8 @@ export const newProducts: Product[] = [
     discount: 21,
     image: "https://picsum.photos/300/200?random=54",
     isLiked: false,
-    category: "spices-sauce",
-    type: "Sốt",
+    categories: ["spices-sauce"],
+    type: "spices", // Updated type
     description: [
       {
         title: "Thông tin chi tiết",
@@ -863,4 +861,3 @@ export const newProducts: Product[] = [
     images: ["https://picsum.photos/300/200?random=54"],
   },
 ];
-

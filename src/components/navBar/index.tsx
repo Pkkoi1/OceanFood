@@ -9,7 +9,6 @@ import MainMenu from "./MainMenu";
 import SideMenu from "./SideMenu";
 import { Dropdown, type MenuProps } from "antd";
 import type { CartItem } from "../../data/cartItemData";
-
 import CartDropdown from "../cart/CartDropdown";
 import { getAllCartItems } from "../../controller/CartController";
 
@@ -39,13 +38,12 @@ const accountItems: MenuProps["items"] = [
   },
 ];
 
-// Menu cho Giỏ hàng (dùng CartDropdownEmpty)
+// Menu cho Giỏ hàng
 const cartItemsMenu: MenuProps["items"] = [
   {
     key: "1",
     label: (
       <div className="w-full">
-        {/* <CartDropdownEmpty /> */}
         <CartDropdown />
       </div>
     ),
@@ -60,6 +58,7 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
   const location = useLocation();
   const [items, setItems] = useState<CartItem[]>([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
+
   // Load cart items from controller
   useEffect(() => {
     const fetchedItems = setInterval(() => {
@@ -75,21 +74,16 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
     onSidebarToggle?.(isHomePage);
   }, [location.pathname, onSidebarToggle]);
 
-  const handleSidebarToggle = (isOpen: boolean) => {
-    onSidebarToggle?.(isOpen);
-  };
-
   // Calculate total quantity dynamically
   useEffect(() => {
     const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
     setTotalQuantity(totalQuantity);
-    // You can use totalQuantity for any additional logic if needed
   }, [items]);
 
   return (
     <div className="bg-white shadow-sm relative hidden lg:block pt-32">
       <div className="flex items-center justify-between px-[100px]">
-        <SideMenu onToggle={handleSidebarToggle} />
+        <SideMenu onToggle={onSidebarToggle} />
 
         <MainMenu />
 

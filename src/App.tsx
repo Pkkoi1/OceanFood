@@ -32,7 +32,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home isSidebarOpen={isSidebarOpen} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/products" element={<ProductShowList />} />
+        <Route
+          path="/products"
+          element={<ProductShowList isSidebarOpen={isSidebarOpen} />}
+        />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -41,14 +44,13 @@ function App() {
         <Route path="/cart" element={<CartView />} />
         <Route path="/cart/checkout" element={<CheckoutView />} />
         <Route path="/handbook/:id" element={<HandbookDetail />} />
-        <Route path="/favorites" element={<FavoriteProducts />} />{" "}
-        {/* Add route for favorite products */}
+        <Route path="/favorites" element={<FavoriteProducts />} />
       </Routes>
-      <BellButton></BellButton>
-      <ContactButton></ContactButton>
-      <MessengerButton></MessengerButton>
-      <PhoneFooter></PhoneFooter>
-      <Footer></Footer>
+      <BellButton />
+      <ContactButton />
+      <MessengerButton />
+      <PhoneFooter />
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -62,7 +62,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   if (layout === "horizontal") {
     return (
       <div
-        className="bg-white border p-2 border-[#F2F2F2] hover:border-[#4FB3D9] overflow-hidden relative group hover:shadow-xl transition-all duration-300 flex max-h-full lg:max-w-full cursor-pointer"
+        className="bg-white border p-2 border-[#F2F2F2] hover:border-[#4FB3D9] overflow-hidden relative group transition-all duration-300 flex max-h-full lg:max-w-full cursor-pointer"
         onClick={handleProductClick}
       >
         {/* Discount Badge */}
@@ -118,7 +118,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   // Layout vertical
   return (
     <div
-      className="bg-white border-[0.01px] border-[#F2F2F2] p-2 overflow-hidden relative group hover:shadow-xl hover:border-[#4FB3D9] transition-all duration-300 cursor-pointer"
+      className="bg-white border-[0.01px] border-[#F2F2F2] p-2 overflow-hidden relative group  hover:border-[#4FB3D9] transition-all duration-300 cursor-pointer"
       onClick={handleProductClick}
     >
       {/* Discount Badge */}

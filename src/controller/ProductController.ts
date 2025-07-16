@@ -58,8 +58,15 @@ export const getUniqueCategories = (): string[] => {
   return Array.from(
     new Set(
       newProducts
-        .map((product) => product.category)
-        .filter((category): category is string => !!category)
+        .flatMap((product) => product.categories || []) // Flatten categories array
+        .filter((category): category is string => !!category) // Ensure valid categories
     )
+  );
+};
+
+// Get products by category
+export const getProductsByCategory = (categoryKey: string): Product[] => {
+  return newProducts.filter(
+    (product) => product.categories?.includes(categoryKey) // Updated to check multiple categories
   );
 };

@@ -5,12 +5,22 @@ import banner from "../../assets/images/collection-img.webp";
 import ListProduct from "../../components/home/ListProduct";
 import Brand from "../../components/home/Brand";
 import List from "../../components/product/List";
-import { productCategories } from "../../constants/productCategories";
+import { productCategories } from "../../data/categoryData";
+import {
+  getProductsByCategory,
+  getAllProducts,
+} from "../../controller/ProductController";
+import type { Product } from "../../data/mockData";
 
-const ProductShowList = () => {
+interface ProductShowListProps {
+  isSidebarOpen?: boolean; // Add isSidebarOpen as an optional prop
+}
+
+const ProductShowList: React.FC<ProductShowListProps> = ({ isSidebarOpen }) => {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState("Tất cả sản phẩm");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -24,27 +34,35 @@ const ProductShowList = () => {
       );
       if (foundCategory) {
         setPageTitle(foundCategory.label);
+      } else {
+        setPageTitle("Tất cả sản phẩm");
       }
     } else {
       setPageTitle("Tất cả sản phẩm");
     }
+
+    const fetchedProducts = category
+      ? getProductsByCategory(category)
+      : getAllProducts();
+    setProducts(fetchedProducts);
   }, [location.search]);
 
   return (
-    <div>
-      <FullBanner image={banner}></FullBanner>
+    <div className={`mt-4 ${isSidebarOpen ? "ml-72" : ""}`}>
+      <FullBanner image={banner} />
       <ListProduct
         title="Hàng giá tốt"
         layout="horizontal"
         number={3}
         carousel={true}
-      ></ListProduct>
+      />
       <List
         title={pageTitle}
         titlePosition="left"
         category={selectedCategory}
-      ></List>
-      <Brand></Brand>
+        products={products}
+      />
+      <Brand />
     </div>
   );
 };
