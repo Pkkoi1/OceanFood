@@ -1,25 +1,22 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import type { Product } from "../../data/mockData";
+import type { HandbookArticle } from "../../data/handbookData";
 
 interface SearchSuggestionsProps {
   suggestions: Product[];
+  articles: HandbookArticle[]; // Add articles to props
   onSearchSubmit: () => void;
-  onSuggestionClick: (productId: number) => void; // Add prop for suggestion click
+  onSuggestionClick: (productId: number) => void;
+  onArticleClick: (articleId: number) => void; // Add handler for article click
 }
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
   suggestions,
+  articles,
   onSearchSubmit,
   onSuggestionClick,
+  onArticleClick,
 }) => {
-  const navigate = useNavigate();
-
-  const handleSuggestionClick = (productId: number) => {
-    navigate(`/product/${productId}`);
-    onSuggestionClick(productId); // Call handler
-  };
-
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
   };
@@ -31,7 +28,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
         <div
           key={product.id}
           className="flex items-center px-4 py-2 hover:bg-blue-50 cursor-pointer transition-colors"
-          onClick={() => handleSuggestionClick(product.id)}
+          onClick={() => onSuggestionClick(product.id)}
         >
           <img
             src={product.image}
@@ -51,14 +48,32 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
           </div>
         </div>
       ))}
-      {suggestions.length >= 4 && (
+      <div className="px-4 py-2 border-b font-bold text-gray-800">
+        Cẩm nang ẩm thực
+      </div>
+      {articles.map((article) => (
         <div
-          className="px-4 py-2 text-center font-bold text-blue-500 cursor-pointer hover:underline"
-          onClick={onSearchSubmit}
+          key={article.id}
+          className="flex items-center px-4 py-2 hover:bg-blue-50 cursor-pointer transition-colors"
+          onClick={() => onArticleClick(article.id)}
         >
-          Xem thêm sản phẩm
+          <img
+            src={article.image}
+            alt={article.title}
+            className="w-12 h-12 object-cover rounded mr-4"
+          />
+          <div className="flex-1">
+            <div className="font-bold text-gray-800">{article.title}</div>
+            <div className="text-gray-600 text-sm">{article.author}</div>
+          </div>
         </div>
-      )}
+      ))}
+      <div
+        className="px-4 py-2 text-center font-bold text-blue-500 cursor-pointer hover:underline"
+        onClick={onSearchSubmit}
+      >
+        Xem thêm kết quả
+      </div>
     </div>
   );
 };

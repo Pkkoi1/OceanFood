@@ -7,8 +7,10 @@ import timeWork from "../../../assets/images/time-work.webp";
 import ship from "../../../assets/images/free-ship-2h.webp";
 import MainMenu from "../../menu/MainMenu";
 import { searchProductsByName } from "../../../controller/ProductController";
+import { searchHandbookByTitle } from "../../../controller/HandbookController";
 import type { Product } from "../../../data/mockData";
 import SearchSuggestions from "../../search/SearchSuggestions";
+import { type HandbookArticle } from "../../../data/handbookData";
 
 const SearchBar = () => {
   const [placeholder, setPlaceholder] = useState("");
@@ -17,6 +19,7 @@ const SearchBar = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState<Product[]>([]);
+  const [articles, setArticles] = useState<HandbookArticle[]>([]); // Add state for articles
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -49,19 +52,28 @@ const SearchBar = () => {
   }, [placeholder, currentIndex, isDeleting]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase(); // Convert to lowercase for case-insensitive matching
     setSearchTerm(value);
     if (value) {
-      const results = searchProductsByName(value);
-      setSuggestions(results.slice(0, 4)); // Limit to 4 suggestions
+      const productResults = searchProductsByName(value);
+      const articleResults = searchHandbookByTitle(value); // Use controller for searching articles
+      setSuggestions(productResults.slice(0, 4)); // Limit to 4 product suggestions
+      setArticles(articleResults.slice(0, 4)); // Limit to 4 article suggestions
     } else {
       setSuggestions([]);
+      setArticles([]);
     }
   };
 
   const handleSuggestionClick = (productId: number) => {
     setSuggestions([]); // Hide suggestions
     navigate(`/product/${productId}`);
+  };
+
+  const handleArticleClick = (articleId: number) => {
+    setSuggestions([]); // Hide suggestions
+    setArticles([]); // Hide articles
+    navigate(`/handbook/${articleId}`);
   };
 
   const handleSearchSubmit = () => {
@@ -107,8 +119,10 @@ const SearchBar = () => {
         {suggestions.length > 0 && (
           <SearchSuggestions
             suggestions={suggestions}
+            articles={articles} // Pass articles to suggestions
             onSearchSubmit={handleSearchSubmit}
-            onSuggestionClick={handleSuggestionClick} // Pass click handler
+            onSuggestionClick={handleSuggestionClick}
+            onArticleClick={handleArticleClick} // Pass article click handler
           />
         )}
       </div>

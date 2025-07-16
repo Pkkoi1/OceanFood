@@ -1,0 +1,13 @@
+import { handbookArticles, type HandbookArticle } from "../data/handbookData";
+
+/**
+ * Search handbook articles by title.
+ * @param title - The title or partial title to search for.
+ * @returns An array of matching handbook articles.
+ */
+export const searchHandbookByTitle = (title: string): HandbookArticle[] => {
+  const lowerCaseTitle = title.toLowerCase();
+  return handbookArticles.filter((article) =>
+    article.title.toLowerCase().includes(lowerCaseTitle)
+  );
+};
