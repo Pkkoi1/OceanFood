@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { productTypes } from "../../data/typeData";
-import { getProductsByCategory } from "../../controller/ProductController";
+import {
+  getProductsByCategory,
+  getOriginsByCategory,
+  getAllProducts,
+} from "../../controller/ProductController";
 
 interface FilterOptions {
   priceRange: string;
@@ -21,6 +25,9 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
   );
   const [selectedOrigins, setSelectedOrigins] = useState<string[]>([]);
   const [availableTypes, setAvailableTypes] = useState(productTypes);
+  const [availableOrigins, setAvailableOrigins] = useState<
+    { key: string; label: string }[]
+  >([]);
 
   const priceRanges = [
     { key: "under-500k", label: "Giá dưới 500.000đ" },
@@ -29,19 +36,6 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
     { key: "3m-5m", label: "3.000.000đ - 5.000.000đ" },
     { key: "5m-7m", label: "5.000.000đ - 7.000.000đ" },
     { key: "over-7m", label: "Giá trên 7.000.000đ" },
-  ];
-
-  const origins = [
-    { key: "chile", label: "Chile" },
-    { key: "my", label: "Mỹ" },
-    { key: "nhat-ban", label: "Nhật Bản" },
-    { key: "ireland", label: "Ireland" },
-    { key: "viet-nam", label: "Việt Nam" },
-    { key: "nauy", label: "Nauy" },
-    { key: "han-quoc", label: "Hàn Quốc" },
-    { key: "canada", label: "Canada" },
-    { key: "thai-lan", label: "Thái Lan" },
-    { key: "trung-quoc", label: "Trung Quốc" },
   ];
 
   useEffect(() => {
@@ -56,8 +50,25 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
       setAvailableTypes(
         productTypes.filter((type) => types.includes(type.key))
       );
+
+      const origins = getOriginsByCategory(category).map((origin) => ({
+        key: origin.toLowerCase().replace(/\s+/g, "-"),
+        label: origin,
+      }));
+      setAvailableOrigins(origins);
     } else {
       setAvailableTypes(productTypes); // Default to all types
+      const allOrigins = Array.from(
+        new Set(
+          getAllProducts()
+            .map((product) => product.origin.split(": ")[1])
+            .filter((origin): origin is string => !!origin)
+        )
+      ).map((origin) => ({
+        key: origin.toLowerCase().replace(/\s+/g, "-"),
+        label: origin,
+      }));
+      setAvailableOrigins(allOrigins); // Default to all origins
     }
   }, [location.search]);
 
@@ -105,7 +116,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
           {priceRanges.map((range) => (
             <label key={range.key} className="flex items-center cursor-pointer">
               <input
-                type="checkbox"
+                type="radio" // Changed to radio for single selection
                 name="priceRange"
                 value={range.key}
                 checked={selectedPriceRange === range.key}
@@ -146,7 +157,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
           Xuất xứ
         </h3>
         <div className="space-y-1">
-          {origins.map((origin) => (
+          {availableOrigins.map((origin) => (
             <label
               key={origin.key}
               className="flex items-center cursor-pointer"

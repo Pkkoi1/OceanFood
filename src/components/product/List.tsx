@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ListProduct from "../home/ListProduct";
 import FilterSidebar from "./FilterSidebar";
+import { useLocation } from "react-router-dom";
 import type { Product } from "../../data/mockData";
-import { getAllProducts } from "../../controller/ProductController";
+import { filterProducts } from "../../controller/ProductController";
 
 interface ListProps {
   title?: string;
@@ -11,13 +12,40 @@ interface ListProps {
   products?: Product[]; // New optional products prop
 }
 
+interface FilterOptions {
+  priceRange: string;
+  productTypes: string[];
+  origins: string[];
+}
+
 const List: React.FC<ListProps> = ({
   title = "",
   titlePosition = "left",
-  products,
+  category,
 }) => {
   const [number, setNumber] = useState(9);
   const [layout, setLayout] = useState<"vertical" | "horizontal">("vertical");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [filters, setFilters] = useState<FilterOptions>({
+    priceRange: "",
+    productTypes: [],
+    origins: [],
+  });
+  const location = useLocation();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const categoryFromUrl = urlParams.get("category") || category;
+
+    // Apply filters immediately
+    const updatedProducts = filterProducts(
+      categoryFromUrl ?? null,
+      filters.priceRange,
+      filters.productTypes,
+      filters.origins
+    );
+    setFilteredProducts(updatedProducts);
+  }, [location.search, category, filters]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,16 +73,27 @@ const List: React.FC<ListProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleFilterChange = (newFilters: FilterOptions) => {
+    setFilters(newFilters);
+    const updatedProducts = filterProducts(
+      category ?? null, // Ensure category is either string or null
+      newFilters.priceRange,
+      newFilters.productTypes,
+      newFilters.origins
+    );
+    setFilteredProducts(updatedProducts);
+  };
+
   return (
     <div className="flex flex-row justify-between items-start mx-4 lg:mx-[100px] mt-4 gap-6">
-      <FilterSidebar />
+      <FilterSidebar onFilterChange={handleFilterChange} />
       <ListProduct
         title={title}
         layout="vertical"
         container={false}
         titlePosition={titlePosition}
         number={number}
-        products={products || getAllProducts()} // Pass products or fetch all
+        products={filteredProducts} // Pass filtered products
       />
     </div>
   );

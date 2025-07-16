@@ -70,3 +70,76 @@ export const getProductsByCategory = (categoryKey: string): Product[] => {
     (product) => product.categories?.includes(categoryKey) // Updated to check multiple categories
   );
 };
+
+// Get origins by category
+export const getOriginsByCategory = (categoryKey: string): string[] => {
+  const products = getProductsByCategory(categoryKey);
+  return Array.from(
+    new Set(
+      products
+        .map((product) => product.origin.split(": ")[1]) // Extract origin value
+        .filter((origin): origin is string => !!origin) // Ensure valid origins
+    )
+  );
+};
+
+// Filter products based on category, price range, type, and origin
+export const filterProducts = (
+  category: string | null,
+  priceRange?: string,
+  types?: string[],
+  origins?: string[]
+): Product[] => {
+  let filteredProducts = [...newProducts];
+
+  // Filter by category from URL
+  if (category) {
+    filteredProducts = filteredProducts.filter((product) =>
+      product.categories?.includes(category)
+    );
+  }
+
+  // Filter by price range
+  if (priceRange) {
+    const [minPrice, maxPrice] = (() => {
+      switch (priceRange) {
+        case "under-500k":
+          return [0, 500000];
+        case "500k-1m":
+          return [500000, 1000000];
+        case "1m-3m":
+          return [1000000, 3000000];
+        case "3m-5m":
+          return [3000000, 5000000];
+        case "5m-7m":
+          return [5000000, 7000000];
+        case "over-7m":
+          return [7000000, Infinity];
+        default:
+          return [0, Infinity];
+      }
+    })();
+    filteredProducts = filteredProducts.filter(
+      (product) =>
+        product.currentPrice >= minPrice && product.currentPrice <= maxPrice
+    );
+  }
+
+  // Filter by types
+  if (types && types.length > 0) {
+    filteredProducts = filteredProducts.filter((product) =>
+      types.includes(product.type || "")
+    );
+  }
+
+  // Filter by origins
+  if (origins && origins.length > 0) {
+    filteredProducts = filteredProducts.filter((product) =>
+      origins.includes(
+        product.origin.split(": ")[1]?.toLowerCase().replace(/\s+/g, "-") || ""
+      )
+    );
+  }
+
+  return filteredProducts;
+};

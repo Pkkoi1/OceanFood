@@ -43,7 +43,7 @@ const ProductShowList: React.FC<ProductShowListProps> = ({ isSidebarOpen }) => {
 
     const fetchedProducts = category
       ? getProductsByCategory(category)
-      : getAllProducts();
+      : getAllProducts(); // Default to all products
     setProducts(fetchedProducts);
   }, [location.search]);
 

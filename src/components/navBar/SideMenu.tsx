@@ -59,6 +59,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ onToggle }) => {
 
   const handleCategoryClick = (category: string) => {
     navigate(`/products?category=${category}`);
+    window.location.reload(); // Reload the page after navigation
     if (isMobile) {
       setShowCategoryMenu(false); // Close menu on mobile after selection
       onToggle?.(false);
