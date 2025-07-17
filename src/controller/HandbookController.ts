@@ -11,3 +11,12 @@ export const searchHandbookByTitle = (title: string): HandbookArticle[] => {
     article.title.toLowerCase().includes(lowerCaseTitle)
   );
 };
+
+/**
+ * Get handbook article by ID.
+ * @param id - The ID of the handbook article.
+ * @returns The handbook article or undefined if not found.
+ */
+export const getHandbookById = (id: number): HandbookArticle | undefined => {
+  return handbookArticles.find((article) => article.id === id);
+};

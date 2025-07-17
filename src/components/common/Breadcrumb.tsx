@@ -2,6 +2,8 @@ import React from "react";
 import { Breadcrumb as AntBreadcrumb } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useLocation, Link } from "react-router-dom";
+import { getProductById } from "../../controller/ProductController";
+import { getHandbookById } from "../../controller/HandbookController";
 
 const Breadcrumb: React.FC = () => {
   const location = useLocation();
@@ -15,6 +17,15 @@ const Breadcrumb: React.FC = () => {
     "/contact": "Liên hệ",
     "/login": "Đăng nhập",
     "/register": "Đăng ký",
+    "/favorites": "Sản phẩm yêu thích",
+    "/search": "Kết quả tìm kiếm",
+    "/store-location": "Địa điểm cửa hàng",
+    "/policy/return": "Chính sách đổi trả",
+    "/policy/payment": "Chính sách mua hàng",
+    "/policy/sales": "Chính sách bán hàng",
+    "/policy/shipping": "Chính sách giao hàng",
+    "/policy/purchase-guide": "Hướng dẫn mua hàng",
+    "/policy/privacy": "Bảo mật thông tin cá nhân",
   };
 
   const generateBreadcrumbItems = () => {
@@ -36,19 +47,46 @@ const Breadcrumb: React.FC = () => {
       },
     ];
 
-    // If not on home page, add current page
-    if (location.pathname !== "/") {
-      const currentRoute = "/" + pathSegments.join("/");
-      const currentLabel =
-        routeMap[currentRoute] || pathSegments[pathSegments.length - 1];
+    // Build hierarchical breadcrumb items
+    let currentPath = "";
+    pathSegments.forEach((segment, index) => {
+      currentPath += `/${segment}`;
+      let label = routeMap[currentPath];
+
+      // Handle dynamic routes for products and handbooks
+      if (!label) {
+        console.log(
+          "Path segment:",
+          segment,
+          "Index:",
+          index,
+          "Current path:",
+          currentPath
+        );
+        if (currentPath.match(/\/products/)) {
+          const productId = Number(segment);
+          const product = getProductById(productId);
+          console.log("Product:", product);
+          label = product ? product.name : "Sản phẩm";
+        } else if (currentPath.match(/\/handbooks/)) {
+          const handbookId = Number(segment);
+          const handbook = getHandbookById(handbookId);
+          label = handbook ? handbook.title : "Cẩm nang ẩm thực";
+        } else {
+          console.log("Default label for segment:", segment);
+          label = segment;
+        }
+      }
 
       items.push({
-        key: "current",
+        key: `segment-${index}`,
         title: (
-          <span className="text-[#37bee3] font-medium">{currentLabel}</span>
+          <Link to={currentPath} className="text-gray-600 hover:text-[#37bee3]">
+            {label}
+          </Link>
         ),
       });
-    }
+    });
 
     return items;
   };

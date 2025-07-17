@@ -45,14 +45,14 @@ function App() {
           path="/products"
           element={<ProductShowList isSidebarOpen={isSidebarOpen} />}
         />
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/handbooks" element={<HanbookPage />} />
         <Route path="/cart" element={<CartView />} />
         <Route path="/cart/checkout" element={<CheckoutView />} />
-        <Route path="/handbook/:id" element={<HandbookDetail />} />
+        <Route path="/handbooks/:id" element={<HandbookDetail />} />
         <Route path="/favorites" element={<FavoriteProducts />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/store-location" element={<StoreLocations />} />

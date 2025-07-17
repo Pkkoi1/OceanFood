@@ -61,7 +61,7 @@ const displayDescription = (() => {
   })();
 
   const handleCardClick = () => {
-    navigate(`/handbook/${article.id}`);
+    navigate(`/handbooks/${article.id}`);
     if (onClick) onClick(article);
   };
   return (

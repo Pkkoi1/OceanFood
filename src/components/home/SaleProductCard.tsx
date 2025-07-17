@@ -37,7 +37,7 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
 
   const handleNameClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top
-    navigate(`/product/${product.id}`); // Navigate to product detail page
+    navigate(`/products/${product.id}`); // Navigate to product detail page
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {

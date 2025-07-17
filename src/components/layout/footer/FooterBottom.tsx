@@ -106,39 +106,18 @@ const FooterBottom = () => {
           <h3 className="text-xl font-bold mb-4">Chính sách</h3>
           <ul className="space-y-3 text-sm">
             <li>
-              <a
-                href="#"
-                className="hover:underline"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/policy/return");
-                }}
-              >
+              <a href="/policy/return" className="hover:underline">
                 Chính sách đổi trả
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:underline"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/policy/payment");
-                }}
-              >
+              <a href="/policy/payment" className="hover:underline">
                 {" "}
                 Chính sách mua hàng
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:underline"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/policy/sales");
-                }}
-              >
+              <a href="/policy/sales" className="hover:underline">
                 Chính sách bán hàng
               </a>
             </li>
@@ -153,14 +132,7 @@ const FooterBottom = () => {
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:underline"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/policy/privacy");
-                }}
-              >
+              <a href="/policy/privacy" className="hover:underline">
                 Bảo mật thông tin cá nhân
               </a>
             </li>
