@@ -30,7 +30,8 @@ export const newProducts: Product[] = [
     currentPrice: 269000,
     originalPrice: 320000,
     discount: 16,
-    image: "https://picsum.photos/300/200?random=1",
+    image:
+      "https://product.hstatic.net/1000030244/product/ca-hoi-xong-khoi-truyen-thong_01bc221aeb3c4d1a974f512a61965664_large.jpg",
     isLiked: false,
     isNew: true,
     stockStatus: "Còn hàng",
@@ -75,10 +76,10 @@ export const newProducts: Product[] = [
       },
     ],
     images: [
-      "https://picsum.photos/300/200?random=1",
-      "https://picsum.photos/300/200?random=11",
-      "https://picsum.photos/300/200?random=12",
-      "https://picsum.photos/300/200?random=13",
+      "https://product.hstatic.net/1000030244/product/ca-hoi-xong-khoi-truyen-thong_01bc221aeb3c4d1a974f512a61965664_large.jpg",
+      "https://nguyenhafood.vn/uploads/2019/07/24/e65114fd10dabe921bdf468a3759e049.jpg",
+      "https://media.dolenglish.vn/PUBLIC/MEDIA/abb9c861-3c52-4c20-b394-31c405d754f5.jpg",
+      "https://doiduavang.vn/wp-content/uploads/2021/06/gia-tri-dinh-duong-ca-hoi-xong-khoi.jpg",
     ],
   },
   {
