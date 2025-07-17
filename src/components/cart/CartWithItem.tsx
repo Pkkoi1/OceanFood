@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { CartItem as ImportedCartItem } from "../../data/cartItemData";
-import { useCart } from "../../hooks/useCart";
 import CartTable from "./CartTable";
 import CartTotal from "./CartTotal";
 import CartItem from "./CartItem";
-import { getAllCartItems } from "../../controller/CartController";
+import {
+  getAllCartItems,
+  updateCartItemQuantity,
+  removeFromCart,
+} from "../../controller/CartController";
 
 interface CartData {
   items: ImportedCartItem[];
@@ -14,7 +17,7 @@ interface CartData {
 
 // Extend CartItem type to include 'key'
 interface CartItem extends ImportedCartItem {
-  key?: string;
+  key: string; // Ensure 'key' is always a string
   selected?: boolean;
 }
 
@@ -24,29 +27,18 @@ const CartWithItem: React.FC<CartData> = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>(
     getAllCartItems().map((item) => ({
       ...item,
-      key: item.id.toString(),
+      key: item.id.toString(), // Ensure 'key' is always a string
       selected: false,
     }))
   );
 
-  // Sử dụng cartItems làm initialItems cho useCart
-  const {
-    items,
-    totalAmount,
-    handleQuantityChange,
-    handleSelectItem,
-    handleSelectAll,
-    handleDeleteItem,
-  } = useCart(cartItems);
-
   useEffect(() => {
-    // Lắng nghe sự kiện storage để cập nhật khi localStorage thay đổi
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === "cartItems") {
         const updatedCartItems = getAllCartItems().map((item) => ({
           ...item,
           key: item.id.toString(),
-          selected: items.find((i) => i.id === item.id)?.selected || false,
+          selected: cartItems.find((i) => i.id === item.id)?.selected || false,
         }));
         setCartItems(updatedCartItems);
       }
@@ -54,7 +46,7 @@ const CartWithItem: React.FC<CartData> = () => {
 
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
-  }, [items]);
+  }, [cartItems]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -66,8 +58,54 @@ const CartWithItem: React.FC<CartData> = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  const handleQuantityChange = (key: string, newQuantity: number) => {
+    const item = cartItems.find((item) => item.key === key);
+    if (item && newQuantity > 0) {
+      updateCartItemQuantity(item.id, newQuantity);
+      setCartItems(
+        getAllCartItems().map((item) => ({
+          ...item,
+          key: item.id.toString(), // Ensure 'key' is always a string
+          selected: cartItems.find((i) => i.id === item.id)?.selected || false,
+        }))
+      );
+    }
+  };
+
+  const handleSelectItem = (key: string, checked: boolean) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.key === key ? { ...item, selected: checked } : item
+      )
+    );
+  };
+
+  const handleSelectAll = (checked: boolean) => {
+    setCartItems((prev) =>
+      prev.map((item) => ({ ...item, selected: checked }))
+    );
+  };
+
+  const handleDeleteItem = (key: string) => {
+    const item = cartItems.find((item) => item.key === key);
+    if (item) {
+      removeFromCart(item.id);
+      setCartItems(
+        getAllCartItems().map((item) => ({
+          ...item,
+          key: item.id.toString(), // Ensure 'key' is always a string
+          selected: cartItems.find((i) => i.id === item.id)?.selected || false,
+        }))
+      );
+    }
+  };
+
   const handleCheckout = () => {
-    const selectedItems = items.filter((item) => item.selected);
+    const selectedItems = cartItems.filter((item) => item.selected);
+    const totalAmount = selectedItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
     if (selectedItems.length > 0) {
       navigate("/cart/checkout", {
         state: { selectedItems, totalAmount },
@@ -88,8 +126,8 @@ const CartWithItem: React.FC<CartData> = () => {
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold">Giỏ hàng của bạn</h3>
             <span className="text-sm text-gray-600">
-              {items.filter((item) => item.selected).length}/{items.length} sản
-              phẩm đã chọn
+              {cartItems.filter((item) => item.selected).length}/
+              {cartItems.length} sản phẩm đã chọn
             </span>
           </div>
 
@@ -121,7 +159,7 @@ const CartWithItem: React.FC<CartData> = () => {
         </div>
       ) : (
         <CartTable
-          items={items}
+          items={cartItems}
           onQuantityChange={handleQuantityChange}
           onSelectItem={handleSelectItem}
           onSelectAll={handleSelectAll}
@@ -131,7 +169,10 @@ const CartWithItem: React.FC<CartData> = () => {
       )}
 
       <CartTotal
-        totalAmount={totalAmount}
+        totalAmount={cartItems.reduce(
+          (sum, item) => sum + (item.selected ? item.price * item.quantity : 0),
+          0
+        )}
         formatPrice={formatPrice}
         onCheckout={handleCheckout}
       />

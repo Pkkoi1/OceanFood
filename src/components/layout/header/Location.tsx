@@ -67,9 +67,9 @@ const Location = () => {
             Yêu thích
           </span>
         </div>
-        <div className="flex items-center gap-1 ">
+        <a className="flex items-center gap-1 " href="/store-location">
           <span className="cursor-pointer">Hệ thống cửa hàng</span>
-        </div>
+        </a>
       </div>
     </div>
   );

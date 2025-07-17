@@ -16,11 +16,13 @@ import method2 from "../../../assets/images/trustbadge_2.webp";
 import method3 from "../../../assets/images/trustbadge_3.webp";
 import method4 from "../../../assets/images/trustbadge_4.webp";
 import { Image } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const FooterBottom = () => {
   const [expandedSections, setExpandedSections] = useState<{
     [key: string]: boolean;
   }>({});
+  const navigate = useNavigate();
 
   const toggleSection = (section: string) => {
     setExpandedSections((prev) => ({
@@ -30,7 +32,7 @@ const FooterBottom = () => {
   };
 
   return (
-    <div className="bg-[#0282a5] text-white text-[14px] py-12 px-4 mb-10 lg:px-[100px] relative overflow-hidden border-t border-white/20">
+    <div className="bg-[#0282a5] text-white text-[14px] py-12 px-4  lg:px-[100px] relative overflow-hidden border-t border-white/20">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-20 text-6xl">🐟</div>
@@ -104,32 +106,61 @@ const FooterBottom = () => {
           <h3 className="text-xl font-bold mb-4">Chính sách</h3>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="#" className="hover:underline">
+              <a
+                href="#"
+                className="hover:underline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/policy/return");
+                }}
+              >
                 Chính sách đổi trả
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a
+                href="#"
+                className="hover:underline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/policy/payment");
+                }}
+              >
+                {" "}
                 Chính sách mua hàng
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a
+                href="#"
+                className="hover:underline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/policy/sales");
+                }}
+              >
                 Chính sách bán hàng
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/policy/shipping" className="hover:underline">
                 Chính sách giao hàng
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/policy/purchase-guide" className="hover:underline">
                 Hướng dẫn mua hàng
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a
+                href="#"
+                className="hover:underline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/policy/privacy");
+                }}
+              >
                 Bảo mật thông tin cá nhân
               </a>
             </li>
@@ -298,6 +329,18 @@ const FooterBottom = () => {
               <li>
                 <a href="#" className="hover:underline">
                   Bảo mật thông tin cá nhân
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="hover:underline"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/policy/payment");
+                  }}
+                >
+                  Chính sách thanh toán
                 </a>
               </li>
             </ul>

@@ -5,6 +5,7 @@ import {
   removeFavorite,
   getAllFavorites,
 } from "../../controller/FavoriteController";
+import { notification } from "antd";
 
 interface FavoriteButtonProps {
   isLiked: boolean;
@@ -20,6 +21,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   className,
 }) => {
   const [isLikedLocal, setIsLikedLocal] = useState(initialIsLiked);
+  const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
     // Đồng bộ trạng thái với localStorage khi khởi động
@@ -32,43 +34,53 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === "favoriteProductIds") {
         const isFavorite = getAllFavorites().includes(productId);
-        console.log(
-          `Storage changed for product ${productId}, isFavorite: ${isFavorite}`
-        ); // Debug
         setIsLikedLocal(isFavorite);
       }
     };
 
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
-  }, [productId, isLikedLocal]); // Thêm isLikedLocal vào dependencies để kiểm tra lại
+  }, [productId, isLikedLocal]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     const newIsLiked = !isLikedLocal;
     if (newIsLiked) {
       addFavorite(productId);
+      api.success({
+        message: "Đã thêm vào yêu thích",
+        description: `Sản phẩm đã được thêm vào danh sách yêu thích.`,
+        placement: "topRight",
+      });
     } else {
       removeFavorite(productId);
+      api.info({
+        message: "Đã xóa khỏi yêu thích",
+        description: `Sản phẩm đã được xóa khỏi danh sách yêu thích.`,
+        placement: "topRight",
+      });
     }
-    setIsLikedLocal(newIsLiked); // Cập nhật ngay lập tức
-    onToggleLike(productId); // Thông báo cho component cha
+    setIsLikedLocal(newIsLiked);
+    onToggleLike(productId);
   };
 
   return (
-    <div className={className} onClick={handleClick}>
-      {isLikedLocal ? (
-        <HeartFilled
-          style={{ color: "#FF4D4F" }}
-          className="text-red-500 text-xl"
-        />
-      ) : (
-        <HeartOutlined
-          style={{ color: "#FF4D4F" }}
-          className="text-gray-400 text-xl hover:text-red-500"
-        />
-      )}
-    </div>
+    <>
+      {contextHolder}
+      <div className={className} onClick={handleClick}>
+        {isLikedLocal ? (
+          <HeartFilled
+            style={{ color: "#FF4D4F" }}
+            className="text-red-500 text-xl"
+          />
+        ) : (
+          <HeartOutlined
+            style={{ color: "#FF4D4F" }}
+            className="text-gray-400 text-xl hover:text-red-500"
+          />
+        )}
+      </div>
+    </>
   );
 };
 

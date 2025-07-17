@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { CartItem as ImportedCartItem } from "../data/cartItemData";
 
 interface CartItem extends ImportedCartItem {
-  key: string;
+  key: string; // Ensure 'key' is always a string
   selected?: boolean;
 }
 
@@ -10,7 +10,7 @@ export const useCart = (initialItems: ImportedCartItem[]) => {
   const [items, setItems] = useState<CartItem[]>(
     initialItems.map((item) => ({
       ...item,
-      key: item.id.toString(),
+      key: item.id.toString(), // Ensure 'key' is always a string
       selected: false,
     }))
   );

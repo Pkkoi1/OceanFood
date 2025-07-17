@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
 import FavoriteButton from "../common/FavoriteButton"; // Import the updated component
 import { addToCart } from "../../controller/CartController";
+import { notification } from "antd";
 
 interface Product {
   id: number;
@@ -31,6 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   layout = "vertical",
 }) => {
   const navigate = useNavigate();
+  const [api, contextHolder] = notification.useNotification();
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
@@ -55,7 +57,25 @@ const ProductCard: React.FC<ProductCardProps> = ({
       price: product.currentPrice,
       quantity: 1, // Mặc định thêm 1
     });
-    alert("Đã thêm sản phẩm vào giỏ hàng!"); // Có thể thay bằng toast
+    api.success({
+      message: "Thêm vào giỏ hàng",
+      description: (
+        <div>
+          <p>{product.name} đã được thêm vào giỏ hàng.</p>
+          <a
+            href="/cart"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/cart");
+            }}
+            style={{ color: "#1890ff", textDecoration: "underline" }}
+          >
+            Xem danh sách giỏ hàng tại đây
+          </a>
+        </div>
+      ),
+      placement: "topRight",
+    });
   };
 
   // Layout horizontal
@@ -65,6 +85,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         className="bg-white border p-2 border-[#F2F2F2] hover:border-[#4FB3D9] overflow-hidden relative group transition-all duration-300 flex max-h-full lg:max-w-full cursor-pointer"
         onClick={handleProductClick}
       >
+        {contextHolder}
         {/* Discount Badge */}
         {product.discount && (
           <div className="absolute top-3 left-3 bg-[#4FB3D9] text-white px-2 py-1 rounded text-[10px] font-bold z-10">
@@ -121,6 +142,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       className="bg-white border-[0.01px] border-[#F2F2F2] p-2 overflow-hidden relative group  hover:border-[#4FB3D9] transition-all duration-300 cursor-pointer"
       onClick={handleProductClick}
     >
+      {contextHolder}
       {/* Discount Badge */}
       <div className="absolute top-6 left-6 z-10">
         {product.discount ? (

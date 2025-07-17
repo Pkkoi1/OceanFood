@@ -21,6 +21,14 @@ import CheckoutView from "./views/checkout/CheckoutView";
 import HandbookDetail from "./views/handbook/HandbookDetail";
 import FavoriteProducts from "./views/favorite/FavoriteProducts";
 import SearchResults from "./views/search/SearchResults";
+import CustomNotification from "./components/notification/CustomNotification";
+import StoreLocations from "./views/storeLocation/StoreLocation";
+import ReturnPolicy from "./views/policy/ReturnPolicy";
+import PaymentPolicy from "./views/policy/PaymentPolicy";
+import SalesPolicy from "./views/policy/SalesPolicy";
+import ShippingPolicy from "./views/policy/ShippingPolicy";
+import PurchaseGuide from "./views/policy/PurchaseGuide";
+import PrivacyPolicy from "./views/policy/PrivacyPolicy";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -47,11 +55,19 @@ function App() {
         <Route path="/handbook/:id" element={<HandbookDetail />} />
         <Route path="/favorites" element={<FavoriteProducts />} />
         <Route path="/search" element={<SearchResults />} />
+        <Route path="/store-location" element={<StoreLocations />} />
+        <Route path="/policy/return" element={<ReturnPolicy />} />
+        <Route path="/policy/payment" element={<PaymentPolicy />} />
+        <Route path="/policy/sales" element={<SalesPolicy />} />
+        <Route path="/policy/shipping" element={<ShippingPolicy />} />
+        <Route path="/policy/purchase-guide" element={<PurchaseGuide />} />
+        <Route path="/policy/privacy" element={<PrivacyPolicy />} />
       </Routes>
       <BellButton />
       <ContactButton />
       <MessengerButton />
       <PhoneFooter />
+      <CustomNotification></CustomNotification>
       <Footer />
     </BrowserRouter>
   );

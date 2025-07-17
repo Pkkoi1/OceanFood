@@ -97,9 +97,9 @@ const SearchBar = () => {
       ref={searchRef}
       className="flex flex-col bg-white lg:shadow lg:flex-row items-center justify-between gap-3 px-4 lg:px-[100px] w-screen lg:my-0 my-3"
     >
-      <div className="flex-shrink-0">
-        <Image src={logo} alt="Ocean Food Logo" width={120} height={60} />
-      </div>
+      <a className="flex-shrink-0 py-2" href="/">
+        <img src={logo} alt="" className="w-[120px] h-[60px]" />
+      </a>
 
       <div className="flex items-center relative w-full lg:w-auto lg:ml-36 order-3 lg:order-2">
         <input
@@ -127,7 +127,7 @@ const SearchBar = () => {
         )}
       </div>
 
-      <div className="hidden lg:flex items-center gap-4 order-2 lg:order-3">
+      <div className="hidden lg:flex font items-center gap-4 order-2 lg:order-3">
         <div className="flex items-center gap-2">
           <Image src={timeWork} alt="Thời gian" width={45} height={45} />
           <div>
