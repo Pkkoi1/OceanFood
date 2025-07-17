@@ -53,7 +53,7 @@ const Brand: React.FC<BrandProps> = ({ title = "Đại lý ủy quyền" }) => {
       </div>
 
       {/* Desktop Brand Logos Grid */}
-      <div className="hidden lg:grid grid-cols-5 gap-8">
+      <a className="hidden lg:grid grid-cols-5 gap-8" href="/products">
         {brandLogos.map((brand) => (
           <div key={brand.id}>
             <img
@@ -63,7 +63,7 @@ const Brand: React.FC<BrandProps> = ({ title = "Đại lý ủy quyền" }) => {
             />
           </div>
         ))}
-      </div>
+      </a>
 
       {/* Mobile Brand Logos Carousel */}
       <div className="lg:hidden relative">
