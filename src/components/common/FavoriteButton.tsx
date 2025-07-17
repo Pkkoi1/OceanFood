@@ -22,10 +22,11 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
 }) => {
   const [isLikedLocal, setIsLikedLocal] = useState(initialIsLiked);
   const [api, contextHolder] = notification.useNotification();
+  let isFavorite = getAllFavorites().includes(productId);
 
   useEffect(() => {
     // Đồng bộ trạng thái với localStorage khi khởi động
-    const isFavorite = getAllFavorites().includes(productId);
+    isFavorite = getAllFavorites().includes(productId);
     if (isLikedLocal !== isFavorite) {
       setIsLikedLocal(isFavorite);
     }
@@ -40,7 +41,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
 
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
-  }, [productId, isLikedLocal]);
+  }, [isFavorite]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
