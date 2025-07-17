@@ -34,7 +34,14 @@ const CheckoutView: React.FC = () => {
     return null;
   }
 
-  const { selectedItems, totalAmount } = state;
+  // Ensure totalAmount is calculated correctly if not provided
+  const {
+    selectedItems,
+    totalAmount = selectedItems.reduce(
+      (sum, item) => sum + item.currentPrice * item.quantity,
+      0
+    ),
+  } = state;
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";

@@ -1,10 +1,13 @@
 export interface CartItem {
   id: number;
   name: string;
-  image: string;
-  price: number;
+  price: number; // Add this field to match the required type
   quantity: number;
-  key?: string; // Add optional 'key' property
+  image: string;
+  currentPrice: number; // Include currentPrice for compatibility
+  originalPrice?: number;
+  discount?: number;
+  key?: string; // Optional key for unique identification
 }
 
 export const cartItems: CartItem[] = [];

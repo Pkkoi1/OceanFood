@@ -56,6 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       image: product.image,
       price: product.currentPrice,
       quantity: 1, // Mặc định thêm 1
+      currentPrice: product.currentPrice,
     });
     api.success({
       message: "Thêm vào giỏ hàng",

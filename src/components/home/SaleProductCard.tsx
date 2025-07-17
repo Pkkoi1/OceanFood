@@ -48,6 +48,7 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
       image: product.image,
       price: product.currentPrice,
       quantity: 1, // Default quantity
+      currentPrice: product.currentPrice,
     });
 
     // Show notification
