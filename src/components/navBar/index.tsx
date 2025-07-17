@@ -38,18 +38,6 @@ const accountItems: MenuProps["items"] = [
   },
 ];
 
-// Menu cho Giỏ hàng
-const cartItemsMenu: MenuProps["items"] = [
-  {
-    key: "1",
-    label: (
-      <div className="w-full">
-        <CartDropdown />
-      </div>
-    ),
-  },
-];
-
 interface NavBarProps {
   onSidebarToggle?: (isOpen: boolean) => void;
 }
@@ -97,12 +85,11 @@ const NavBar: React.FC<NavBarProps> = ({ onSidebarToggle }) => {
 
           {/* Cart */}
           <Dropdown
-            menu={{ items: cartItemsMenu }}
             trigger={["hover"]}
             placement="bottomRight"
-            dropdownRender={(menu) => (
+            popupRender={() => (
               <div className="bg-white shadow-lg rounded border w-full border-gray-200">
-                {menu}
+                <CartDropdown />
               </div>
             )}
           >

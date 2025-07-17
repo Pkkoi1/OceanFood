@@ -64,10 +64,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <p>{product.name} đã được thêm vào giỏ hàng.</p>
           <a
             href="/cart"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/cart");
-            }}
             style={{ color: "#1890ff", textDecoration: "underline" }}
           >
             Xem danh sách giỏ hàng tại đây

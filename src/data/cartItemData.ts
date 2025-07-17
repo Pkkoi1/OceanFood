@@ -4,6 +4,7 @@ export interface CartItem {
   image: string;
   price: number;
   quantity: number;
+  key?: string; // Add optional 'key' property
 }
 
 export const cartItems: CartItem[] = [];

@@ -4,26 +4,76 @@ import CartSummary from "./CartSummary";
 import CartItem from "./CartItem";
 import type { CartItem as CartItemType } from "../../data/cartItemData";
 import { ShoppingOutlined } from "@ant-design/icons";
-import { getAllCartItems } from "../../controller/CartController";
+import {
+  getAllCartItems,
+  updateCartItemQuantity,
+  removeFromCart,
+} from "../../controller/CartController";
 
 const CartDropdown: React.FC = () => {
   const [items, setItems] = useState<CartItemType[]>([]);
 
   useEffect(() => {
-    // ✅ Lấy dữ liệu giỏ hàng từ controller
-    const fetchedItems = setInterval(() => {
-      const cartItems = getAllCartItems();
-      setItems(cartItems);
+    const interval = setInterval(() => {
+      setItems(
+        getAllCartItems().map((item) => ({
+          ...item,
+          key: item.id.toString(), // Ensure 'key' is always a string
+        }))
+      );
     }, 500);
-    return () => clearInterval(fetchedItems);
+
+    return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "cartItems") {
+        setItems(
+          getAllCartItems().map((item) => ({
+            ...item,
+            key: item.id.toString(),
+          }))
+        );
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  const handleQuantityChange = (key: string, newQuantity: number) => {
+    const item = items.find((item) => item.key === key);
+    if (item && newQuantity > 0) {
+      updateCartItemQuantity(item.id, newQuantity);
+      setItems(
+        getAllCartItems().map((item) => ({
+          ...item,
+          key: item.id.toString(),
+        }))
+      );
+    }
+  };
+
+  const handleDeleteItem = (key: string) => {
+    const item = items.find((item) => item.key === key);
+    if (item) {
+      removeFromCart(item.id);
+      setItems(
+        getAllCartItems().map((item) => ({
+          ...item,
+          key: item.id.toString(),
+        }))
+      );
+    }
+  };
 
   const handleCheckout = () => {
     alert("Chuyển đến trang thanh toán!");
-    // Thêm logic thanh toán ở đây
+    // Add checkout logic here
   };
 
-  // Tính tổng tiền
+  // Calculate total price
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -35,11 +85,15 @@ const CartDropdown: React.FC = () => {
         <>
           {items.map((item) => (
             <CartItem
-              key={item.id}
+              key={item.key}
               imageSrc={item.image}
               name={item.name}
               price={item.price}
               quantity={item.quantity}
+              onQuantityChange={(newQuantity) =>
+                handleQuantityChange(item.key ?? "", newQuantity)
+              }
+              onDelete={() => handleDeleteItem(item.key ?? "")}
             />
           ))}
           <CartSummary total={total} onCheckout={handleCheckout} />
