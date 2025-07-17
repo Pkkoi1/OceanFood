@@ -34,14 +34,14 @@ const CustomNotification: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       showNotification();
-    }, 10000); // Show notification every 10 seconds
+    }, 30000); 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
 
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 bg-white shadow-lg rounded-lg border border-gray-200 p-4 flex items-center gap-4 z-50">
+    <div className="fixed lg:bottom-4 top-4 left-4 bg-white shadow-lg rounded-lg border border-gray-200 p-4 flex items-center gap-4 z-50">
       <img
         src={notificationData.image}
         alt={notificationData.name}

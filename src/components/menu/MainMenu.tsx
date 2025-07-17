@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PlusOutlined, MinusOutlined, UserOutlined } from "@ant-design/icons";
-import { productCategories } from "../../constants/productCategories";
 import { useLocation } from "react-router-dom";
+import { productCategories } from "../../data/categoryData";
 
 interface MainMenuProps {
   onMenuClick?: (menuKey: string) => void;
@@ -42,7 +42,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
   };
 
   return (
-    <div className="text-md">
+    <div className="text-md m-[-24px]">
       {/* Login/Register Section - Only visible on mobile */}
       <div className="lg:hidden mb-4">
         <div className="bg-[#4FB3D9] text-white p-4 flex items-center gap-3">
@@ -98,15 +98,12 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
 
           {/* Product Subcategories */}
           {item.key === "products" && isProductsExpanded && (
-            <div className="ml-4 mt-2 space-y-1">
+            <div className="ml-6 mt-2 space-y-1">
               {productCategories.map((category) => (
                 <button
                   key={category.key}
                   onClick={() =>
-                    handleMenuClick(
-                      category.key,
-                      `/products/${category.key}`
-                    )
+                    handleMenuClick(category.key, `/products/${category.key}`)
                   }
                   className="w-full text-left py-1 text-sm text-gray-600 hover:text-[#37bee3] cursor-pointer transition-colors"
                 >

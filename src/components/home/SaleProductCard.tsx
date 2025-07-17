@@ -88,7 +88,7 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
 
-        <div className="flex lg:flex-row flex-col h-full w-full">
+        <div className="flex lg:flex-row flex-col justify-between lg:h-full h-[500px] w-full">
           <div className="lg:w-1/2 w-full p-4 relative group">
             {product.discount && (
               <div className="absolute top-7 left-7 bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold z-10">
@@ -100,7 +100,7 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
               isLiked={product.isLiked} // Use local state
               onToggleLike={onToggleLike} // Pass local handler
               productId={product.id}
-              className="absolute top-7 right-7 z-10 cursor-pointer"
+              className="absolute top-7 right-7 cursor-pointer z-30"
             />
 
             <div className="w-full h-full overflow-hidden ">

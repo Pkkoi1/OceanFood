@@ -78,6 +78,8 @@ const SearchBar = () => {
 
   const handleSearchSubmit = () => {
     setSuggestions([]); // Hide suggestions
+    setArticles([]); // Hide articles
+    setSearchTerm(""); // Clear input field
     navigate(`/search?query=${searchTerm}`);
   };
 
