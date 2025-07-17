@@ -74,27 +74,27 @@ const FooterBottom = () => {
           <h3 className="text-xl font-bold mb-4">Về chúng tôi</h3>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/" className="hover:underline">
                 Trang chủ
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/about" className="hover:underline">
                 Giới thiệu
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/products" className="hover:underline">
                 Sản phẩm
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/handbooks" className="hover:underline">
                 Cẩm nang ăn thức
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/contact" className="hover:underline">
                 Liên hệ
               </a>
             </li>
