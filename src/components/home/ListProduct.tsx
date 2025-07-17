@@ -3,6 +3,7 @@ import { Carousel, Select } from "antd";
 import ProductCard from "../product/ProductCard";
 import { favoriteProductIds } from "../../data/mockFavoriteProducts";
 import { getAllProducts } from "../../controller/ProductController";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -38,8 +39,9 @@ const ListProduct: React.FC<ListProductProps> = ({
   titlePosition = "center",
   products = getAllProducts(), // Default to fetching all products
 }) => {
+  const navigate = useNavigate();
   const [displayProducts, setDisplayProducts] = useState<Product[]>([]);
-  const [visibleCount, setVisibleCount] = useState(number);
+  const [visibleCount] = useState(number);
   const [sortOption, setSortOption] = useState("default");
   const [displayTitle, setDisplayTitle] = useState(title);
 
@@ -91,7 +93,7 @@ const ListProduct: React.FC<ListProductProps> = ({
   };
 
   const loadMore = () => {
-    setVisibleCount((prev) => prev + 5);
+    navigate("/products");
   };
 
   // If carousel mode, show all products; otherwise use existing logic
@@ -162,7 +164,11 @@ const ListProduct: React.FC<ListProductProps> = ({
   };
 
   return (
-    <div className={`py-8 mb-6 ${container ? "mx-4 lg:mx-[100px]" : "px-4 w-full lg:px-0 "}`}>
+    <div
+      className={`py-8 mb-6 ${
+        container ? "mx-4 lg:mx-[100px]" : "px-4 w-full lg:px-0 "
+      }`}
+    >
       <div className={`flex w-full items-center mb-8`}>
         <div
           className={`flex items-center gap)||<|A|> gap-4 w-full  ${getTitleAlignment()}`}
@@ -244,7 +250,7 @@ const ListProduct: React.FC<ListProductProps> = ({
       {hasMore && (
         <div className="text-center mt-8">
           <button
-            className="bg-[#4FB3D9] border-2 border-[#4FB3D9] hover:bg-white hover:text-[#4FB3D9] hover:border-[#4FB3D9] text-[16px] px-9 py-3 rounded-full font-bold text-white transition-all duration-300"
+            className="bg-[#4FB3D9] border-2 border-[#4FB3D9] cursor-pointer hover:bg-white hover:text-[#4FB3D9] hover:border-[#4FB3D9] text-[16px] px-9 py-3 rounded-full font-bold text-white transition-all duration-300"
             onClick={loadMore}
           >
             Xem tất cả
