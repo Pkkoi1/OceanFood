@@ -162,7 +162,7 @@ const ListProduct: React.FC<ListProductProps> = ({
   };
 
   return (
-    <div className={`py-8 mb-6 ${container ? "mx-4 lg:mx-[100px]" : ""}`}>
+    <div className={`py-8 mb-6 ${container ? "mx-4 lg:mx-[100px]" : "px-4 w-full lg:px-0 "}`}>
       <div className={`flex w-full items-center mb-8`}>
         <div
           className={`flex items-center gap)||<|A|> gap-4 w-full  ${getTitleAlignment()}`}
@@ -172,7 +172,7 @@ const ListProduct: React.FC<ListProductProps> = ({
           </h2>
 
           {(titlePosition === "left" || titlePosition === "right") && (
-            <div className="flex items-center gap-[150px] lg:gap-2">
+            <div className="flex items-center gap-[90px] lg:gap-2 lg:px-0 px-4">
               <span className="text-gray-600">Sắp xếp theo:</span>
               <Select
                 value={sortOption}
