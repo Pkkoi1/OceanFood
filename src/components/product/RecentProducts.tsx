@@ -1,21 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
-import { newProducts } from "../../data/mockData"; // Giả định import từ mockData.ts
-
-interface Product {
-  id: number;
-  name: string;
-  origin: string;
-  currentPrice: number;
-  originalPrice?: number;
-  discount?: number;
-  image: string;
-  isLiked: boolean;
-  badge?: string;
-  isNew?: boolean;
-  sold?: number;
-  stockStatus?: string;
-}
+import { newProducts, type Product } from "../../data/mockData"; // Giả định import từ mockData.ts
 
 const RecentProducts: React.FC = () => {
   const [recentProducts, setRecentProducts] = useState<Product[]>([]);
