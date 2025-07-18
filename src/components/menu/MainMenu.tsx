@@ -75,7 +75,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onMenuClick }) => {
         >
           <button
             onClick={() => handleMenuClick(item.key, item.href)}
-            className={`w-full text-left pl-4 lg:pl-0 pr-4 py-1 flex items-center justify-between  hover:text-[#37bee3] cursor-pointer transition-colors ${
+            className={`w-full text-left pl-4 lg:pl-10 lg:mt-2 pr-4 py-1 flex items-center justify-between  hover:text-[#37bee3] cursor-pointer transition-colors ${
               location.pathname === item.href.replace("", "")
                 ? "text-[#37bee3]"
                 : "text-gray-700"

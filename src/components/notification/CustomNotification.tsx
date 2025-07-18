@@ -34,7 +34,7 @@ const CustomNotification: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       showNotification();
-    }, 10000); // Show notification every 10 seconds
+    }, 60000); // Show notification every 10 seconds
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
 
