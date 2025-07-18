@@ -1,24 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
+import { Modal, notification } from "antd";
 import FavoriteButton from "../common/FavoriteButton"; // Import the updated component
+import ProductImage from "./ProductImage";
+import ProductInfo from "./ProductInfo";
 import { addToCart } from "../../controller/CartController";
-import { notification } from "antd";
-
-interface Product {
-  id: number;
-  name: string;
-  origin: string;
-  currentPrice: number;
-  originalPrice?: number;
-  discount?: number;
-  image: string;
-  isLiked: boolean;
-  badge?: string;
-  isNew?: boolean;
-  sold?: number;
-  stockStatus?: string;
-}
+import type { Product } from "../../data/mockData";
 
 interface ProductCardProps {
   product: Product;
@@ -33,6 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
@@ -73,6 +62,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
       ),
       placement: "topRight",
     });
+  };
+
+  const handleModalOpen = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent event bubbling
+    setIsModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalVisible(false);
   };
 
   // Layout horizontal
@@ -129,6 +127,33 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           </div>
         </div>
+        <button
+          className="absolute bottom-3 right-3 bg-blue-500 text-white p-2 rounded shadow-lg"
+          onClick={handleModalOpen}
+        >
+          Xem chi tiết
+        </button>
+        <Modal
+          visible={isModalVisible}
+          onCancel={handleModalClose}
+          footer={null}
+          centered
+          width={800}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="col-span-1 lg:col-span-5">
+              <ProductImage product={product} />
+            </div>
+            <div className="col-span-1 lg:col-span-4">
+              <ProductInfo
+                product={product}
+                quantity={1}
+                onQuantityChange={() => {}}
+                onToggleLike={() => {}}
+              />
+            </div>
+          </div>
+        </Modal>
       </div>
     );
   }
@@ -136,7 +161,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   // Layout vertical
   return (
     <div
-      className="bg-white border-[0.01px] border-[#F2F2F2] p-2 overflow-hidden relative group  hover:border-[#4FB3D9] transition-all duration-300 cursor-pointer"
+      className="bg-white border-[0.01px] border-[#F2F2F2] p-2 overflow-hidden relative group hover:border-[#4FB3D9] transition-all duration-300 cursor-pointer"
       onClick={handleProductClick}
     >
       {contextHolder}
@@ -206,6 +231,33 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </button>
         </div>
       </div>
+      <button
+        className="absolute bottom-3 right-3 bg-blue-500 text-white p-2 rounded shadow-lg"
+        onClick={handleModalOpen}
+      >
+        Xem chi tiết
+      </button>
+      <Modal
+        visible={isModalVisible}
+        onCancel={handleModalClose}
+        footer={null}
+        centered
+        width={800}
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="col-span-1 lg:col-span-5">
+            <ProductImage product={product} />
+          </div>
+          <div className="col-span-1 lg:col-span-4">
+            <ProductInfo
+              product={product}
+              quantity={1}
+              onQuantityChange={() => {}}
+              onToggleLike={() => {}}
+            />
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

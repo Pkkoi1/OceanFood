@@ -4,21 +4,7 @@ import ProductCard from "../product/ProductCard";
 import { favoriteProductIds } from "../../data/mockFavoriteProducts";
 import { getAllProducts } from "../../controller/ProductController";
 import { useNavigate } from "react-router-dom";
-
-interface Product {
-  id: number;
-  name: string;
-  origin: string;
-  currentPrice: number;
-  originalPrice?: number;
-  discount?: number;
-  image: string;
-  isLiked: boolean;
-  badge?: string;
-  isNew?: boolean;
-  sold?: number;
-  stockStatus?: string;
-}
+import type { Product } from "../../data/mockData";
 
 interface ListProductProps {
   title?: string;
