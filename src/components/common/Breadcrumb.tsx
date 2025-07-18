@@ -8,7 +8,6 @@ import { getHandbookById } from "../../controller/HandbookController";
 const Breadcrumb: React.FC = () => {
   const location = useLocation();
 
-  // Route mapping for Vietnamese labels
   const routeMap: Record<string, string> = {
     "/": "Trang chủ",
     "/about": "Giới thiệu",
@@ -47,13 +46,11 @@ const Breadcrumb: React.FC = () => {
       },
     ];
 
-    // Build hierarchical breadcrumb items
     let currentPath = "";
     pathSegments.forEach((segment, index) => {
       currentPath += `/${segment}`;
       let label = routeMap[currentPath];
 
-      // Handle dynamic routes for products and handbooks
       if (!label) {
         console.log(
           "Path segment:",
@@ -91,7 +88,6 @@ const Breadcrumb: React.FC = () => {
     return items;
   };
 
-  // Don't show breadcrumb on home page
   if (location.pathname === "/") {
     return null;
   }

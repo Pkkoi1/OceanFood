@@ -28,6 +28,7 @@ interface ListProductProps {
   container?: boolean;
   titlePosition?: "left" | "center" | "right";
   products?: Product[]; // New optional products prop
+  buttonType?: "all" | "more"; // New optional prop for button type
 }
 
 const ListProduct: React.FC<ListProductProps> = ({
@@ -38,10 +39,11 @@ const ListProduct: React.FC<ListProductProps> = ({
   container = true,
   titlePosition = "center",
   products = getAllProducts(), // Default to fetching all products
+  buttonType = "all", // Default to "all"
 }) => {
   const navigate = useNavigate();
   const [displayProducts, setDisplayProducts] = useState<Product[]>([]);
-  const [visibleCount] = useState(number);
+  const [visibleCount, setVisibleCount] = useState(number);
   const [sortOption, setSortOption] = useState("default");
   const [displayTitle, setDisplayTitle] = useState(title);
 
@@ -163,6 +165,9 @@ const ListProduct: React.FC<ListProductProps> = ({
     }
   };
 
+  const shouldShowLoadMore = buttonType === "all" && hasMore;
+  const shouldShowSeeMore = buttonType === "more";
+
   return (
     <div
       className={`py-8 mb-6 ${
@@ -247,13 +252,23 @@ const ListProduct: React.FC<ListProductProps> = ({
       )}
 
       {/* Chỉ hiển thị nút "Xem tất cả" nếu còn sản phẩm để load và không phải number = 3 */}
-      {hasMore && (
+      {shouldShowLoadMore && (
         <div className="text-center mt-8">
           <button
             className="bg-[#4FB3D9] border-2 border-[#4FB3D9] cursor-pointer hover:bg-white hover:text-[#4FB3D9] hover:border-[#4FB3D9] text-[16px] px-9 py-3 rounded-full font-bold text-white transition-all duration-300"
             onClick={loadMore}
           >
             Xem tất cả
+          </button>
+        </div>
+      )}
+      {shouldShowSeeMore && (
+        <div className="text-center mt-8">
+          <button
+            className="bg-[#4FB3D9] border-2 border-[#4FB3D9] cursor-pointer hover:bg-white hover:text-[#4FB3D9] hover:border-[#4FB3D9] text-[16px] px-9 py-3 rounded-full font-bold text-white transition-all duration-300"
+            onClick={() => setVisibleCount((prev) => prev + 6)} // Load 6 more products
+          >
+            Xem thêm
           </button>
         </div>
       )}

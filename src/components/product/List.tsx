@@ -93,6 +93,7 @@ const List: React.FC<ListProps> = ({
         container={false}
         titlePosition={titlePosition}
         number={number}
+        buttonType="more"
         products={filteredProducts} // Pass filtered products
       />
     </div>
