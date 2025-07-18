@@ -15,7 +15,6 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({
   product,
   quantity,
   onQuantityChange,
-  onToggleLike,
 }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 px-4 lg:px-[100px] gap-6 lg:gap-0">
@@ -30,7 +29,6 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({
           product={product}
           quantity={quantity}
           onQuantityChange={onQuantityChange}
-          onToggleLike={onToggleLike}
         />
       </div>
 

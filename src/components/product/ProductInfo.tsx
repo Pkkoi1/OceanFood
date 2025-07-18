@@ -7,33 +7,12 @@ import {
 import { addToCart } from "../../controller/CartController";
 import { useNavigate } from "react-router-dom";
 import { notification } from "antd";
-
-interface Product {
-  id: number;
-  name: string;
-  origin: string;
-  currentPrice: number;
-  originalPrice?: number;
-  discount?: number;
-  image: string;
-  isLiked: boolean;
-  badge?: string;
-  isNew?: boolean;
-  sold?: number;
-  stockStatus?: string;
-  brand?: string;
-  weight?: string;
-  condition?: string;
-  commitment?: string;
-  description: { title: string; content: string }[];
-  images?: string[];
-}
+import type { Product } from "../../data/mockData";
 
 interface ProductInfoProps {
   product: Product;
   quantity: number;
   onQuantityChange: (type: "increase" | "decrease") => void;
-  onToggleLike: () => void;
 }
 
 const ProductInfo: React.FC<ProductInfoProps> = ({
@@ -178,14 +157,14 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
             <span className="font-medium">Số lượng:</span>
             <div className="flex items-center border rounded w-fit">
               <button
-                className="px-3 py-2 hover:bg-gray-100"
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => onQuantityChange("decrease")}
               >
                 <MinusOutlined />
               </button>
               <span className="px-4 py-2 border-x">{quantity}</span>
               <button
-                className="px-3 py-2 hover:bg-gray-100"
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => onQuantityChange("increase")}
               >
                 <PlusOutlined />

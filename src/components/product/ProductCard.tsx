@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
-import { Modal, notification } from "antd";
+import { notification } from "antd";
 import FavoriteButton from "../common/FavoriteButton"; // Import the updated component
-import ProductImage from "./ProductImage";
-import ProductInfo from "./ProductInfo";
+
 import { addToCart } from "../../controller/CartController";
 import type { Product } from "../../data/mockData";
+import ProductDetailModal from "./ProductDetailModal";
 
 interface ProductCardProps {
   product: Product;
@@ -22,19 +22,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("vi-VN") + "đ";
   };
 
+  const handleQuantityChange = (type: "increase" | "decrease") => {
+    if (type === "increase") {
+      setQuantity((prev) => prev + 1);
+    } else if (type === "decrease" && quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
   const handleProductClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
     navigate(`/products/${product.id}`);
-  };
-
-  const handleActionButtonClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Ngăn event bubble lên parent
-    // Xử lý logic cho button (add to cart, view detail, etc.)
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -65,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const handleModalOpen = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent event bubbling
+    e.stopPropagation();
     setIsModalVisible(true);
   };
 
@@ -127,43 +130,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           </div>
         </div>
-        <button
-          className="absolute bottom-3 right-3 bg-blue-500 text-white p-2 rounded shadow-lg"
-          onClick={handleModalOpen}
-        >
-          Xem chi tiết
-        </button>
-        <Modal
-          visible={isModalVisible}
-          onCancel={handleModalClose}
-          footer={null}
-          centered
-          width={800}
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="col-span-1 lg:col-span-5">
-              <ProductImage product={product} />
-            </div>
-            <div className="col-span-1 lg:col-span-4">
-              <ProductInfo
-                product={product}
-                quantity={1}
-                onQuantityChange={() => {}}
-                onToggleLike={() => {}}
-              />
-            </div>
-          </div>
-        </Modal>
       </div>
     );
   }
 
   // Layout vertical
   return (
-    <div
-      className="bg-white border-[0.01px] border-[#F2F2F2] p-2 overflow-hidden relative group hover:border-[#4FB3D9] transition-all duration-300 cursor-pointer"
-      onClick={handleProductClick}
-    >
+    <div className="bg-white border-[0.01px] border-[#F2F2F2] p-2 overflow-hidden relative group hover:border-[#4FB3D9] transition-all duration-300 cursor-pointer">
       {contextHolder}
       {/* Discount Badge */}
       <div className="absolute top-6 left-6 z-10">
@@ -187,7 +160,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
       />
 
       {/* Product Image */}
-      <div className="relative  overflow-hidden flex-shrink-0">
+      <div
+        className="relative  overflow-hidden flex-shrink-0"
+        onClick={handleProductClick}
+      >
         <img
           src={product.image}
           alt={product.name}
@@ -197,7 +173,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Product Info */}
       <div className="p-4 items-center text-center">
-        <h3 className="font-bold lg:text-lg text-md mb-2 line-clamp-1 h-6">
+        <h3
+          className="font-bold lg:text-lg hover:text-[#4fb3d9] text-md mb-2 line-clamp-1 h-6"
+          onClick={handleProductClick}
+        >
           {product.name}
         </h3>
         <p className="text-gray-600 text-sm mb-3">{product.origin}</p>
@@ -225,39 +204,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </button>
           <button
             className="w-12 h-12 rounded-full border-2 border-gray-300 text-gray-600 hover:bg-[#4FB3D9] hover:text-white hover:border-[#4FB3D9] flex items-center justify-center cursor-pointer"
-            onClick={handleActionButtonClick}
+            onClick={handleModalOpen}
           >
             <EyeOutlined />
           </button>
         </div>
       </div>
-      <button
-        className="absolute bottom-3 right-3 bg-blue-500 text-white p-2 rounded shadow-lg"
-        onClick={handleModalOpen}
-      >
-        Xem chi tiết
-      </button>
-      <Modal
-        visible={isModalVisible}
-        onCancel={handleModalClose}
-        footer={null}
-        centered
-        width={800}
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="col-span-1 lg:col-span-5">
-            <ProductImage product={product} />
-          </div>
-          <div className="col-span-1 lg:col-span-4">
-            <ProductInfo
-              product={product}
-              quantity={1}
-              onQuantityChange={() => {}}
-              onToggleLike={() => {}}
-            />
-          </div>
-        </div>
-      </Modal>
+
+      <ProductDetailModal
+        product={product}
+        quantity={quantity} // Pass the current quantity state
+        onQuantityChange={handleQuantityChange} // Handle quantity changes
+        isVisible={isModalVisible}
+        onClose={handleModalClose}
+      />
     </div>
   );
 };

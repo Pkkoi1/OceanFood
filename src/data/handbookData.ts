@@ -26,7 +26,8 @@ export const handbookArticles: HandbookArticle[] = [
     author: "Nguyễn Thị Lan",
     title: "Cách sơ chế tôm hùm Canada nhanh và đúng cách",
     date: "15/02/2025",
-    image: "https://picsum.photos/300/200?random=11",
+    image:
+      "https://bizweb.dktcdn.net/100/533/545/files/can-59a7c137c5dc4e6f8e9e64438fe70162-grande.png?v=1739585253593",
     category: "Chế biến",
     description: [
       {
@@ -37,7 +38,7 @@ export const handbookArticles: HandbookArticle[] = [
             content:
               "Tôm hùm Canada là loài hải sản nổi tiếng đến từ vùng biển Đại Tây Dương thuộc Canada, đặc biệt là khu vực Nova Scotia – nơi nổi tiếng có môi trường nước lạnh, sạch và rất giàu khoáng chất tự nhiên. Nhờ điều kiện sống lý tưởng này, tôm hùm Canada phát triển có vỏ cứng, thịt săn chắc, vị ngọt thanh và đậm đà.",
             img: {
-              url: "https://picsum.photos/600/400?random=201",
+              url: "https://bizweb.dktcdn.net/100/533/545/files/can-59a7c137c5dc4e6f8e9e64438fe70162-grande.png?v=1739585253593",
               caption:
                 "Tôm hùm Canada trong môi trường tự nhiên vùng biển Nova Scotia",
             },
@@ -57,7 +58,7 @@ export const handbookArticles: HandbookArticle[] = [
             content:
               "Đặt tôm còn sống vào ngăn mát tủ lạnh khoảng 10–15 phút hoặc ngâm trong nước đá để làm dịu và hạn chế chuyển động mạnh. Sử dụng bàn chải mềm để chà nhẹ toàn bộ phần vỏ bên ngoài, đặc biệt là các khe kẽ ở càng, chân và phần đầu – nơi thường tích tụ cặn bẩn và cát biển.",
             img: {
-              url: "https://picsum.photos/600/400?random=202",
+              url: "https://bizweb.dktcdn.net/100/533/545/files/z4942234520686-27de47ef2355a3b97617e1d5a22700cc-6fc1ae0468294c45a20d4bf4d3cf6b0a-grande.jpg?v=1739585272903",
               caption: "Quá trình làm sạch và sơ chế tôm hùm Canada",
             },
           },
@@ -80,7 +81,8 @@ export const handbookArticles: HandbookArticle[] = [
     author: "Nguyễn Thị Lan",
     title: "Tôm hùm Nova Scotia Canada: lợi ích dinh dưỡng và cách chế biến",
     date: "15/02/2025",
-    image: "https://picsum.photos/300/200?random=17",
+    image:
+      "https://bizweb.dktcdn.net/100/533/545/articles/img-7158-b26dc42ed2484e5587e7b9f86578eb8c-1024x1024.jpg?v=1739585606957",
     category: "Dinh dưỡng",
     description: [
       {
@@ -91,7 +93,7 @@ export const handbookArticles: HandbookArticle[] = [
             content:
               "Tôm hùm từ vùng Nova Scotia thuộc Canada không chỉ nổi tiếng bởi kích thước lớn mà còn vì hương vị thịt ngọt, giàu độ đạm và ít cholesterol. Loài tôm này sống trong vùng biển có dòng hải lưu lạnh, nên quá trình phát triển chậm nhưng bù lại chất lượng thịt vượt trội.",
             img: {
-              url: "https://picsum.photos/600/400?random=203",
+              url: "https://bizweb.dktcdn.net/100/533/545/files/118-1024x683-1-1686914999522738947316-75edde5a30614756b55d124938e23635-grande.jpg?v=1739584904267",
               caption: "Tôm hùm Nova Scotia với chất lượng thịt vượt trội",
             },
           },
@@ -115,7 +117,7 @@ export const handbookArticles: HandbookArticle[] = [
             content:
               "Cách chế biến phổ biến nhất với tôm hùm Nova Scotia là hấp nguyên con. Thêm vài lát chanh, gừng và lá nguyệt quế để tạo hương thơm. Thời gian hấp trung bình từ 12–15 phút cho tôm khoảng 1kg.",
             img: {
-              url: "https://picsum.photos/600/400?random=204",
+              url: "https://bizweb.dktcdn.net/100/533/545/files/123-topaz-enhance-826fee19440745989c223370eaa42477-grande.jpg?v=1739584943513",
               caption: "Món tôm hùm hấp nguyên con với gia vị thơm ngon",
             },
           },
@@ -133,7 +135,8 @@ export const handbookArticles: HandbookArticle[] = [
     author: "Nguyễn Thị Lan",
     title: "Chi tiết công thức vẹm xanh nướng mỡ hành cực hấp dẫn",
     date: "10/12/2024",
-    image: "https://picsum.photos/300/200?random=15",
+    image:
+      "https://bizweb.dktcdn.net/100/533/545/articles/vem-xanh-nuong-mo-hanh-10.jpg?v=1739585586507",
     category: "Công thức",
     description: [
       {
@@ -147,6 +150,10 @@ export const handbookArticles: HandbookArticle[] = [
           {
             subTitle: "Sơ chế vẹm",
             content: "Làm sạch vẹm, sau đó hấp sơ cho vừa chín.",
+            img: {
+              url: "https://bizweb.dktcdn.net/100/533/545/files/vem-xanh-nuong-mo-hanh-8.jpg?v=1733819431660",
+              caption: "Vẹm xanh sau khi sơ chế sạch sẽ",
+            },
           },
           {
             subTitle: "Chế biến và nướng",
@@ -162,7 +169,8 @@ export const handbookArticles: HandbookArticle[] = [
     id: 4,
     title: "Cách làm sò huyết rang me ngon đúng điệu tại nhà",
     date: "10/12/2024",
-    image: "https://picsum.photos/300/200?random=12",
+    image:
+      "https://bizweb.dktcdn.net/100/533/545/articles/so-huyet-rang-me1.jpg?v=1733819127097",
     category: "Chế biến",
     description: [
       {
@@ -192,7 +200,8 @@ export const handbookArticles: HandbookArticle[] = [
     id: 5,
     title: "Tác dụng của tôm biển là gì? Bật mí 9 lợi ích cho sức khỏe",
     date: "10/12/2024",
-    image: "https://picsum.photos/300/200?random=14",
+    image:
+      "https://bizweb.dktcdn.net/100/533/545/articles/tom-bien-3.jpg?v=1733815604127",
     category: "Sức khỏe",
     description: [
       {
@@ -212,7 +221,8 @@ export const handbookArticles: HandbookArticle[] = [
     id: 6,
     title: "Ốc gai nấu gì ngon? Mách bạn 07 món hấp dẫn từ ốc gai",
     date: "10/12/2024",
-    image: "https://picsum.photos/300/200?random=7",
+    image:
+      "https://bizweb.dktcdn.net/100/533/545/articles/oc-gai-nau-gi-ngon-9.jpg?v=1739585596517",
     category: "Công thức",
     description: [
       {
@@ -234,96 +244,6 @@ export const handbookArticles: HandbookArticle[] = [
               "Ốc gai hấp gừng sả, ốc gai xào sa tế, cháo ốc gai và ốc gai hầm sả ớt mang đến hương vị đa dạng, phù hợp với nhiều khẩu vị.",
           },
         ],
-      },
-    ],
-  },
-  {
-    author: "Phạm Thu Trang",
-    id: 7,
-    title: "Mẹo rã đông hải sản đúng cách để giữ nguyên độ tươi ngon",
-    date: "01/01/2025",
-    image: "https://picsum.photos/300/200?random=21",
-    category: "Mẹo bếp",
-    description: [
-      {
-        heading: "Vì sao phải rã đông đúng cách?",
-        content:
-          "Rã đông sai cách có thể làm mất chất dinh dưỡng trong hải sản, khiến chúng mềm nhũn hoặc có mùi tanh. Rã đông đúng giúp giữ nguyên cấu trúc thịt, độ ngọt tự nhiên và hương vị ban đầu.",
-      },
-      {
-        heading: "Các phương pháp rã đông an toàn",
-        content: [
-          {
-            subTitle: "Rã đông trong tủ lạnh",
-            content:
-              "Rã đông trong ngăn mát tủ lạnh là cách tối ưu nhất, tuy tốn thời gian nhưng đảm bảo độ tươi.",
-          },
-          {
-            subTitle: "Rã đông bằng nước lạnh",
-            content:
-              "Đặt hải sản vào túi kín rồi ngâm nước lạnh trong 30–60 phút. Tránh rã đông bằng nước nóng hoặc để ngoài không khí quá lâu.",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    author: "Đặng Hoài Nam",
-    id: 8,
-    title: "5 loại gia vị nên dùng khi chế biến hải sản để tăng hương vị",
-    date: "03/01/2025",
-    image: "https://picsum.photos/300/200?random=22",
-    category: "Mẹo bếp",
-    description: [
-      {
-        heading: "1. Gừng và sả",
-        content:
-          "Hai loại gia vị này giúp khử mùi tanh hiệu quả và làm dậy mùi hải sản. Thường được dùng trong các món hấp, luộc hoặc xào.",
-      },
-      {
-        heading: "2. Tỏi và ớt",
-        content:
-          "Tỏi phi thơm kết hợp với ớt cay tạo nên hương vị đặc trưng cho các món nướng, xào. Đây là bộ đôi không thể thiếu cho các món như mực nướng, nghêu xào cay.",
-      },
-    ],
-  },
-  {
-    author: "Vũ Ngọc Hà",
-    id: 9,
-    title: "Bí quyết chọn hải sản tươi sống tại chợ và siêu thị",
-    date: "04/01/2025",
-    image: "https://picsum.photos/300/200?random=23",
-    category: "Mẹo bếp",
-    description: [
-      {
-        heading: "Cách nhận biết hải sản tươi",
-        content:
-          "Hải sản tươi thường có màu sáng bóng, mắt trong, thịt chắc và không có mùi lạ. Với tôm, hãy chọn con còn sống, vỏ bóng. Với cá, mắt cá phải trong và mang đỏ tươi.",
-      },
-      {
-        heading: "Lưu ý khi mua ở siêu thị",
-        content:
-          "Ưu tiên chọn hải sản đóng gói có ghi ngày sản xuất và hạn sử dụng rõ ràng. Quan sát màu sắc và hình dạng để tránh mua phải sản phẩm bị hư hoặc cấp đông lâu ngày.",
-      },
-    ],
-  },
-  {
-    author: "Ngô Văn Duy",
-    id: 10,
-    title: "Hướng dẫn bảo quản hải sản trong tủ lạnh đúng cách",
-    date: "05/01/2025",
-    image: "https://picsum.photos/300/200?random=24",
-    category: "Bảo quản",
-    description: [
-      {
-        heading: "Phân loại khi bảo quản",
-        content:
-          "Chia hải sản thành từng loại như tôm, cá, mực, sò… để bảo quản riêng biệt. Dùng túi zip hoặc hộp kín để tránh ám mùi qua lại và bảo vệ hải sản khỏi vi khuẩn.",
-      },
-      {
-        heading: "Nhiệt độ và thời gian bảo quản",
-        content:
-          "Ngăn mát chỉ nên bảo quản hải sản trong 1–2 ngày. Nếu chưa dùng ngay, cấp đông ở -18°C và dùng trong vòng 1 tháng. Ghi nhãn ngày cấp đông để dễ kiểm soát hạn sử dụng.",
       },
     ],
   },
