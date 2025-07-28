@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Carousel, Select } from "antd";
 import ProductCard from "../product/ProductCard";
 import { favoriteProductIds } from "../../data/mockFavoriteProducts";
-import { getAllProducts } from "../../controller/ProductController";
+import { fetchProducts } from "../../Service/ProductService"; // Import fetchProducts
 import { useNavigate } from "react-router-dom";
 import type { Product } from "../../data/mockData";
 
@@ -24,7 +24,7 @@ const ListProduct: React.FC<ListProductProps> = ({
   carousel = false,
   container = true,
   titlePosition = "center",
-  products = getAllProducts(), // Default to fetching all products
+  products, // Remove default value here
   buttonType = "all", // Default to "all"
 }) => {
   const navigate = useNavigate();
@@ -34,16 +34,22 @@ const ListProduct: React.FC<ListProductProps> = ({
   const [displayTitle, setDisplayTitle] = useState(title);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setDisplayProducts(
-        products.map((product) => ({
-          ...product,
-          isLiked: favoriteProductIds.includes(product.id),
-        }))
-      );
-    }, 500);
-    return () => clearInterval(interval);
-  }, [products]);
+    const fetchProductsData = async () => {
+      try {
+        const fetchedProducts = products || (await fetchProducts()); // Fetch from API if products not provided
+        setDisplayProducts(
+          fetchedProducts.map((product: Product) => ({
+            ...product,
+            isLiked: favoriteProductIds.includes(product.id),
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProductsData();
+  }, [products]); // Re-run if products prop changes
 
   const sortOptions = [
     { value: "default", label: "Mặc định" },
