@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
-import { newProducts, type Product } from "../../data/mockData"; // Giả định import từ mockData.ts
+import { type Product } from "../../data/mockData"; // Giả định import từ mockData.ts
+import { getRecentlyViewedProducts } from "../../controller/ProductController";
 
 const RecentProducts: React.FC = () => {
   const [recentProducts, setRecentProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    // Lấy ngẫu nhiên 4 sản phẩm từ mockData
-    const shuffled = [...newProducts].sort(() => 0.5 - Math.random());
-    const selectedProducts = shuffled.slice(0, 4);
-    setRecentProducts(selectedProducts);
+    // Fetch recently viewed products from localStorage
+    const recentProducts = getRecentlyViewedProducts();
+    setRecentProducts(recentProducts);
   }, []);
 
   const handleToggleLike = (productId: number) => {

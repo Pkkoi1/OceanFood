@@ -3,7 +3,7 @@ import ListProduct from "../home/ListProduct";
 import FilterSidebar from "./FilterSidebar";
 import { useLocation } from "react-router-dom";
 import type { Product } from "../../data/mockData";
-import { filterProducts } from "../../controller/ProductController";
+import { filter } from "../../Service/ProductService";
 
 interface ListProps {
   title?: string;
@@ -15,7 +15,7 @@ interface ListProps {
 interface FilterOptions {
   priceRange: string;
   productTypes: string[];
-  origins: string[];
+  origin: string[];
 }
 
 const List: React.FC<ListProps> = ({
@@ -29,22 +29,26 @@ const List: React.FC<ListProps> = ({
   const [filters, setFilters] = useState<FilterOptions>({
     priceRange: "",
     productTypes: [],
-    origins: [],
+    origin: [],
   });
   const location = useLocation();
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const categoryFromUrl = urlParams.get("category") || category;
+    const fetchFilteredProducts = async () => {
+      const urlParams = new URLSearchParams(location.search);
+      const categoryFromUrl = urlParams.get("category") || category;
 
-    // Apply filters immediately
-    const updatedProducts = filterProducts(
-      categoryFromUrl ?? null,
-      filters.priceRange,
-      filters.productTypes,
-      filters.origins
-    );
-    setFilteredProducts(updatedProducts);
+      // Apply filters immediately
+      const updatedProducts = await filter(
+        categoryFromUrl ?? null,
+        filters.priceRange,
+        filters.productTypes,
+        filters.origin
+      );
+      setFilteredProducts(updatedProducts);
+    };
+
+    fetchFilteredProducts();
   }, [location.search, category, filters]);
 
   useEffect(() => {
@@ -73,13 +77,13 @@ const List: React.FC<ListProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleFilterChange = (newFilters: FilterOptions) => {
+  const handleFilterChange = async (newFilters: FilterOptions) => {
     setFilters(newFilters);
-    const updatedProducts = filterProducts(
+    const updatedProducts = await filter(
       category ?? null, // Ensure category is either string or null
       newFilters.priceRange,
       newFilters.productTypes,
-      newFilters.origins
+      newFilters.origin
     );
     setFilteredProducts(updatedProducts);
   };

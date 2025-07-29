@@ -16,3 +16,67 @@ export const getAllProducts = async () => {
     throw error;
   }
 };
+
+export const getProductByCategory = async (category: string) => {
+  try {
+    const response = await apiClient.get(`/products/category/${category}`);
+    return response.data.data;
+  } catch (error) {
+    console.error(`Error fetching products for category ${category}:`, error);
+    throw error;
+  }
+};
+
+export const filterProducts = async (
+  category?: string | null,
+  priceRange?: string,
+  types?: string[],
+  origin?: string[]
+) => {
+  try {
+    const response = await apiClient.get("/products/filter", {
+      params: {
+        category,
+        priceRange,
+        types,
+        origin,
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error("Error filtering products:", error);
+    throw error;
+  }
+};
+
+export const getProductById = async (id: string) => {
+  try {
+    const response = await apiClient.get(`/products/${id}`);
+    return response.data.data;
+  } catch (error) {
+    console.error(`Error fetching product with ID ${id}:`, error);
+    throw error;
+  }
+};
+export const getOriginsByCategory = async (category: string) => {
+  try {
+    const response = await apiClient.get(
+      `/products/category/${category}/origins`
+    );
+    return response.data.data;
+  } catch (error) {
+    console.error(`Error fetching origins for category ${category}:`, error);
+    throw error;
+  }
+};
+export const searchProducts = async (name: string) => {
+  try {
+    const response = await apiClient.get("/products/search", {
+      params: { name },
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error(`Error searching products by name ${name}:`, error);
+    throw error;
+  }
+};

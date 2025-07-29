@@ -143,3 +143,29 @@ export const filterProducts = (
 
   return filteredProducts;
 };
+
+// Manage recently viewed products
+const RECENT_PRODUCTS_KEY = "recentProducts";
+
+export const addRecentlyViewedProduct = (product: Product): void => {
+  const storedProducts = localStorage.getItem(RECENT_PRODUCTS_KEY);
+  const recentProducts: Product[] = storedProducts
+    ? JSON.parse(storedProducts)
+    : [];
+
+  // Remove the product if it already exists
+  const updatedProducts = recentProducts.filter((p) => p.id !== product.id);
+
+  // Add the new product to the beginning
+  updatedProducts.unshift(product);
+
+  // Limit to 4 products
+  const limitedProducts = updatedProducts.slice(0, 4);
+
+  localStorage.setItem(RECENT_PRODUCTS_KEY, JSON.stringify(limitedProducts));
+};
+
+export const getRecentlyViewedProducts = (): Product[] => {
+  const storedProducts = localStorage.getItem(RECENT_PRODUCTS_KEY);
+  return storedProducts ? JSON.parse(storedProducts) : [];
+};

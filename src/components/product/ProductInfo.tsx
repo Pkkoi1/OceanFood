@@ -25,7 +25,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
 
   const handleAddToCart = () => {
     addToCart({
-      id: product.id,
+      id: Number(product.id), // Ensure id is a number
       name: product.name,
       price: product.currentPrice, // Map currentPrice to price
       quantity,

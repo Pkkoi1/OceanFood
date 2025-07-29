@@ -1,12 +1,15 @@
-import React from "react";
+import React, { type JSX } from "react";
 import { Breadcrumb as AntBreadcrumb } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useLocation, Link } from "react-router-dom";
-import { getProductById } from "../../controller/ProductController";
 import { getHandbookById } from "../../controller/HandbookController";
+import { findProductById } from "../../Service/ProductService";
 
 const Breadcrumb: React.FC = () => {
   const location = useLocation();
+  const [breadcrumbItems, setBreadcrumbItems] = React.useState<
+    { key: string; title: JSX.Element }[]
+  >([]);
 
   const routeMap: Record<string, string> = {
     "/": "Trang chủ",
@@ -27,7 +30,7 @@ const Breadcrumb: React.FC = () => {
     "/policy/privacy": "Bảo mật thông tin cá nhân",
   };
 
-  const generateBreadcrumbItems = () => {
+  const generateBreadcrumbItems = async () => {
     const pathSegments = location.pathname.split("/").filter(Boolean);
 
     // Always start with home
@@ -47,7 +50,7 @@ const Breadcrumb: React.FC = () => {
     ];
 
     let currentPath = "";
-    pathSegments.forEach((segment, index) => {
+    for (const [index, segment] of pathSegments.entries()) {
       currentPath += `/${segment}`;
       let label = routeMap[currentPath];
 
@@ -61,8 +64,8 @@ const Breadcrumb: React.FC = () => {
           currentPath
         );
         if (currentPath.match(/\/products/)) {
-          const productId = Number(segment);
-          const product = getProductById(productId);
+          const productId = segment;
+          const product = await findProductById(productId); // Use await here
           console.log("Product:", product);
           label = product ? product.name : "Sản phẩm";
         } else if (currentPath.match(/\/handbooks/)) {
@@ -83,10 +86,19 @@ const Breadcrumb: React.FC = () => {
           </Link>
         ),
       });
-    });
+    }
 
     return items;
   };
+
+  React.useEffect(() => {
+    const fetchBreadcrumbItems = async () => {
+      const items = await generateBreadcrumbItems();
+      setBreadcrumbItems(items);
+    };
+
+    fetchBreadcrumbItems();
+  }, [location.pathname]);
 
   if (location.pathname === "/") {
     return null;
@@ -97,7 +109,7 @@ const Breadcrumb: React.FC = () => {
       <div className="lg:mx-[100px] mx-4">
         <AntBreadcrumb
           separator=">"
-          items={generateBreadcrumbItems()}
+          items={breadcrumbItems}
           className="text-sm"
         />
       </div>

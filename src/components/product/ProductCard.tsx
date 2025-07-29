@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
 import { notification } from "antd";
 import FavoriteButton from "../common/FavoriteButton"; // Import the updated component
+import { addRecentlyViewedProduct } from "../../controller/ProductController";
 
 import { addToCart } from "../../controller/CartController";
 import type { Product } from "../../data/mockData";
@@ -36,14 +37,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
     }
   };
   const handleProductClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top
+    addRecentlyViewedProduct(product); // Save to recently viewed
     navigate(`/products/${product.id}`);
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     addToCart({
-      id: product.id,
+      id: Number(product.id),
       name: product.name,
       image: product.image,
       price: product.currentPrice,
@@ -85,7 +87,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       >
         {contextHolder}
         {/* Discount Badge */}
-        {product.discount && (
+        {(product.discount ?? 0) > 0 && (
           <div className="absolute top-3 left-3 bg-[#4FB3D9] text-white px-2 py-1 rounded text-[10px] font-bold z-10">
             -{product.discount}%
           </div>
@@ -95,7 +97,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <FavoriteButton
           isLiked={product.isLiked}
           onToggleLike={onToggleLike}
-          productId={product.id}
+          productId={Number(product.id)}
           className="absolute top-3 right-4/6 z-10 cursor-pointer"
         />
 
@@ -140,7 +142,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       {contextHolder}
       {/* Discount Badge */}
       <div className="absolute top-6 left-6 z-10">
-        {product.discount ? (
+        {(product.discount ?? 0) > 0 ? (
           <div className="bg-[#4FB3D9] text-white px-2 py-1 rounded text-sm font-bold">
             -{product.discount}%
           </div>
@@ -155,7 +157,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <FavoriteButton
         isLiked={product.isLiked}
         onToggleLike={onToggleLike}
-        productId={product.id}
+        productId={Number(product.id)}
         className="absolute top-6 right-6 z-10 cursor-pointer"
       />
 

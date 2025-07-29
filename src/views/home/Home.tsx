@@ -8,7 +8,8 @@ import productImg1 from "../../assets/images/product-image-1.webp";
 import productImg2 from "../../assets/images/product-image-2.webp";
 import Handbook from "../../components/handbook/Handbook";
 import Brand from "../../components/home/Brand";
-import { getProductsByCategory } from "../../controller/ProductController";
+import { getProductsByCategory } from "../../Service/ProductService";
+import type { Product } from "../../data/mockData";
 
 interface HomeProps {
   isSidebarOpen: boolean;
@@ -16,6 +17,29 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ isSidebarOpen }) => {
   const [Number, setNumber] = useState(6);
   const [layout, setLayout] = useState<"vertical" | "horizontal">("vertical");
+  const [frozenSeafoodProducts, setFrozenSeafoodProducts] = useState<Product[]>(
+    []
+  );
+  const [importedSeafoodProducts, setImportedSeafoodProducts] = useState<
+    Product[]
+  >([]);
+
+  useEffect(() => {
+    const fetchProductsByCategory = async () => {
+      try {
+        const frozenProducts = await getProductsByCategory("frozen-seafood");
+        const importedProducts = await getProductsByCategory(
+          "imported-seafood"
+        );
+        setFrozenSeafoodProducts(frozenProducts);
+        setImportedSeafoodProducts(importedProducts);
+      } catch (error) {
+        console.error("Error fetching products by category:", error);
+      }
+    };
+
+    fetchProductsByCategory();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -60,13 +84,13 @@ const Home: React.FC<HomeProps> = ({ isSidebarOpen }) => {
           title="Hải sản đông lạnh"
           layout={layout}
           number={Number}
-          products={getProductsByCategory("frozen-seafood")}
+          products={frozenSeafoodProducts} // Pass resolved products
         ></ListProduct>
         <FullBanner image={productImg2}></FullBanner>
         <ListProduct
           titlePosition="center"
           title="Hải sản nhập khẩu"
-          products={getProductsByCategory("imported-seafood")}
+          products={importedSeafoodProducts} // Pass resolved products
           layout={layout}
           number={Number}
         ></ListProduct>
