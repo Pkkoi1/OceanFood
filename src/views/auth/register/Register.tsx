@@ -46,9 +46,28 @@ const Register: React.FC = () => {
         placement: "topRight",
       });
       console.log("Registration successful:", response);
-    } catch (error: any) {
-      if (error.response && error.response.status === 400) {
-        const errorMessage = error.response.data.message || "Đã xảy ra lỗi.";
+    } catch (error: unknown) {
+      type ErrorResponse = {
+        response?: {
+          status?: number;
+          data?: {
+            message?: string;
+          };
+        };
+      };
+
+      const err = error as ErrorResponse;
+
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in err &&
+        typeof err.response === "object" &&
+        err.response !== null &&
+        "status" in err.response
+      ) {
+        const errorMessage =
+          err.response?.data?.message || "Đã xảy ra lỗi.";
         if (errorMessage.includes("email")) {
           setErrors({ ...errors, email: "Email đã được sử dụng." });
         } else if (errorMessage.includes("phone")) {
