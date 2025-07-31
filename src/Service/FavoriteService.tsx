@@ -5,11 +5,13 @@ import {
   clearFavorites,
   getFavoriteCount,
 } from "../api/API";
+import type { Product } from "../data/mockData";
 
 // Update the Favorite type to match the backend schema
 export interface Favorite {
   userId: string;
   productIds: string[]; // Array of product IDs
+  products: Product[]; // Array of product objects
   createdAt: string;
   updatedAt: string;
 }
@@ -90,6 +92,7 @@ export const fetchFavorites = async (userId: string): Promise<Favorite> => {
     return {
       userId,
       productIds,
+      products: response,
       createdAt: "",
       updatedAt: "",
     } as Favorite;
