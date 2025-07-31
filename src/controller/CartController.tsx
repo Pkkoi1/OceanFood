@@ -27,7 +27,7 @@ export const addToCart = (product: CartItem): void => {
 
 // Cập nhật số lượng sản phẩm trong giỏ hàng
 export const updateCartItemQuantity = (
-  productId: number,
+  productId: string,
   quantity: number
 ): void => {
   const item = cartItems.find((item) => item.id === productId);
@@ -38,7 +38,7 @@ export const updateCartItemQuantity = (
 };
 
 // Xóa sản phẩm khỏi giỏ hàng
-export const removeFromCart = (productId: number): void => {
+export const removeFromCart = (productId: string): void => {
   const index = cartItems.findIndex((item) => item.id === productId);
   if (index > -1) {
     cartItems.splice(index, 1);

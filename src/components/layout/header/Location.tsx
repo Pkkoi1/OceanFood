@@ -11,34 +11,26 @@ import { useEffect, useState } from "react";
 const Location = () => {
   const navigate = useNavigate();
   const [favoriteCount, setFavoriteCount] = useState(getAllFavorites().length);
+  console.log("Location mounted");
 
   useEffect(() => {
-    const updateInterval = 500; // Thiết lập thời gian cập nhật (ms)
-
     const updateFavoriteCount = () => {
       const newCount = getAllFavorites().length;
-      if (favoriteCount !== newCount) {
-        setFavoriteCount(newCount);
-      }
+      console.log("favoriteChange event triggered, newCount:", newCount);
+      setFavoriteCount(() => {
+        console.log("Updating favoriteCount state to:", newCount);
+        return newCount;
+      });
     };
 
-    // Cập nhật định kỳ theo interval
-    const intervalId = setInterval(updateFavoriteCount, updateInterval);
-
-    // Lắng nghe sự kiện storage để cập nhật khi localStorage thay đổi
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === "favoriteProductIds") {
-        updateFavoriteCount();
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
+    console.log("Adding favoriteChange listener");
+    window.addEventListener("favoriteChange", updateFavoriteCount);
 
     return () => {
-      clearInterval(intervalId);
-      window.removeEventListener("storage", handleStorageChange);
+      console.log("Removing favoriteChange listener");
+      window.removeEventListener("favoriteChange", updateFavoriteCount);
     };
-  }, [favoriteCount]);
+  }, []);
 
   return (
     <div className="flex flex-row items-center justify-between gap-2 py-2 bg-[#0282a5] text-white px-[100px] text-[14px]">

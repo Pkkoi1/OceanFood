@@ -1,45 +1,48 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/product/ProductCard";
-import { newProducts } from "../../data/mockData";
-import {
-  getAllFavorites,
-  removeFavorite,
-} from "../../controller/FavoriteController";
+import { newProducts, type Product } from "../../data/mockData";
+import { fetchFavorites, removeFavorite } from "../../Service/FavoriteService";
 
 const FavoriteProducts: React.FC = () => {
-  const [products, setProducts] = useState(
-    newProducts
-      .filter((product) => getAllFavorites().includes(product.id))
-      .map((product) => ({ ...product, isLiked: true }))
-  );
-
+  const user = JSON.parse(localStorage.getItem("userData") || "{}"); // Retrieve user object from local storage
+  const userId = user.user._id || ""; // Extract userId from the user object
+  const [products, setProducts] = useState<Product[]>([]); // Use the Product type
+  console.log("User ID:", user); // Debugging line to check userId
   useEffect(() => {
-    // Lắng nghe sự kiện storage để cập nhật khi localStorage thay đổi
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === "favoriteProductIds") {
+    const fetchFavoriteProducts = async () => {
+      try {
+        const favorites = await fetchFavorites(userId);
+        const productIds = favorites?.productIds || []; // Safely access productIds
         setProducts(
           newProducts
-            .filter((product) => getAllFavorites().includes(product.id))
+            .filter((product) => productIds.includes(product.id))
             .map((product) => ({ ...product, isLiked: true }))
         );
+      } catch (error) {
+        console.error("Error fetching favorite products:", error);
+      }
+    };
+
+    fetchFavoriteProducts();
+
+    // Lắng nghe sự kiện storage để cập nhật khi localStorage thay đổi
+    const handleStorageChange = async (event: StorageEvent) => {
+      if (event.key === "favoriteProductIds") {
+        await fetchFavoriteProducts();
       }
     };
 
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
+  }, [userId]);
 
-  const toggleLike = (productId: number) => {
-    setProducts((prev) => {
-      const updatedProducts = prev.filter((product) => {
-        if (product.id === productId) {
-          removeFavorite(productId);
-          return false;
-        }
-        return true;
-      });
-      return updatedProducts;
-    });
+  const toggleLike = async (productId: string) => {
+    try {
+      await removeFavorite(userId, productId);
+      setProducts((prev) => prev.filter((product) => product.id !== productId));
+    } catch (error) {
+      console.error("Error removing favorite product:", error);
+    }
   };
 
   return (

@@ -1,32 +1,36 @@
-// Hàm tải danh sách yêu thích từ localStorage
-const loadFavorites = (): number[] => {
+// FavoriteController.tsx
+const loadFavorites = (): string[] => {
   const storedFavorites = localStorage.getItem("favoriteProductIds");
   return storedFavorites ? JSON.parse(storedFavorites) : [];
 };
 
-// Hàm lưu danh sách yêu thích vào localStorage
-const saveFavorites = (ids: number[]): void => {
+let favoriteProductIds: string[] = loadFavorites();
+
+export const saveFavorites = (ids: string[]): void => {
+  favoriteProductIds = [...ids]; // Cập nhật biến toàn cục
   localStorage.setItem("favoriteProductIds", JSON.stringify(ids));
+  window.dispatchEvent(new Event("favoriteChange"));
+  console.log("Favorites saved:", ids);
 };
 
-// Khởi tạo favoriteProductIds từ localStorage
-const favoriteProductIds: number[] = loadFavorites();
+export const getAllFavorites = (): string[] => {
+  const storedFavorites = localStorage.getItem("favoriteProductIds");
+  favoriteProductIds = storedFavorites ? JSON.parse(storedFavorites) : []; // Đồng bộ từ localStorage
+  console.log("getAllFavorites:", favoriteProductIds);
+  return [...favoriteProductIds];
+};
 
-export const addFavorite = (productId: number): void => {
+export const addFavorite = (productId: string): void => {
   if (!favoriteProductIds.includes(productId)) {
     favoriteProductIds.push(productId);
     saveFavorites(favoriteProductIds);
   }
 };
 
-export const removeFavorite = (productId: number): void => {
+export const removeFavorite = (productId: string): void => {
   const index = favoriteProductIds.indexOf(productId);
   if (index > -1) {
     favoriteProductIds.splice(index, 1);
     saveFavorites(favoriteProductIds);
   }
-};
-
-export const getAllFavorites = (): number[] => {
-  return [...favoriteProductIds];
 };

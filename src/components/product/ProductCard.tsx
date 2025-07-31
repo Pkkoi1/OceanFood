@@ -11,7 +11,7 @@ import ProductDetailModal from "./ProductDetailModal";
 
 interface ProductCardProps {
   product: Product;
-  onToggleLike: (productId: number) => void;
+  onToggleLike: (productId: string) => void;
   layout?: "vertical" | "horizontal";
 }
 
@@ -45,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     addToCart({
-      id: Number(product.id),
+      id: product.id,
       name: product.name,
       image: product.image,
       price: product.currentPrice,
@@ -97,7 +97,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <FavoriteButton
           isLiked={product.isLiked}
           onToggleLike={onToggleLike}
-          productId={Number(product.id)}
+          productId={(product.id)}
           className="absolute top-3 right-4/6 z-10 cursor-pointer"
         />
 
@@ -157,7 +157,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <FavoriteButton
         isLiked={product.isLiked}
         onToggleLike={onToggleLike}
-        productId={Number(product.id)}
+        productId={(product.id)}
         className="absolute top-6 right-6 z-10 cursor-pointer"
       />
 

@@ -131,3 +131,61 @@ export const logoutUser = async () => {
     throw error;
   }
 };
+//Favorites
+
+export const addToFavorites = async (userId: string, productId: string) => {
+  try {
+    const response = await apiClient.post(`/favorites/${userId}/add`, {
+      productId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error adding to favorites:", error);
+    throw error;
+  }
+};
+
+export const getFavorites = async (userId: string) => {
+  try {
+    const response = await apiClient.get(`/favorites/${userId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching favorites:", error);
+    throw error;
+  }
+};
+
+export const removeFromFavorites = async (
+  userId: string,
+  productId: string
+) => {
+  try {
+    const response = await apiClient.delete(
+      `/favorites/${userId}/remove/${productId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error removing from favorites:", error);
+    throw error;
+  }
+};
+
+export const clearFavorites = async (userId: string) => {
+  try {
+    const response = await apiClient.delete(`/favorites/${userId}/clear`);
+    return response.data;
+  } catch (error) {
+    console.error("Error clearing favorites:", error);
+    throw error;
+  }
+};
+
+export const getFavoriteCount = async (userId: string) => {
+  try {
+    const response = await apiClient.get(`/favorites/${userId}/count`);
+    return response.data.data.count; // Return the count from the response
+  } catch (error) {
+    console.error("Error fetching favorite count:", error);
+    throw error;
+  }
+};

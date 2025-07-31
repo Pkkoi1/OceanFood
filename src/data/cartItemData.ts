@@ -1,5 +1,5 @@
 export interface CartItem {
-  id: number;
+  id: string;
   name: string;
   price: number; // Add this field to match the required type
   quantity: number;
