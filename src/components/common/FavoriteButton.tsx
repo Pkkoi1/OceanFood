@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
-import { addFavorite, removeFavorite } from "../../Service/FavoriteService";
-import { getAllFavorites } from "../../controller/FavoriteController";
+import {
+  addFavorite,
+  removeFavorite,
+  getAllFavorites,
+} from "../../Service/FavoriteService";
 import { notification } from "antd";
 
 interface FavoriteButtonProps {
@@ -65,6 +68,12 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
       onToggleLike(productId);
     } catch (error) {
       console.error("Error updating favorite:", error);
+      api.error({
+        message: "Lỗi",
+        description:
+          "Không thể cập nhật danh sách yêu thích. Vui lòng thử lại.",
+        placement: "topRight",
+      });
     }
   };
 

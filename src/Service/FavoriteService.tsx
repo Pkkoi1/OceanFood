@@ -5,10 +5,6 @@ import {
   clearFavorites,
   getFavoriteCount,
 } from "../api/API";
-import {
-  getAllFavorites,
-  saveFavorites,
-} from "../controller/FavoriteController";
 
 // Update the Favorite type to match the backend schema
 export interface Favorite {
@@ -18,20 +14,52 @@ export interface Favorite {
   updatedAt: string;
 }
 
+// // Hàm tải danh sách yêu thích từ localStorage
+// const loadFavorites = (): string[] => {
+//   const storedFavorites = localStorage.getItem("favoriteProductIds");
+//   return storedFavorites ? JSON.parse(storedFavorites) : [];
+// };
+
+// Hàm lưu danh sách yêu thích vào localStorage
+export const saveFavorites = (ids: string[]): void => {
+  localStorage.setItem("favoriteProductIds", JSON.stringify(ids));
+  window.dispatchEvent(new Event("favoriteChange"));
+  console.log("Favorites saved:", ids);
+};
+
+// Hàm lấy danh sách yêu thích từ localStorage
+export const getAllFavorites = (): string[] => {
+  const storedFavorites = localStorage.getItem("favoriteProductIds");
+  const favorites = storedFavorites ? JSON.parse(storedFavorites) : [];
+  console.log("getAllFavorites:", favorites);
+  return [...favorites];
+};
+
+// Hàm thêm sản phẩm vào danh sách yêu thích trong localStorage
+export const addFavoriteLocal = (productId: string): void => {
+  const localFavorites = getAllFavorites();
+  if (!localFavorites.includes(productId)) {
+    localFavorites.push(productId);
+    saveFavorites(localFavorites);
+  }
+};
+
+// Hàm xóa sản phẩm khỏi danh sách yêu thích trong localStorage
+export const removeFavoriteLocal = (productId: string): void => {
+  const localFavorites = getAllFavorites();
+  const updatedFavorites = localFavorites.filter((id) => id !== productId);
+  saveFavorites(updatedFavorites);
+};
+
 export const addFavorite = async (
   productId: string,
   userId: string
 ): Promise<Favorite> => {
   try {
-    // Add to localStorage first
-    const localFavorites = getAllFavorites();
-    if (!localFavorites.includes(productId)) {
-      localFavorites.push(productId); // Add productId as string
-      saveFavorites(localFavorites);
-    }
-
-    // Then add to database
+    // Add to database
     const response = await addToFavorites(userId, productId);
+    // Add to localStorage
+    addFavoriteLocal(productId);
     return response as Favorite;
   } catch (error) {
     console.error("Error adding favorite:", error);
@@ -56,6 +84,8 @@ export const fetchFavorites = async (userId: string): Promise<Favorite> => {
     }
 
     const productIds = response.map((product) => product.id || product._id);
+    // Update localStorage with server data
+    saveFavorites(productIds);
 
     return {
       userId,
@@ -84,7 +114,13 @@ export const removeFavorite = async (
   productId: string
 ): Promise<void> => {
   try {
+    // Remove from database
     await removeFromFavorites(userId, productId);
+    // Remove from localStorage
+    removeFavoriteLocal(productId);
+    // Fetch updated favorites from server to ensure sync
+    const serverFavorites = await fetchFavorites(userId);
+    saveFavorites(serverFavorites.productIds);
   } catch (error) {
     console.error("Error removing favorite:", error);
     throw error;
@@ -94,6 +130,8 @@ export const removeFavorite = async (
 export const clearAllFavorites = async (userId: string): Promise<void> => {
   try {
     await clearFavorites(userId);
+    // Clear localStorage
+    saveFavorites([]);
   } catch (error) {
     console.error("Error clearing favorites:", error);
     throw error;

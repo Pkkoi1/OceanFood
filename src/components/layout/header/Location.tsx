@@ -5,8 +5,8 @@ import {
 } from "@ant-design/icons";
 import { Badge } from "antd";
 import { useNavigate } from "react-router-dom";
-import { getAllFavorites } from "../../../controller/FavoriteController";
 import { useEffect, useState } from "react";
+import { getAllFavorites } from "../../../Service/FavoriteService";
 
 const Location = () => {
   const navigate = useNavigate();
