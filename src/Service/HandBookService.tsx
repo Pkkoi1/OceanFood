@@ -22,3 +22,15 @@ export const fetchHandbookById = async (
     throw error;
   }
 };
+
+export const getHandbookByName = async (
+  title: string
+): Promise<HandbookArticle | null> => {
+  try {
+    const handbook = await HandbookAPI.getHandbookByName(title);
+    return handbook as HandbookArticle;
+  } catch (error) {
+    console.error(`Error fetching handbook with title ${title}:`, error);
+    throw error;
+  }
+};

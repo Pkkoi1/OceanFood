@@ -198,12 +198,14 @@ export const HandbookAPI = {
       throw error;
     }
   },
-  getHandbookByName: async (name: string) => {
+  getHandbookByName: async (title: string) => {
     try {
-      const response = await apiClient.get(`/handbook/name/${name}`);
+      const response = await apiClient.get("/handbook/search", {
+        params: { title },
+      });
       return response.data.data;
     } catch (error) {
-      console.error(`Error fetching handbook with name ${name}:`, error);
+      console.error(`Error fetching handbook with title ${title}:`, error);
       throw error;
     }
   },
