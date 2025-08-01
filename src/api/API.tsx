@@ -210,3 +210,57 @@ export const HandbookAPI = {
     }
   },
 };
+
+// Cart APIs
+export const CartAPI = {
+  getCart: async (userId: string) => {
+    try {
+      const response = await apiClient.get(`/cart/${userId}`);
+      return response.data.data;
+    } catch (error) {
+      console.error(`Error fetching cart for user ${userId}:`, error);
+      throw error;
+    }
+  },
+  addToCart: async (userId: string, productId: string, quantity: number) => {
+    try {
+      const response = await apiClient.post(`/cart/${userId}/add`, {
+        productId,
+        quantity,
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Error adding product ${productId} to cart:`, error);
+      throw error;
+    }
+  },
+  updateCartItem: async (userId: string, itemId: string, quantity: number) => {
+    try {
+      const response = await apiClient.put(`/cart/${userId}/item/${itemId}`, {
+        quantity,
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Error updating cart item ${itemId}:`, error);
+      throw error;
+    }
+  },
+  removeFromCart: async (userId: string, itemId: string) => {
+    try {
+      const response = await apiClient.delete(`/cart/${userId}/item/${itemId}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error removing item ${itemId} from cart:`, error);
+      throw error;
+    }
+  },
+  clearCart: async (userId: string) => {
+    try {
+      const response = await apiClient.delete(`/cart/${userId}/clear`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error clearing cart for user ${userId}:`, error);
+      throw error;
+    }
+  },
+};

@@ -16,7 +16,6 @@ export const saveFavorites = (ids: string[]): void => {
 export const getAllFavorites = (): string[] => {
   const storedFavorites = localStorage.getItem("favoriteProductIds");
   favoriteProductIds = storedFavorites ? JSON.parse(storedFavorites) : []; // Đồng bộ từ localStorage
-  console.log("getAllFavorites:", favoriteProductIds);
   return [...favoriteProductIds];
 };
 
