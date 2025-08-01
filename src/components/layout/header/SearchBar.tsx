@@ -65,12 +65,12 @@ const SearchBar = () => {
     }
   };
 
-  const handleSuggestionClick = (productId: number) => {
+  const handleSuggestionClick = (productId: string) => {
     setSuggestions([]); // Hide suggestions
     navigate(`/products/${productId}`);
   };
 
-  const handleArticleClick = (articleId: number) => {
+  const handleArticleClick = (articleId: string) => {
     setSuggestions([]); // Hide suggestions
     setArticles([]); // Hide articles
     navigate(`/handbooks/${articleId}`);
