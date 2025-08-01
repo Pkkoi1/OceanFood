@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  handbookArticles,
-  type HandbookArticle,
-} from "../../data/handbookData";
+import { fetchHandbook } from "../../Service/HandBookService";
+import type { HandbookArticle } from "../../data/handbookData";
 import HandbookCard from "./HandbookCard";
 
 interface HandbookProps {
@@ -17,26 +15,37 @@ const Handbook: React.FC<HandbookProps> = ({
   onArticleClick,
 }) => {
   const [gridCols, setGridCols] = useState("grid-cols-3");
+  const [articles, setArticles] = useState<HandbookArticle[]>([]);
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
       if (width < 700) {
-        // phone
         setGridCols("grid-cols-1");
       } else if (width < 1024) {
-        // tablet/iPad
         setGridCols("grid-cols-2");
       } else {
-        // desktop
         setGridCols("grid-cols-3");
       }
     };
 
-    handleResize(); // Set initial value
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const fetchedArticles = await fetchHandbook();
+        setArticles(fetchedArticles || []); // Ensure articles is always an array
+      } catch (error) {
+        console.error("Error fetching handbook articles:", error);
+      }
+    };
+
+    fetchArticles();
   }, []);
 
   return (
@@ -44,19 +53,18 @@ const Handbook: React.FC<HandbookProps> = ({
       <div className="container mx-auto px-4 lg:px-[100px] py-8">
         {/* Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            {title}
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">{title}</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Khám phá những bí quyết chế biến món ngon, cách chọn và bảo quản hải sản tươi ngon nhất
+            Khám phá những bí quyết chế biến món ngon, cách chọn và bảo quản hải
+            sản tươi ngon nhất
           </p>
         </div>
 
         {/* Articles Grid */}
         <div className={`grid ${gridCols} gap-6`}>
-          {handbookArticles.slice(0, maxArticles).map((article) => (
+          {articles.slice(0, maxArticles).map((article) => (
             <HandbookCard
-              key={article.id}
+              key={article.id} // Ensure unique key
               article={article}
               onClick={onArticleClick}
             />

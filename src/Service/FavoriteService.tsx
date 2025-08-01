@@ -1,22 +1,15 @@
-import {
-  addToFavorites,
-  getFavorites,
-  removeFromFavorites,
-  clearFavorites,
-  getFavoriteCount,
-} from "../api/API";
+import { FavoriteAPI } from "../api/API";
 import type { Product } from "../data/mockData";
 
-// Update the Favorite type to match the backend schema
 export interface Favorite {
   userId: string;
-  productIds: string[]; // Array of product IDs
-  products: Product[]; // Array of product objects
+  productIds: string[];
+  products: Product[];
   createdAt: string;
   updatedAt: string;
 }
 
-// // Hàm tải danh sách yêu thích từ localStorage
+// Hàm tải danh sách yêu thích từ localStorage
 // const loadFavorites = (): string[] => {
 //   const storedFavorites = localStorage.getItem("favoriteProductIds");
 //   return storedFavorites ? JSON.parse(storedFavorites) : [];
@@ -58,9 +51,7 @@ export const addFavorite = async (
   userId: string
 ): Promise<Favorite> => {
   try {
-    // Add to database
-    const response = await addToFavorites(userId, productId);
-    // Add to localStorage
+    const response = await FavoriteAPI.addToFavorites(userId, productId);
     addFavoriteLocal(productId);
     return response as Favorite;
   } catch (error) {
@@ -71,12 +62,8 @@ export const addFavorite = async (
 
 export const fetchFavorites = async (userId: string): Promise<Favorite> => {
   try {
-    const response = await getFavorites(userId);
-
-    // Log the full response for debugging
+    const response = await FavoriteAPI.getFavorites(userId);
     console.log("fetchFavorites response:", response);
-
-    // Extract product IDs from the response
     if (!response || !Array.isArray(response)) {
       throw new Error(
         `Invalid response format: Expected an array of products, got ${JSON.stringify(
@@ -84,11 +71,8 @@ export const fetchFavorites = async (userId: string): Promise<Favorite> => {
         )}`
       );
     }
-
     const productIds = response.map((product) => product.id || product._id);
-    // Update localStorage with server data
     saveFavorites(productIds);
-
     return {
       userId,
       productIds,
@@ -104,8 +88,7 @@ export const fetchFavorites = async (userId: string): Promise<Favorite> => {
 
 export const fetchFavoriteCount = async (userId: string): Promise<number> => {
   try {
-    const response = await getFavorites(userId);
-    return response.productIds.length; // Return the count of product IDs
+    return await FavoriteAPI.getFavoriteCount(userId);
   } catch (error) {
     console.error("Error fetching favorite count:", error);
     throw error;
@@ -117,11 +100,8 @@ export const removeFavorite = async (
   productId: string
 ): Promise<void> => {
   try {
-    // Remove from database
-    await removeFromFavorites(userId, productId);
-    // Remove from localStorage
+    await FavoriteAPI.removeFromFavorites(userId, productId);
     removeFavoriteLocal(productId);
-    // Fetch updated favorites from server to ensure sync
     const serverFavorites = await fetchFavorites(userId);
     saveFavorites(serverFavorites.productIds);
   } catch (error) {
@@ -132,7 +112,7 @@ export const removeFavorite = async (
 
 export const clearAllFavorites = async (userId: string): Promise<void> => {
   try {
-    await clearFavorites(userId);
+    await FavoriteAPI.clearFavorites(userId);
     // Clear localStorage
     saveFavorites([]);
   } catch (error) {
@@ -145,7 +125,7 @@ export const fetchFavoriteCountFromAPI = async (
   userId: string
 ): Promise<number> => {
   try {
-    return await getFavoriteCount(userId);
+    return await FavoriteAPI.getFavoriteCount(userId);
   } catch (error) {
     console.error("Error fetching favorite count from API:", error);
     throw error;

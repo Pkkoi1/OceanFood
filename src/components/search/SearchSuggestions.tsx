@@ -6,8 +6,8 @@ interface SearchSuggestionsProps {
   suggestions: Product[];
   articles: HandbookArticle[];
   onSearchSubmit: () => void;
-  onSuggestionClick: (productId: number) => void;
-  onArticleClick: (articleId: number) => void;
+  onSuggestionClick: (productId: string) => void;
+  onArticleClick: (articleId: string) => void;
 }
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({

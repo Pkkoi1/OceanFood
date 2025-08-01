@@ -2,7 +2,7 @@ import React, { type JSX } from "react";
 import { Breadcrumb as AntBreadcrumb } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useLocation, Link } from "react-router-dom";
-import { getHandbookById } from "../../controller/HandbookController";
+import { fetchHandbookById } from "../../Service/HandBookService";
 import { findProductById } from "../../Service/ProductService";
 
 const Breadcrumb: React.FC = () => {
@@ -55,25 +55,15 @@ const Breadcrumb: React.FC = () => {
       let label = routeMap[currentPath];
 
       if (!label) {
-        console.log(
-          "Path segment:",
-          segment,
-          "Index:",
-          index,
-          "Current path:",
-          currentPath
-        );
         if (currentPath.match(/\/products/)) {
           const productId = segment;
-          const product = await findProductById(productId); // Use await here
-          console.log("Product:", product);
+          const product = await findProductById(productId);
           label = product ? product.name : "Sản phẩm";
         } else if (currentPath.match(/\/handbooks/)) {
-          const handbookId = Number(segment);
-          const handbook = getHandbookById(handbookId);
+          const handbookId = segment;
+          const handbook = await fetchHandbookById(handbookId);
           label = handbook ? handbook.title : "Cẩm nang ẩm thực";
         } else {
-          console.log("Default label for segment:", segment);
           label = segment;
         }
       }

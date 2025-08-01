@@ -1,4 +1,4 @@
-import { loginUser, registerUser, logoutUser } from "../api/API";
+import { UserAPI } from "../api/API";
 
 export const registerAccount = async (
   fullName: string,
@@ -8,7 +8,7 @@ export const registerAccount = async (
 ) => {
   try {
     const userData = { fullName, email, phoneNumber, password };
-    const response = await registerUser(userData);
+    const response = await UserAPI.registerUser(userData);
     return response;
   } catch (error) {
     console.error("Error in registerAccount service:", error);
@@ -18,7 +18,7 @@ export const registerAccount = async (
 
 export const loginAccount = async (email: string, password: string) => {
   try {
-    const response = await loginUser(email, password);
+    const response = await UserAPI.loginUser(email, password);
     return response.data;
   } catch (error) {
     console.error("Error in loginAccount service:", error);
@@ -28,7 +28,7 @@ export const loginAccount = async (email: string, password: string) => {
 
 export const logoutAccount = async () => {
   try {
-    const response = await logoutUser();
+    const response = await UserAPI.logoutUser();
     return response;
   } catch (error) {
     console.error("Error in logoutAccount service:", error);

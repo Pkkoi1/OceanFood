@@ -1,16 +1,11 @@
 import {
-  filterProducts,
-  getAllProducts,
-  getOriginsByCategory,
-  getProductByCategory,
-  getProductById,
-  searchProducts,
+  ProductAPI,
 } from "../api/API";
 import type { Product } from "../data/mockData"; // Import Product type
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
-    const products = await getAllProducts();
+    const products = await ProductAPI.getAllProducts();
     return products as Product[]; // Ensure the data is cast to Product[]
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -22,7 +17,7 @@ export const getProductsByCategory = async (
   category: string
 ): Promise<Product[]> => {
   try {
-    const products = await getProductByCategory(category);
+    const products = await ProductAPI.getProductByCategory(category);
     return products as Product[]; // Ensure the data is cast to Product[]
   } catch (error) {
     console.error(`Error fetching products for category ${category}:`, error);
@@ -37,7 +32,7 @@ export const filter = async (
   origin?: string[]
 ): Promise<Product[]> => {
   try {
-    const products = await filterProducts(category, priceRange, types, origin);
+    const products = await ProductAPI.filterProducts(category, priceRange, types, origin);
     return products as Product[]; // Ensure the data is cast to Product[]
   } catch (error) {
     console.error("Error filtering products:", error);
@@ -47,7 +42,7 @@ export const filter = async (
 
 export const findProductById = async (id: string): Promise<Product> => {
   try {
-    const product = await getProductById(id);
+    const product = await ProductAPI.getProductById(id);
     return product as Product; // Ensure the data is cast to Product
   } catch (error) {
     console.error(`Error fetching product with ID ${id}:`, error);
@@ -55,24 +50,23 @@ export const findProductById = async (id: string): Promise<Product> => {
   }
 };
 
-// getOriginsByCategory
 export const getOriginsByCategories = async (
   category: string
 ): Promise<string[]> => {
   try {
-    const origins = await getOriginsByCategory(category);
+    const origins = await ProductAPI.getOriginsByCategory(category);
     return origins as string[]; // Ensure the data is cast to string[]
   } catch (error) {
     console.error(`Error fetching origins for category ${category}:`, error);
     throw error;
   }
 };
-// searchProducts
+
 export const searchProductsByName = async (
   name: string
 ): Promise<Product[]> => {
   try {
-    const products = await searchProducts(name);
+    const products = await ProductAPI.searchProducts(name);
     return products.filter((product: Product) =>
       product.name.toLowerCase().includes(name.toLowerCase())
     ) as Product[]; // Ensure the data is cast to Product[]
