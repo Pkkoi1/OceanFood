@@ -291,4 +291,20 @@ export const CartAPI = {
       throw error;
     }
   },
+  updateCartItemQuantity: async (
+    userId: string,
+    productId: string,
+    quantity: number
+  ) => {
+    try {
+      const response = await apiClient.put(
+        `/cart/${userId}/item/${productId}/quantity`,
+        { quantity }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(`Error updating quantity for product ${productId}:`, error);
+      throw error;
+    }
+  },
 };

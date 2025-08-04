@@ -75,10 +75,16 @@ const CartWithItem: React.FC<CartData> = () => {
 
     if (item && userId) {
       try {
-        if (newQuantity > item.quantity) {
-          await CartService.increaseCartItem(userId, item.id);
-        } else if (newQuantity < item.quantity) {
-          await CartService.decreaseCartItem(userId, item.id);
+        if (newQuantity === 0) {
+          // Remove item if quantity is 0
+          await CartService.removeFromCart(userId, item.id);
+        } else {
+          // Update quantity
+          await CartService.updateCartItemQuantity(
+            userId,
+            item.id,
+            newQuantity
+          );
         }
         const updatedCart = await CartService.getCart(userId);
         setCartItems(

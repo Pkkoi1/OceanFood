@@ -43,15 +43,19 @@ const CartDropdown: React.FC = () => {
 
   const handleQuantityChange = async (key: string, newQuantity: number) => {
     const item = items.find((item: CartItemType) => item.key === key);
-    const userData = localStorage.getItem("userData");
-    const userId = userData ? JSON.parse(userData).user?._id : null;
 
     if (item && userId) {
       try {
-        if (newQuantity > item.quantity) {
-          await CartService.increaseCartItem(userId, item.id);
-        } else if (newQuantity < item.quantity) {
-          await CartService.decreaseCartItem(userId, item.id);
+        if (newQuantity === 0) {
+          // Remove item if quantity is 0
+          await CartService.removeFromCart(userId, item.id);
+        } else {
+          // Update quantity
+          await CartService.updateCartItemQuantity(
+            userId,
+            item.id,
+            newQuantity
+          );
         }
         const updatedCart = await CartService.getCart(userId);
         setItems(

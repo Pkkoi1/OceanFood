@@ -88,12 +88,18 @@ const CartTable: React.FC<CartTableProps> = ({
             size="small"
             icon={<MinusOutlined />}
             onClick={() => onQuantityChange(record.key, quantity - 1)}
-            disabled={quantity <= 1}
+            disabled={quantity <= 0} // Prevent reducing below 0
           />
           <InputNumber
-            min={1}
+            min={0} // Prevent entering negative numbers
             value={quantity}
-            onChange={(value) => onQuantityChange(record.key, value || 1)}
+            onChange={(value) => {
+              if (value === 0) {
+                onDeleteItem(record.key); // Remove item if quantity is 0
+              } else if (value !== null && value > 0) {
+                onQuantityChange(record.key, value);
+              }
+            }}
             className="w-16 mx-1"
             controls={false}
           />
