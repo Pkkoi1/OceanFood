@@ -263,4 +263,32 @@ export const CartAPI = {
       throw error;
     }
   },
+  increaseCartItem: async (userId: string, itemId: string) => {
+    try {
+      const response = await apiClient.put(
+        `/cart/${userId}/item/${itemId}/increase`
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        `Error increasing quantity for cart item ${itemId}:`,
+        error
+      );
+      throw error;
+    }
+  },
+  decreaseCartItem: async (userId: string, itemId: string) => {
+    try {
+      const response = await apiClient.put(
+        `/cart/${userId}/item/${itemId}/decrease`
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        `Error decreasing quantity for cart item ${itemId}:`,
+        error
+      );
+      throw error;
+    }
+  },
 };

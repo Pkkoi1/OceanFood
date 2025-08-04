@@ -42,4 +42,10 @@ export const CartService = {
   clearCart: async (userId: string) => {
     return await CartAPI.clearCart(userId);
   },
+  increaseCartItem: async (userId: string, itemId: string) => {
+    return await CartAPI.increaseCartItem(userId, itemId);
+  },
+  decreaseCartItem: async (userId: string, itemId: string) => {
+    return await CartAPI.decreaseCartItem(userId, itemId);
+  },
 };

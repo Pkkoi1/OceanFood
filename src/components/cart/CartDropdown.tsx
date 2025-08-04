@@ -15,7 +15,6 @@ const CartDropdown: React.FC = () => {
     const fetchCartItems = async () => {
       if (userId) {
         const cartData = await CartService.getCart(userId);
-        console.log("Fetched cart items:", cartData);
         setItems(
           cartData.items.map(
             (item: {
@@ -44,15 +43,42 @@ const CartDropdown: React.FC = () => {
 
   const handleQuantityChange = async (key: string, newQuantity: number) => {
     const item = items.find((item: CartItemType) => item.key === key);
-    if (item && newQuantity > 0 && userId) {
-      await CartService.updateCartItem(userId, item.id, newQuantity);
-      const updatedCart = await CartService.getCart(userId);
-      setItems(
-        updatedCart.map((item: CartItemType) => ({
-          ...item,
-          key: item.id.toString(),
-        }))
-      );
+    const userData = localStorage.getItem("userData");
+    const userId = userData ? JSON.parse(userData).user?._id : null;
+
+    if (item && userId) {
+      try {
+        if (newQuantity > item.quantity) {
+          await CartService.increaseCartItem(userId, item.id);
+        } else if (newQuantity < item.quantity) {
+          await CartService.decreaseCartItem(userId, item.id);
+        }
+        const updatedCart = await CartService.getCart(userId);
+        setItems(
+          updatedCart.items.map(
+            (item: {
+              _id: string;
+              product: {
+                _id: string;
+                name: string;
+                price: number;
+                image: string;
+              };
+              quantity: number;
+            }) => ({
+              key: item._id ? item._id.toString() : "",
+              id: item.product?._id || "",
+              name: item.product?.name || "Unknown Product",
+              price: item.product?.price || 0,
+              quantity: item.quantity || 0,
+              image: item.product?.image || "",
+            })
+          )
+        );
+      } catch (error) {
+        console.error("Error updating quantity:", error);
+        alert("Không thể cập nhật số lượng sản phẩm.");
+      }
     }
   };
 

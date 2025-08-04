@@ -18,6 +18,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   const shippingFee = 0; // Free shipping
   const finalTotal = totalAmount + shippingFee;
 
+  console.log("Order Summary Items:", items);
+  
   const handlePlaceOrder = () => {
     // Handle order placement
     alert("Đặt hàng thành công!");
