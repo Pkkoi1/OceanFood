@@ -4,10 +4,10 @@ import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
 import { notification } from "antd";
 import FavoriteButton from "../common/FavoriteButton"; // Import the updated component
 import { addRecentlyViewedProduct } from "../../controller/ProductController";
-
-import { addToCart } from "../../controller/CartController";
+import { CartService } from "../../Service/CartService";
 import type { Product } from "../../data/mockData";
 import ProductDetailModal from "./ProductDetailModal";
+import { getUserId } from "../../utils/auth"; // Utility to get logged-in user ID
 
 interface ProductCardProps {
   product: Product;
@@ -42,31 +42,45 @@ const ProductCard: React.FC<ProductCardProps> = ({
     navigate(`/products/${product.id}`);
   };
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart({
-      id: product.id,
-      name: product.name,
-      image: product.image,
-      price: product.currentPrice,
-      quantity: 1, // Mặc định thêm 1
-      currentPrice: product.currentPrice,
-    });
-    api.success({
-      message: "Thêm vào giỏ hàng",
-      description: (
-        <div>
-          <p>{product.name} đã được thêm vào giỏ hàng.</p>
-          <a
-            href="/cart"
-            style={{ color: "#1890ff", textDecoration: "underline" }}
-          >
-            Xem danh sách giỏ hàng tại đây
-          </a>
-        </div>
-      ),
-      placement: "topRight",
-    });
+    const userId = getUserId(); // Check if the user is logged in
+    try {
+      if (!userId) {
+        api.error({
+          message: "Yêu cầu đăng nhập",
+          description: "Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.",
+          placement: "topRight",
+        });
+        return;
+      }
+      await CartService.addToCart(userId, product.id.toString(), 1);
+      api.success({
+        message: "Thêm vào giỏ hàng",
+        description: (
+          <div>
+            <p>{product.name} đã được thêm vào giỏ hàng.</p>
+            <a
+              href="/cart"
+              style={{ color: "#1890ff", textDecoration: "underline" }}
+            >
+              Xem danh sách giỏ hàng tại đây
+            </a>
+          </div>
+        ),
+        placement: "topRight",
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Đã xảy ra lỗi khi thêm vào giỏ hàng.";
+      api.error({
+        message: "Lỗi",
+        description: errorMessage,
+        placement: "topRight",
+      });
+    }
   };
 
   const handleModalOpen = (e: React.MouseEvent) => {
@@ -97,7 +111,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <FavoriteButton
           isLiked={product.isLiked}
           onToggleLike={onToggleLike}
-          productId={(product.id)}
+          productId={product.id}
           className="absolute top-3 right-4/6 z-10 cursor-pointer"
         />
 
@@ -157,7 +171,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <FavoriteButton
         isLiked={product.isLiked}
         onToggleLike={onToggleLike}
-        productId={(product.id)}
+        productId={product.id}
         className="absolute top-6 right-6 z-10 cursor-pointer"
       />
 

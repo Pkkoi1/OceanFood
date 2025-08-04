@@ -4,50 +4,51 @@ import CartSummary from "./CartSummary";
 import CartItem from "./CartItem";
 import type { CartItem as CartItemType } from "../../data/cartItemData";
 import { ShoppingOutlined } from "@ant-design/icons";
-import {
-  getAllCartItems,
-  updateCartItemQuantity,
-  removeFromCart,
-} from "../../controller/CartController";
+import { CartService } from "../../Service/CartService";
 
 const CartDropdown: React.FC = () => {
   const [items, setItems] = useState<CartItemType[]>([]);
+  const userData = localStorage.getItem("userData");
+  const userId = userData ? JSON.parse(userData).user?._id : null;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setItems(
-        getAllCartItems().map((item) => ({
-          ...item,
-          key: item.id.toString(), // Ensure 'key' is always a string
-        }))
-      );
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === "cartItems") {
+    const fetchCartItems = async () => {
+      if (userId) {
+        const cartData = await CartService.getCart(userId);
+        console.log("Fetched cart items:", cartData);
         setItems(
-          getAllCartItems().map((item) => ({
-            ...item,
-            key: item.id.toString(),
-          }))
+          cartData.items.map(
+            (item: {
+              _id: string;
+              product: {
+                _id: string;
+                name: string;
+                price: number;
+                image: string;
+              };
+              quantity: number;
+            }) => ({
+              key: item._id ? item._id.toString() : "", // Use _id as key
+              id: item.product?._id || "", // Extract product ID
+              name: item.product?.name || "Unknown Product", // Extract product name
+              price: item.product?.price || 0, // Extract product price
+              quantity: item.quantity || 0, // Extract quantity
+              image: item.product?.image || "", // Extract product image
+            })
+          )
         );
       }
     };
+    fetchCartItems();
+  }, [userId]);
 
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
-
-  const handleQuantityChange = (key: string, newQuantity: number) => {
-    const item = items.find((item) => item.key === key);
-    if (item && newQuantity > 0) {
-      updateCartItemQuantity(item.id, newQuantity);
+  const handleQuantityChange = async (key: string, newQuantity: number) => {
+    const item = items.find((item: CartItemType) => item.key === key);
+    if (item && newQuantity > 0 && userId) {
+      await CartService.updateCartItem(userId, item.id, newQuantity);
+      const updatedCart = await CartService.getCart(userId);
       setItems(
-        getAllCartItems().map((item) => ({
+        updatedCart.map((item: CartItemType) => ({
           ...item,
           key: item.id.toString(),
         }))
@@ -55,12 +56,13 @@ const CartDropdown: React.FC = () => {
     }
   };
 
-  const handleDeleteItem = (key: string) => {
-    const item = items.find((item) => item.key === key);
-    if (item) {
-      removeFromCart(item.id);
+  const handleDeleteItem = async (key: string) => {
+    const item = items.find((item: CartItemType) => item.key === key);
+    if (item && userId) {
+      await CartService.removeFromCart(userId, item.id);
+      const updatedCart = await CartService.getCart(userId);
       setItems(
-        getAllCartItems().map((item) => ({
+        updatedCart.map((item: CartItemType) => ({
           ...item,
           key: item.id.toString(),
         }))

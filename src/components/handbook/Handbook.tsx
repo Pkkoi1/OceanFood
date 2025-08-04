@@ -62,9 +62,9 @@ const Handbook: React.FC<HandbookProps> = ({
 
         {/* Articles Grid */}
         <div className={`grid ${gridCols} gap-6`}>
-          {articles.slice(0, maxArticles).map((article) => (
+          {articles.slice(0, maxArticles).map((article, index) => (
             <HandbookCard
-              key={article.id} // Ensure unique key
+              key={article.id || `article-${index}`} // Ensure unique key
               article={article}
               onClick={onArticleClick}
             />

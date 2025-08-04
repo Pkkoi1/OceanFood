@@ -4,9 +4,10 @@ import {
   MinusOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { addToCart } from "../../controller/CartController";
+import { CartService } from "../../Service/CartService";
 import { useNavigate } from "react-router-dom";
 import { notification } from "antd";
+import { getUserId } from "../../utils/auth"; // Utility to get logged-in user ID
 import type { Product } from "../../data/mockData";
 
 interface ProductInfoProps {
@@ -23,32 +24,44 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
 
-  const handleAddToCart = () => {
-    addToCart({
-      id: Number(product.id), // Ensure id is a number
-      name: product.name,
-      price: product.currentPrice, // Map currentPrice to price
-      quantity,
-      image: product.image,
-      currentPrice: product.currentPrice,
-      originalPrice: product.originalPrice,
-      discount: product.discount,
-    });
-    api.success({
-      message: "Thêm vào giỏ hàng",
-      description: (
-        <div>
-          <p>{product.name} đã được thêm vào giỏ hàng.</p>
-          <a
-            href="/cart"
-            style={{ color: "#1890ff", textDecoration: "underline" }}
-          >
-            Xem danh sách giỏ hàng tại đây
-          </a>
-        </div>
-      ),
-      placement: "topRight",
-    });
+  const handleAddToCart = async () => {
+    const userId = getUserId(); // Check if the user is logged in
+    try {
+      if (!userId) {
+        api.error({
+          message: "Yêu cầu đăng nhập",
+          description: "Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.",
+          placement: "topRight",
+        });
+        return;
+      }
+      await CartService.addToCart(userId, product.id.toString(), quantity);
+      api.success({
+        message: "Thêm vào giỏ hàng",
+        description: (
+          <div>
+            <p>{product.name} đã được thêm vào giỏ hàng.</p>
+            <a
+              href="/cart"
+              style={{ color: "#1890ff", textDecoration: "underline" }}
+            >
+              Xem danh sách giỏ hàng tại đây
+            </a>
+          </div>
+        ),
+        placement: "topRight",
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Đã xảy ra lỗi khi thêm vào giỏ hàng.";
+      api.error({
+        message: "Lỗi",
+        description: errorMessage,
+        placement: "topRight",
+      });
+    }
   };
 
   const handleBuyNow = () => {

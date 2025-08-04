@@ -16,7 +16,9 @@ const cartItems: CartItem[] = loadCartItems();
 
 // Thêm sản phẩm vào giỏ hàng (nếu đã có thì tăng số lượng)
 export const addToCart = (product: CartItem): void => {
-  const existingItem = cartItems.find((item) => item.id === product.id);
+  const existingItem = cartItems.find(
+    (item: CartItem) => item.id === product.id
+  );
   if (existingItem) {
     existingItem.quantity += product.quantity;
   } else {
@@ -30,7 +32,7 @@ export const updateCartItemQuantity = (
   productId: string,
   quantity: number
 ): void => {
-  const item = cartItems.find((item) => item.id === productId);
+  const item = cartItems.find((item: CartItem) => item.id === productId);
   if (item) {
     item.quantity = quantity;
     saveCartItems(cartItems);
@@ -39,7 +41,7 @@ export const updateCartItemQuantity = (
 
 // Xóa sản phẩm khỏi giỏ hàng
 export const removeFromCart = (productId: string): void => {
-  const index = cartItems.findIndex((item) => item.id === productId);
+  const index = cartItems.findIndex((item: CartItem) => item.id === productId);
   if (index > -1) {
     cartItems.splice(index, 1);
     saveCartItems(cartItems);
