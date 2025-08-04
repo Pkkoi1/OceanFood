@@ -31,7 +31,7 @@ const DateFilter: React.FC = () => {
         >
           <a onClick={(e) => e.preventDefault()}>
             <Space>
-              Chọn ngày
+              Chọn thời gian
               <DownOutlined />
             </Space>
           </a>

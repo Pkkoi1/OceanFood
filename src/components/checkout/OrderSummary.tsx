@@ -6,20 +6,21 @@ import OrderItem from "./OrderItem";
 interface OrderSummaryProps {
   items: Array<CartItem & { key: string; selected?: boolean }>;
   totalAmount: number;
+  shippingFee: number; // Add shippingFee prop
   formatPrice: (price: number) => string;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
   items,
   totalAmount,
+  shippingFee,
   formatPrice,
 }) => {
   const [discountCode, setDiscountCode] = useState("");
-  const shippingFee = 0; // Free shipping
-  const finalTotal = totalAmount + shippingFee;
+  const finalTotal = totalAmount + shippingFee; // Include shipping fee in total
 
   console.log("Order Summary Items:", items);
-  
+
   const handlePlaceOrder = () => {
     // Handle order placement
     alert("Đặt hàng thành công!");

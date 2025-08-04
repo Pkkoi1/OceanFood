@@ -308,3 +308,55 @@ export const CartAPI = {
     }
   },
 };
+
+// Flash Sale APIs
+export const FlashSaleAPI = {
+  getFlashSales: async () => {
+    try {
+      const response = await apiClient.get("/flash-sale");
+      return response.data.data;
+    } catch (error) {
+      console.error("Error fetching flash sales:", error);
+      throw error;
+    }
+  },
+  addFlashSale: async (flashSaleData: {
+    product: string;
+    startDate: string;
+    endDate: string;
+    discountPercentage: number;
+  }) => {
+    try {
+      const response = await apiClient.post("/flash-sale", flashSaleData);
+      return response.data;
+    } catch (error) {
+      console.error("Error adding flash sale:", error);
+      throw error;
+    }
+  },
+  updateFlashSale: async (
+    id: string,
+    updateData: {
+      startDate?: string;
+      endDate?: string;
+      discountPercentage?: number;
+    }
+  ) => {
+    try {
+      const response = await apiClient.put(`/flash-sale/${id}`, updateData);
+      return response.data;
+    } catch (error) {
+      console.error(`Error updating flash sale with ID ${id}:`, error);
+      throw error;
+    }
+  },
+  deleteFlashSale: async (id: string) => {
+    try {
+      const response = await apiClient.delete(`/flash-sale/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error deleting flash sale with ID ${id}:`, error);
+      throw error;
+    }
+  },
+};

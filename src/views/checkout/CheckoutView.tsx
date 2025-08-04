@@ -57,6 +57,8 @@ const CheckoutView: React.FC = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const shippingFee = 40000; // Fixed shipping fee
+
   return (
     <div className="container mx-auto px-4 lg:px-[100px] py-8">
       <div className="flex items-center gap-4 mb-6">
@@ -74,7 +76,10 @@ const CheckoutView: React.FC = () => {
 
         {/* Column 2: Shipping & Payment */}
         <div className="lg:col-span-1 space-y-6">
-          <ShippingSection />
+          <ShippingSection
+            address={formData.address}
+            shippingFee={shippingFee}
+          />
           <PaymentSection
             paymentMethod={paymentMethod}
             onChange={handlePaymentChange}
@@ -86,6 +91,7 @@ const CheckoutView: React.FC = () => {
           <OrderSummary
             items={selectedItems}
             totalAmount={totalAmount}
+            shippingFee={shippingFee} // Pass shippingFee here
             formatPrice={formatPrice}
           />
         </div>

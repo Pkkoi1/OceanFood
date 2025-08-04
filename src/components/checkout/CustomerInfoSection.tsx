@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, Input } from "antd";
 import vietnamAddresses from "../../data/vietnam_addresses.json";
 
@@ -53,8 +53,17 @@ const CustomerInfoSection: React.FC<CustomerInfoSectionProps> = ({
   formData,
   onChange,
 }) => {
+  const [userName, setUserName] = useState<string | null>(null);
   const [districts, setDistricts] = useState<SelectOption[]>([]);
   const [wards, setWards] = useState<SelectOption[]>([]);
+
+  useEffect(() => {
+    const userData = localStorage.getItem("userData");
+    if (userData) {
+      const parsedData = JSON.parse(userData);
+      setUserName(parsedData.user?.fullName || null);
+    }
+  }, []);
 
   // Get provinces from JSON data
   const provinces: SelectOption[] = (vietnamAddresses as Province[]).map(
@@ -114,16 +123,27 @@ const CustomerInfoSection: React.FC<CustomerInfoSectionProps> = ({
     }
   };
 
+  const handleLoginRedirect = () => {
+    window.location.href = "/login"; // Redirect to login page
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-medium">Thông tin nhận hàng</h2>
-        <a href="#" className="text-[#37bee3] text-sm flex items-center gap-1">
-          <span className="w-4 h-4 rounded-full bg-[#37bee3] text-white text-xs flex items-center justify-center">
-            👤
-          </span>
-          Đăng nhập
-        </a>
+        {userName ? (
+          <span className="text-gray-700 text-sm">Xin chào, {userName}</span>
+        ) : (
+          <a
+            onClick={handleLoginRedirect}
+            className="text-[#37bee3] text-sm flex items-center gap-1 cursor-pointer"
+          >
+            <span className="w-4 h-4 rounded-full bg-[#37bee3] text-white text-xs flex items-center justify-center">
+              👤
+            </span>
+            Đăng nhập
+          </a>
+        )}
       </div>
 
       <div className="space-y-6 flex gap-2 flex-col">
