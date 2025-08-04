@@ -20,6 +20,8 @@ export interface Product {
   flashSale?: boolean;
   categories?: string[]; // Updated to allow multiple categories
   type?: string;
+  soldQuantity?: number; // Added for sold quantity
+  totalQuantity?: number; // Added for total quantity
 }
 
 export const newProducts: Product[] = [

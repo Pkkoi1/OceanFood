@@ -3,7 +3,12 @@ import { FlashSaleAPI } from "../api/API";
 export const FlashSaleService = {
   fetchFlashSales: async () => {
     try {
-      return await FlashSaleAPI.getFlashSales();
+      const response = await FlashSaleAPI.getFlashSales();
+      console.log(
+        "FlashSaleService.fetchFlashSales response (should be array):",
+        response
+      );
+      return response; // Đảm bảo trả về mảng
     } catch (error) {
       console.error("Error in FlashSaleService.fetchFlashSales:", error);
       throw error;
