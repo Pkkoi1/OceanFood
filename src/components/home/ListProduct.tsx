@@ -40,7 +40,7 @@ const ListProduct: React.FC<ListProductProps> = ({
         setDisplayProducts(
           fetchedProducts.map((product: Product) => ({
             ...product,
-            isLiked: favoriteProductIds.includes(product.id),
+            isLiked: favoriteProductIds.includes(Number(product.id)),
           }))
         );
       } catch (error) {
@@ -76,7 +76,7 @@ const ListProduct: React.FC<ListProductProps> = ({
     }
   };
 
-  const toggleLike = (productId: number) => {
+  const toggleLike = (productId: string) => {
     setDisplayProducts((prev) =>
       prev.map((product) =>
         product.id === productId

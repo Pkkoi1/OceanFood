@@ -12,7 +12,7 @@ const RecentProducts: React.FC = () => {
     setRecentProducts(recentProducts);
   }, []);
 
-  const handleToggleLike = (productId: number) => {
+  const handleToggleLike = (productId: string) => {
     setRecentProducts((prevProducts) =>
       prevProducts.map((product) =>
         product.id === productId

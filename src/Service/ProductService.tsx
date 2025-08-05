@@ -1,6 +1,4 @@
-import {
-  ProductAPI,
-} from "../api/API";
+import { ProductAPI } from "../api/API";
 import type { Product } from "../data/mockData"; // Import Product type
 
 export const fetchProducts = async (): Promise<Product[]> => {
@@ -32,7 +30,12 @@ export const filter = async (
   origin?: string[]
 ): Promise<Product[]> => {
   try {
-    const products = await ProductAPI.filterProducts(category, priceRange, types, origin);
+    const products = await ProductAPI.filterProducts(
+      category,
+      priceRange,
+      types,
+      origin
+    );
     return products as Product[]; // Ensure the data is cast to Product[]
   } catch (error) {
     console.error("Error filtering products:", error);
