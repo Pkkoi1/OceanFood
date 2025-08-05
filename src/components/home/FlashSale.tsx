@@ -7,6 +7,21 @@ import { favoriteProductIds } from "../../data/mockFavoriteProducts";
 import type { Product } from "../../data/mockData";
 import { FlashSaleService } from "../../Service/FlashSaleService";
 
+interface FlashSaleItem {
+  product: {
+    id?: string;
+    _id?: string;
+    name: string;
+    origin?: string;
+    currentPrice: number;
+    originalPrice?: number;
+    discount?: number;
+    soldQuantity?: number;
+    image: string;
+    description?: { title: string; content: string }[];
+  };
+}
+
 const FlashSale: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({
     days: 226,
@@ -54,8 +69,8 @@ const FlashSale: React.FC = () => {
         );
         // Map dữ liệu trả về sang định dạng Product
         const mappedProducts: Product[] = Array.isArray(res)
-          ? res.map((item: any) => ({
-              id: item.product.id || item.product._id,
+          ? res.map((item: FlashSaleItem) => ({
+              id: item.product.id || item.product._id || "",
               name: item.product.name,
               origin: item.product.origin || "", // Lấy xuất xứ nếu có
               currentPrice: item.product.currentPrice,
@@ -64,7 +79,7 @@ const FlashSale: React.FC = () => {
               sold: item.product.soldQuantity || 0, // Lấy số lượng đã bán nếu có
               image: item.product.image,
               isLiked: favoriteProductIds.includes(
-                item.product.id || item.product._id
+                Number(item.product.id || item.product._id)
               ),
               badge: "Bán chạy",
               stockStatus: undefined,
