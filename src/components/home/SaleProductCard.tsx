@@ -3,25 +3,11 @@ import { useNavigate } from "react-router-dom";
 import FavoriteButton from "../common/FavoriteButton";
 import { addToCart } from "../../controller/CartController";
 import { notification } from "antd";
-
-interface Product {
-  id: number;
-  name: string;
-  origin: string;
-  currentPrice: number;
-  originalPrice?: number;
-  discount?: number;
-  sold?: number;
-  image: string;
-  isLiked: boolean;
-  badge?: string;
-  stockStatus?: string;
-  flashSale?: boolean;
-}
+import type { Product } from "../../data/mockData";
 
 interface ProductCardProps {
   product: Product;
-  onToggleLike: (productId: number) => void;
+  onToggleLike: (productId: string) => void; // sửa lại thành string
 }
 
 const SaleProductCard: React.FC<ProductCardProps> = ({
@@ -117,11 +103,16 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
             <div>
               <h3
                 className="font-bold text-lg mb-2 line-clamp-2 cursor-pointer hover:text-[#4FB3D9] transition-colors"
-                onClick={handleNameClick} // Add click handler for navigation
+                onClick={handleNameClick}
               >
                 {product.name}
               </h3>
-              <p className="text-gray-600 text-sm mb-3">{product.origin}</p>
+              {/* Luôn hiển thị xuất xứ nếu có */}
+              <p className="text-gray-600 text-sm mb-3">
+                {product.origin.startsWith("Xuất xứ")
+                  ? product.origin
+                  : `Xuất xứ: ${product.origin}`}
+              </p>
 
               <div className="mb-3">
                 <div className="flex items-center lg:justify-normal justify-center gap-2 mb-1">
@@ -140,7 +131,7 @@ const SaleProductCard: React.FC<ProductCardProps> = ({
                       <span className="mr-1">⚡</span>
                       {product.stockStatus}
                     </div>
-                  ) : product.sold ? (
+                  ) : typeof product.sold === "number" ? (
                     <div className="flex items-center text-sm bg-[#f0f7ff] w-fit p-2 font-bold lg:justify-start justify-center">
                       Đã bán{" "}
                       <strong className="text-red-500 ml-1">

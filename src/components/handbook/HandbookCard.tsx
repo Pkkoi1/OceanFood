@@ -50,20 +50,25 @@ const HandbookCard: React.FC<HandbookCardProps> = ({
   const sizeClasses = getSizeClasses();
 
   // Use the first section's content as the description for display
-const displayDescription = (() => {
-    const firstSection = article.description[0];
+  const displayDescription = (() => {
+    const firstSection = article.sections?.[0];
     if (!firstSection?.content) return "";
     if (typeof firstSection.content === "string") {
       return firstSection.content;
     }
     // If content is an array, use the first item's content
-    return firstSection.content[0]?.content || "";
+    return firstSection.content[0] || "";
   })();
 
   const handleCardClick = () => {
-    navigate(`/handbooks/${article.id}`);
+    navigate(`/handbooks/${article._id}`);
     if (onClick) onClick(article);
   };
+
+  if (!article) {
+    return null; // Handle undefined article gracefully
+  }
+
   return (
     <div
       className={`bg-white overflow-hidden duration-300 cursor-pointer group flex ${sizeClasses.container}`}
@@ -86,20 +91,20 @@ const displayDescription = (() => {
         <h3
           className={`${sizeClasses.title} line-clamp-2 group-hover:text-[#4FB3D9] transition-colors duration-300`}
         >
-          {article.title}
+          {article.title || "Untitled"}
         </h3>
 
         {/* Date */}
         <div className={`flex items-center text-gray-500 ${sizeClasses.date}`}>
           <CalendarOutlined className="mr-1 text-xs" />
-          <span>{article.date}</span>
+          <span>{article.createdAt}</span>
         </div>
 
         {/* Description */}
         <p
           className={`text-gray-600 ${sizeClasses.description} line-clamp-2 leading-relaxed`}
         >
-          {displayDescription}
+          {displayDescription || "No description available."}
         </p>
       </div>
     </div>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import ListProduct from "../../components/home/ListProduct";
-import { searchProductsByName } from "../../controller/ProductController";
-import type { Product } from "../../data/mockData"; // Import Product type
+import ListProduct from "../../../components/home/ListProduct";
+import type { Product } from "../../../data/mockData"; // Import Product type
+import { searchProductsByName } from "../../../Service/ProductService";
 
 const SearchResults: React.FC = () => {
   const location = useLocation();
@@ -32,12 +32,16 @@ const SearchResults: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const query = queryParams.get("query");
-    if (query) {
-      const results = searchProductsByName(query);
-      setProducts(results);
-    }
+    const fetchSearchResults = async () => {
+      const queryParams = new URLSearchParams(location.search);
+      const query = queryParams.get("query");
+      if (query) {
+        const results = await searchProductsByName(query); // Use await to resolve the promise
+        setProducts(results);
+      }
+    };
+
+    fetchSearchResults();
   }, [location.search]);
 
   return (

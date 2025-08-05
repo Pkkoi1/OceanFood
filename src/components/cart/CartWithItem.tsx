@@ -4,11 +4,7 @@ import type { CartItem as ImportedCartItem } from "../../data/cartItemData";
 import CartTable from "./CartTable";
 import CartTotal from "./CartTotal";
 import CartItem from "./CartItem";
-import {
-  getAllCartItems,
-  updateCartItemQuantity,
-  removeFromCart,
-} from "../../controller/CartController";
+import { CartService } from "../../Service/CartService";
 
 interface CartData {
   items: ImportedCartItem[];
@@ -24,29 +20,44 @@ interface CartItem extends ImportedCartItem {
 const CartWithItem: React.FC<CartData> = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState<CartItem[]>(
-    getAllCartItems().map((item) => ({
-      ...item,
-      key: item.id.toString(), // Ensure 'key' is always a string
-      selected: false,
-    }))
-  );
+  const userData = localStorage.getItem("userData");
+  const userId = userData ? JSON.parse(userData).user?._id : null;
+
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === "cartItems") {
-        const updatedCartItems = getAllCartItems().map((item) => ({
-          ...item,
-          key: item.id.toString(),
-          selected: cartItems.find((i) => i.id === item.id)?.selected || false,
-        }));
-        setCartItems(updatedCartItems);
+    const fetchCartItems = async () => {
+      if (userId) {
+        const cartData = await CartService.getCart(userId);
+        setCartItems(
+          cartData.items.map(
+            (
+              item: {
+                id?: string;
+                product: {
+                  _id?: string;
+                  name?: string;
+                  price?: number;
+                  image?: string;
+                };
+                quantity?: number;
+              },
+              index: number
+            ) => ({
+              key: item.id ? item.id.toString() : `fallback-key-${index}`, // Ensure key is unique
+              id: item.product?._id || "", // Extract product ID
+              name: item.product?.name || "Unknown Product", // Extract product name
+              price: item.product?.price || 0, // Extract product price
+              quantity: item.quantity || 0, // Extract quantity
+              image: item.product?.image || "", // Extract product image
+              selected: false, // Default selected state
+            })
+          )
+        );
       }
     };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, [cartItems]);
+    fetchCartItems();
+  }, [userId]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -58,17 +69,54 @@ const CartWithItem: React.FC<CartData> = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const handleQuantityChange = (key: string, newQuantity: number) => {
-    const item = cartItems.find((item) => item.key === key);
-    if (item && newQuantity > 0) {
-      updateCartItemQuantity(item.id, newQuantity);
-      setCartItems(
-        getAllCartItems().map((item) => ({
-          ...item,
-          key: item.id.toString(), // Ensure 'key' is always a string
-          selected: cartItems.find((i) => i.id === item.id)?.selected || false,
-        }))
-      );
+  const handleQuantityChange = async (key: string, newQuantity: number) => {
+    const item = cartItems.find((item: CartItem) => item.key === key);
+
+    if (item && userId) {
+      try {
+        if (newQuantity === 0) {
+          // Remove item if quantity is 0
+          await CartService.removeFromCart(userId, item.id);
+        } else {
+          // Update quantity
+          await CartService.updateCartItemQuantity(
+            userId,
+            item.id,
+            newQuantity
+          );
+        }
+        const updatedCart = await CartService.getCart(userId);
+        setCartItems(
+          updatedCart.items.map(
+            (
+              item: {
+                id?: string;
+                product: {
+                  _id?: string;
+                  name?: string;
+                  price?: number;
+                  image?: string;
+                };
+                quantity?: number;
+              },
+              index: number
+            ) => ({
+              key: item.id ? item.id.toString() : `fallback-key-${index}`, // Ensure key is unique
+              id: item.product?._id || "", // Extract product ID
+              name: item.product?.name || "Unknown Product", // Extract product name
+              price: item.product?.price || 0, // Extract product price
+              quantity: item.quantity || 0, // Extract quantity
+              image: item.product?.image || "", // Extract product image
+              selected:
+                cartItems.find((i) => i.id === item.product?._id)?.selected ||
+                false,
+            })
+          )
+        );
+      } catch (error) {
+        console.error("Error updating quantity:", error);
+        alert("Không thể cập nhật số lượng sản phẩm.");
+      }
     }
   };
 
@@ -86,16 +134,34 @@ const CartWithItem: React.FC<CartData> = () => {
     );
   };
 
-  const handleDeleteItem = (key: string) => {
+  const handleDeleteItem = async (key: string) => {
     const item = cartItems.find((item) => item.key === key);
-    if (item) {
-      removeFromCart(item.id);
+    if (item && userId) {
+      await CartService.removeFromCart(userId, item.id);
+      const updatedCart = await CartService.getCart(userId);
       setCartItems(
-        getAllCartItems().map((item) => ({
-          ...item,
-          key: item.id.toString(), // Ensure 'key' is always a string
-          selected: cartItems.find((i) => i.id === item.id)?.selected || false,
-        }))
+        updatedCart.items.map(
+          (item: {
+            id: string;
+            product: {
+              _id: string;
+              name: string;
+              price: number;
+              image: string;
+            };
+            quantity: number;
+          }) => ({
+            key: item.id.toString(),
+            id: item.product?._id || "",
+            name: item.product?.name || "Unknown Product",
+            price: item.product?.price || 0,
+            quantity: item.quantity || 0,
+            image: item.product?.image || "",
+            selected:
+              cartItems.find((i) => i.id === item.product?._id)?.selected ||
+              false,
+          })
+        )
       );
     }
   };

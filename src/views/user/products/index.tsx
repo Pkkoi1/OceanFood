@@ -1,16 +1,11 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import FullBanner from "../../components/home/banner/FullBanner";
-import banner from "../../assets/images/collection-img.webp";
-import ListProduct from "../../components/home/ListProduct";
-import Brand from "../../components/home/Brand";
-import List from "../../components/product/List";
-import { productCategories } from "../../data/categoryData";
-import {
-  getProductsByCategory,
-  getAllProducts,
-} from "../../controller/ProductController";
-import type { Product } from "../../data/mockData";
+import FullBanner from "../../../components/home/banner/FullBanner";
+import banner from "../../../assets/images/collection-img.webp";
+import ListProduct from "../../../components/home/ListProduct";
+import Brand from "../../../components/home/Brand";
+import List from "../../../components/product/List";
+import { productCategories } from "../../../data/categoryData";
 
 interface ProductShowListProps {
   isSidebarOpen?: boolean; // Add isSidebarOpen as an optional prop
@@ -20,7 +15,6 @@ const ProductShowList: React.FC<ProductShowListProps> = ({ isSidebarOpen }) => {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState("Tất cả sản phẩm");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -40,11 +34,6 @@ const ProductShowList: React.FC<ProductShowListProps> = ({ isSidebarOpen }) => {
     } else {
       setPageTitle("Tất cả sản phẩm");
     }
-
-    const fetchedProducts = category
-      ? getProductsByCategory(category)
-      : getAllProducts(); // Default to all products
-    setProducts(fetchedProducts);
   }, [location.search]);
 
   return (
@@ -60,7 +49,6 @@ const ProductShowList: React.FC<ProductShowListProps> = ({ isSidebarOpen }) => {
         title={pageTitle}
         titlePosition="left"
         category={selectedCategory}
-        products={products}
       />
       <Brand />
     </div>

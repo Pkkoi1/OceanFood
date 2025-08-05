@@ -6,11 +6,11 @@ import logo from "../../../assets/images/logo.webp";
 import timeWork from "../../../assets/images/time-work.webp";
 import ship from "../../../assets/images/free-ship-2h.webp";
 import MainMenu from "../../menu/MainMenu";
-import { searchProductsByName } from "../../../controller/ProductController";
-import { searchHandbookByTitle } from "../../../controller/HandbookController";
 import type { Product } from "../../../data/mockData";
 import SearchSuggestions from "../../search/SearchSuggestions";
 import { type HandbookArticle } from "../../../data/handbookData";
+import { searchProductsByName } from "../../../Service/ProductService";
+import { getHandbookByName } from "../../../Service/HandBookService";
 
 const SearchBar = () => {
   const [placeholder, setPlaceholder] = useState("");
@@ -51,26 +51,28 @@ const SearchBar = () => {
     return () => clearTimeout(timeout);
   }, [placeholder, currentIndex, isDeleting]);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase(); // Convert to lowercase for case-insensitive matching
     setSearchTerm(value);
     if (value) {
-      const productResults = searchProductsByName(value);
-      const articleResults = searchHandbookByTitle(value); // Use controller for searching articles
+      const productResults = await searchProductsByName(value);
+      const articleResults = await getHandbookByName(value); // Use service for searching articles
       setSuggestions(productResults.slice(0, 4)); // Limit to 4 product suggestions
-      setArticles(articleResults.slice(0, 4)); // Limit to 4 article suggestions
+      setArticles(
+        Array.isArray(articleResults) ? articleResults.slice(0, 4) : []
+      ); // Ensure articleResults is an array
     } else {
       setSuggestions([]); // Clear product suggestions
       setArticles([]); // Clear article suggestions
     }
   };
 
-  const handleSuggestionClick = (productId: number) => {
+  const handleSuggestionClick = (productId: string) => {
     setSuggestions([]); // Hide suggestions
     navigate(`/products/${productId}`);
   };
 
-  const handleArticleClick = (articleId: number) => {
+  const handleArticleClick = (articleId: string) => {
     setSuggestions([]); // Hide suggestions
     setArticles([]); // Hide articles
     navigate(`/handbooks/${articleId}`);

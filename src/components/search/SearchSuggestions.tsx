@@ -6,8 +6,8 @@ interface SearchSuggestionsProps {
   suggestions: Product[];
   articles: HandbookArticle[];
   onSearchSubmit: () => void;
-  onSuggestionClick: (productId: number) => void;
-  onArticleClick: (articleId: number) => void;
+  onSuggestionClick: (productId: string) => void;
+  onArticleClick: (articleId: string) => void;
 }
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
@@ -59,9 +59,9 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
       )}
       {articles.map((article) => (
         <div
-          key={article.id}
+          key={article._id}
           className="flex items-center px-4 py-2 hover:bg-blue-50 cursor-pointer transition-colors"
-          onClick={() => onArticleClick(article.id)}
+          onClick={() => article._id && onArticleClick(article._id)}
         >
           <img
             src={article.image}

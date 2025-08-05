@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { newProducts, type Product } from "../../data/mockData";
-import ProductDetailContent from "../../components/product/ProductDetailContent";
-import ProductDetailTabs from "../../components/product/ProductDetailTabs";
-import ListProduct from "../../components/home/ListProduct";
-import Brand from "../../components/home/Brand";
+import { type Product } from "../../../data/mockData";
+import { findProductById } from "../../../Service/ProductService"; // Import the service function
+import ProductDetailContent from "../../../components/product/ProductDetailContent";
+import ProductDetailTabs from "../../../components/product/ProductDetailTabs";
+import ListProduct from "../../../components/home/ListProduct";
+import Brand from "../../../components/home/Brand";
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,8 +13,14 @@ const ProductDetail: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    const foundProduct = newProducts.find((p) => p.id === parseInt(id || "1"));
-    setProduct(foundProduct || null);
+    const fetchProduct = async () => {
+      if (id) {
+        const foundProduct = await findProductById(id); // Use the service function
+        setProduct(foundProduct || null);
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
   const handleQuantityChange = (type: "increase" | "decrease") => {

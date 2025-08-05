@@ -5,40 +5,29 @@ import {
 } from "@ant-design/icons";
 import { Badge } from "antd";
 import { useNavigate } from "react-router-dom";
-import { getAllFavorites } from "../../../controller/FavoriteController";
 import { useEffect, useState } from "react";
+import { getAllFavorites } from "../../../Service/FavoriteService";
 
 const Location = () => {
   const navigate = useNavigate();
   const [favoriteCount, setFavoriteCount] = useState(getAllFavorites().length);
 
   useEffect(() => {
-    const updateInterval = 500; // Thiết lập thời gian cập nhật (ms)
-
     const updateFavoriteCount = () => {
       const newCount = getAllFavorites().length;
-      if (favoriteCount !== newCount) {
-        setFavoriteCount(newCount);
-      }
+      console.log("favoriteChange event triggered, newCount:", newCount);
+      setFavoriteCount(() => {
+        console.log("Updating favoriteCount state to:", newCount);
+        return newCount;
+      });
     };
 
-    // Cập nhật định kỳ theo interval
-    const intervalId = setInterval(updateFavoriteCount, updateInterval);
-
-    // Lắng nghe sự kiện storage để cập nhật khi localStorage thay đổi
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === "favoriteProductIds") {
-        updateFavoriteCount();
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("favoriteChange", updateFavoriteCount);
 
     return () => {
-      clearInterval(intervalId);
-      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("favoriteChange", updateFavoriteCount);
     };
-  }, [favoriteCount]);
+  }, []);
 
   return (
     <div className="flex flex-row items-center justify-between gap-2 py-2 bg-[#0282a5] text-white px-[100px] text-[14px]">

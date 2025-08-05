@@ -1,27 +1,73 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
+import { useNavigate } from "react-router-dom";
 import type { CartItem } from "../../data/cartItemData";
 import OrderItem from "./OrderItem";
+import { CartService } from "../../Service/CartService";
 
 interface OrderSummaryProps {
   items: Array<CartItem & { key: string; selected?: boolean }>;
   totalAmount: number;
+  shippingFee: number;
   formatPrice: (price: number) => string;
+  onPlaceOrder?: () => Promise<{
+    userId: string;
+    selectedItems: Array<CartItem & { key: string; selected?: boolean }>;
+  } | null>;
+  loading?: boolean;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
   items,
   totalAmount,
+  shippingFee,
   formatPrice,
+  onPlaceOrder,
+  loading,
 }) => {
   const [discountCode, setDiscountCode] = useState("");
-  const shippingFee = 0; // Free shipping
-  const finalTotal = totalAmount + shippingFee;
+  const navigate = useNavigate();
+  const finalTotal = totalAmount + shippingFee; // Include shipping fee in total
 
-  const handlePlaceOrder = () => {
-    // Handle order placement
+  // Hàm xóa sản phẩm khỏi giỏ hàng (localStorage + database)
+  const handleClearCart = async (
+    userId: string,
+    selectedItems: Array<CartItem & { key: string; selected?: boolean }>
+  ) => {
+    // Xóa trên database
+    if (userId) {
+      await Promise.all(
+        selectedItems.map((item) => CartService.removeFromCart(userId, item.id))
+      );
+    }
+    // Xóa trên localStorage
+    const cartItemsRaw = localStorage.getItem("cartItems");
+    if (cartItemsRaw) {
+      const cartItems = JSON.parse(cartItemsRaw);
+      const selectedIds = selectedItems.map((item) => item.id);
+      const newCartItems = cartItems.filter(
+        (item: { id: string }) => !selectedIds.includes(item.id)
+      );
+      if (newCartItems.length > 0) {
+        localStorage.setItem("cartItems", JSON.stringify(newCartItems));
+      } else {
+        localStorage.removeItem("cartItems");
+      }
+    }
     alert("Đặt hàng thành công!");
+    navigate("/");
   };
+
+  const handlePlaceOrder = async () => {
+    if (onPlaceOrder) {
+      const result = await onPlaceOrder();
+      if (result && result.userId) {
+        await handleClearCart(result.userId, result.selectedItems);
+      }
+    }
+  };
+
+  console.log("Order Summary Items:", items);
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6">
@@ -84,8 +130,10 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
         size="large"
         className="w-full bg-[#37bee3] hover:bg-[#2a9bc4] border-[#37bee3]"
         onClick={handlePlaceOrder}
+        loading={loading}
+        disabled={loading}
       >
-        ĐẶT HÀNG
+        {loading ? "Đang xử lý..." : "ĐẶT HÀNG"}
       </Button>
     </div>
   );

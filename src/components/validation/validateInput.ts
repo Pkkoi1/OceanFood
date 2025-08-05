@@ -15,10 +15,10 @@ const validateInput = (data: Record<string, string>) => {
     errors.email = "Email không hợp lệ.";
   }
 
-  if (!data.phone) {
-    errors.phone = "Số điện thoại không được để trống.";
-  } else if (!/^\d{10,11}$/.test(data.phone)) {
-    errors.phone = "Số điện thoại không hợp lệ.";
+  if (!data.phoneNumber) {
+    errors.phoneNumber = "Số điện thoại không được để trống.";
+  } else if (!/^\d{10,11}$/.test(data.phoneNumber)) {
+    errors.phoneNumber = "Số điện thoại không hợp lệ.";
   }
 
   if (!data.password) {

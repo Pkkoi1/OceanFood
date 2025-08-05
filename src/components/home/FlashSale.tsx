@@ -3,23 +3,9 @@ import { Carousel } from "antd";
 import SaleProductCard from "./SaleProductCard";
 import flashSale from "../../assets/images/save-icon.webp";
 import type { CarouselRef } from "antd/es/carousel";
-import { newProducts } from "../../data/mockData";
 import { favoriteProductIds } from "../../data/mockFavoriteProducts";
-
-interface Product {
-  id: number;
-  name: string;
-  origin: string;
-  currentPrice: number;
-  originalPrice?: number;
-  discount?: number;
-  sold?: number;
-  image: string;
-  isLiked: boolean;
-  badge?: string;
-  stockStatus?: string;
-  flashSale?: boolean;
-}
+import type { Product } from "../../data/mockData";
+import { FlashSaleService } from "../../Service/FlashSaleService";
 
 const FlashSale: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -42,9 +28,10 @@ const FlashSale: React.FC = () => {
   const mobileProducts = products.map((product) => [product]);
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const carouselRef = useRef<CarouselRef>(null);
+  const desktopCarouselRef = useRef<CarouselRef>(null);
+  const mobileCarouselRef = useRef<CarouselRef>(null);
 
-  const toggleLike = (productId: number) => {
+  const toggleLike = (productId: string) => {
     setProducts((prev) =>
       prev.map((product) =>
         product.id === productId
@@ -55,17 +42,43 @@ const FlashSale: React.FC = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProducts(
-        newProducts
-          .filter((product) => product.flashSale)
-          .map((product) => ({
-            ...product,
-            isLiked: favoriteProductIds.includes(product.id),
-          }))
-      );
-    }, 500);
-    return () => clearInterval(interval);
+    // Lấy danh sách sản phẩm flash sale từ API
+    const fetchFlashSales = async () => {
+      try {
+        const res = await FlashSaleService.fetchFlashSales();
+        console.log(
+          "Fetched Flash Sales at :",
+          res,
+          Array.isArray(res),
+          typeof res
+        );
+        // Map dữ liệu trả về sang định dạng Product
+        const mappedProducts: Product[] = Array.isArray(res)
+          ? res.map((item: any) => ({
+              id: item.product.id || item.product._id,
+              name: item.product.name,
+              origin: item.product.origin || "", // Lấy xuất xứ nếu có
+              currentPrice: item.product.currentPrice,
+              originalPrice: item.product.originalPrice,
+              discount: item.product.discount,
+              sold: item.product.soldQuantity || 0, // Lấy số lượng đã bán nếu có
+              image: item.product.image,
+              isLiked: favoriteProductIds.includes(
+                item.product.id || item.product._id
+              ),
+              badge: "Bán chạy",
+              stockStatus: undefined,
+              flashSale: true,
+              description: item.product.description || [], // Thêm dòng này
+            }))
+          : [];
+        setProducts(mappedProducts);
+      } catch (error) {
+        setProducts([]);
+        console.error("Error fetching flash sales:", error);
+      }
+    };
+    fetchFlashSales();
   }, []);
 
   useEffect(() => {
@@ -93,9 +106,14 @@ const FlashSale: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const goToSlide = (slideIndex: number) => {
+  // Sửa lại hàm goToSlide để nhận thêm tham số loại (desktop/mobile)
+  const goToSlide = (slideIndex: number, type: "desktop" | "mobile") => {
     setCurrentSlide(slideIndex);
-    carouselRef.current?.goTo(slideIndex);
+    if (type === "desktop") {
+      desktopCarouselRef.current?.goTo(slideIndex);
+    } else {
+      mobileCarouselRef.current?.goTo(slideIndex);
+    }
   };
 
   return (
@@ -144,14 +162,14 @@ const FlashSale: React.FC = () => {
         {/* Desktop Carousel */}
         <div className="hidden lg:block">
           <Carousel
-            ref={carouselRef}
+            ref={desktopCarouselRef}
             arrows={true}
             infinite={true}
             dots={false}
             autoplay={false}
             draggable={true}
             className="flash-sale-carousel"
-            beforeChange={(to) => setCurrentSlide(to)}
+            beforeChange={(_, to) => setCurrentSlide(to)}
           >
             {allProducts.map((productSet, index) => (
               <div key={index}>
@@ -172,14 +190,14 @@ const FlashSale: React.FC = () => {
         {/* Mobile Carousel */}
         <div className="block lg:hidden">
           <Carousel
-            ref={carouselRef}
+            ref={mobileCarouselRef}
             arrows={true}
             infinite={true}
             dots={false}
             autoplay={false}
             draggable={true}
             className="flash-sale-carousel"
-            beforeChange={(to) => setCurrentSlide(to)}
+            beforeChange={(_, to) => setCurrentSlide(to)}
           >
             {mobileProducts.map((productSet, index) => (
               <div key={index}>
@@ -209,7 +227,7 @@ const FlashSale: React.FC = () => {
                       ? "bg-[#4FB3D9] scale-110"
                       : "bg-[#ececec] hover:bg-[#4FB3D9]/50"
                   }`}
-                  onClick={() => goToSlide(index)}
+                  onClick={() => goToSlide(index, "desktop")}
                 />
               ))}
             </div>
@@ -222,7 +240,7 @@ const FlashSale: React.FC = () => {
                       ? "bg-[#4FB3D9] scale-110"
                       : "bg-[#ececec] hover:bg-[#4FB3D9]/50"
                   }`}
-                  onClick={() => goToSlide(index)}
+                  onClick={() => goToSlide(index, "mobile")}
                 />
               ))}
             </div>

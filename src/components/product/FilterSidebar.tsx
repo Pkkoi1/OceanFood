@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { productTypes } from "../../data/typeData";
 import {
+  fetchProducts,
+  getOriginsByCategories,
   getProductsByCategory,
-  getOriginsByCategory,
-  getAllProducts,
-} from "../../controller/ProductController";
+} from "../../Service/ProductService";
 
 interface FilterOptions {
   priceRange: string;
   productTypes: string[];
-  origins: string[];
+  origin: string[];
 }
 
 interface FilterSidebarProps {
@@ -39,37 +39,47 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
   ];
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const category = urlParams.get("category");
+    const fetchFilters = async () => {
+      const urlParams = new URLSearchParams(location.search);
+      const category = urlParams.get("category");
 
-    if (category) {
-      const products = getProductsByCategory(category);
-      const types = Array.from(
-        new Set(products.map((product) => product.type).filter(Boolean))
-      );
-      setAvailableTypes(
-        productTypes.filter((type) => types.includes(type.key))
-      );
+      if (category) {
+        const products = await getProductsByCategory(category);
+        const types = Array.from(
+          new Set(products.map((product) => product.type).filter(Boolean))
+        );
+        setAvailableTypes(
+          productTypes.filter((type) => types.includes(type.key))
+        );
 
-      const origins = getOriginsByCategory(category).map((origin) => ({
-        key: origin.toLowerCase().replace(/\s+/g, "-"),
-        label: origin,
-      }));
-      setAvailableOrigins(origins);
-    } else {
-      setAvailableTypes(productTypes); // Default to all types
-      const allOrigins = Array.from(
-        new Set(
-          getAllProducts()
-            .map((product) => product.origin.split(": ")[1])
-            .filter((origin): origin is string => !!origin)
-        )
-      ).map((origin) => ({
-        key: origin.toLowerCase().replace(/\s+/g, "-"),
-        label: origin,
-      }));
-      setAvailableOrigins(allOrigins); // Default to all origins
-    }
+        const origins = (await getOriginsByCategories(category)).map(
+          (origin) => ({
+            key: origin.toLowerCase().replace(/\s+/g, "-"),
+            label: origin,
+          })
+        );
+        console.log("Available origins:", origins);
+        setAvailableOrigins(origins);
+      } else {
+        setAvailableTypes(productTypes); // Default to all types
+        const allProducts = await fetchProducts();
+        console.log("All products:", allProducts); // Log raw product data
+        const allOrigins = Array.from(
+          new Set(
+            allProducts
+              .map((product) => product.origin) // Directly access the `origin` property
+              .filter((origin): origin is string => !!origin) // Ensure `origin` is not null or undefined
+          )
+        ).map((origin) => ({
+          key: origin.toLowerCase().replace(/\s+/g, "-"),
+          label: origin,
+        }));
+        console.log("All origins:", allOrigins);
+        setAvailableOrigins(allOrigins); // Default to all origins
+      }
+    };
+
+    fetchFilters();
   }, [location.search]);
 
   const handlePriceRangeChange = (value: string) => {
@@ -77,7 +87,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
     onFilterChange?.({
       priceRange: value,
       productTypes: selectedProductTypes,
-      origins: selectedOrigins,
+      origin: selectedOrigins,
     });
   };
 
@@ -89,7 +99,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
     onFilterChange?.({
       priceRange: selectedPriceRange,
       productTypes: newTypes,
-      origins: selectedOrigins,
+      origin: selectedOrigins,
     });
   };
 
@@ -98,10 +108,11 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ onFilterChange }) => {
       ? [...selectedOrigins, value]
       : selectedOrigins.filter((origin) => origin !== value);
     setSelectedOrigins(newOrigins);
+    console.log("Selected origins:", newOrigins); // Log selected origins
     onFilterChange?.({
       priceRange: selectedPriceRange,
       productTypes: selectedProductTypes,
-      origins: newOrigins,
+      origin: newOrigins,
     });
   };
 

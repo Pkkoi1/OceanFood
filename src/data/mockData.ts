@@ -1,5 +1,5 @@
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   origin: string;
   currentPrice: number;
@@ -20,11 +20,13 @@ export interface Product {
   flashSale?: boolean;
   categories?: string[]; // Updated to allow multiple categories
   type?: string;
+  soldQuantity?: number; // Added for sold quantity
+  totalQuantity?: number; // Added for total quantity
 }
 
 export const newProducts: Product[] = [
   {
-    id: 1,
+    id: "1",
     name: "Cá Hồi Xông Khói Vị Truyền Thống",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 269000,
@@ -83,7 +85,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 2,
+    id: "2",
     name: "Cá Hồi Cắt Khoanh",
     origin: "Xuất xứ: Chile",
     currentPrice: 195000,
@@ -142,7 +144,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 3,
+    id: "3",
     name: "Cá Hồi Nguyên Con Tươi",
     origin: "Xuất xứ: Nauy",
     currentPrice: 590000,
@@ -201,7 +203,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 4,
+    id: "4",
     name: "Cá Hồi Phi Lê Tươi Nguyên Miếng",
     origin: "Xuất xứ: Nauy",
     currentPrice: 1350000,
@@ -260,7 +262,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 5,
+    id: "5",
     name: "Thân Cá Hồi Phile",
     origin: "Xuất xứ: Nauy",
     currentPrice: 175000,
@@ -319,7 +321,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 6,
+    id: "6",
     name: "Tôm Thẻ Sống",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 185000,
@@ -377,7 +379,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 7,
+    id: "7",
     name: "Tôm Sú Sống",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 295000,
@@ -436,7 +438,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 8,
+    id: "8",
     name: "Tôm Càng Xanh Sống",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 450000,
@@ -492,7 +494,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 9,
+    id: "9",
     name: "Tôm Hùm Baby Sống",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 680000,
@@ -548,7 +550,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 10,
+    id: "10",
     name: "Cá Chẽm Tươi Sống",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 320000,
@@ -604,7 +606,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 11,
+    id: "11",
     name: "Hàu sữa Pháp",
     origin: "Xuất xứ: Pháp",
     currentPrice: 250000,
@@ -626,7 +628,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 12,
+    id: "12",
     name: "Ngao trắng New Zealand",
     origin: "Xuất xứ: New Zealand",
     currentPrice: 180000,
@@ -648,7 +650,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 13,
+    id: "13",
     name: "Cua Hoàng Đế Alaska",
     origin: "Xuất xứ: Alaska",
     currentPrice: 1200000,
@@ -672,7 +674,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 14,
+    id: "14",
     name: "Tôm Sú Tươi",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 350000,
@@ -698,7 +700,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 15,
+    id: "15",
     name: "Mực ống tươi",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 220000,
@@ -722,7 +724,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 16,
+    id: "16",
     name: "Sốt Teriyaki Nhật Bản",
     origin: "Xuất xứ: Nhật Bản",
     currentPrice: 120000,
@@ -746,7 +748,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 17,
+    id: "17",
     name: "Hàu sữa Canada",
     origin: "Xuất xứ: Canada",
     currentPrice: 280000,
@@ -770,7 +772,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 18,
+    id: "18",
     name: "Ngao vàng Úc",
     origin: "Xuất xứ: Úc",
     currentPrice: 190000,
@@ -792,7 +794,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 19,
+    id: "19",
     name: "Cua Thịt Cà Mau Sống",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 450000,
@@ -817,7 +819,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 20,
+    id: "20",
     name: "Tôm hùm Alaska",
     origin: "Xuất xứ: Alaska",
     currentPrice: 1500000,
@@ -842,7 +844,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 21,
+    id: "21",
     name: "Mực lá tươi",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 250000,
@@ -867,7 +869,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 22,
+    id: "22",
     name: "Sốt BBQ Mỹ",
     origin: "Xuất xứ: Mỹ",
     currentPrice: 120000,
@@ -892,7 +894,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 23,
+    id: "23",
     name: "Nước Mắm Tĩn Nhãn Đỏ",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 80000,
@@ -921,7 +923,7 @@ export const newProducts: Product[] = [
     ],
   },
   {
-    id: 24,
+    id: "24",
     name: "Nước Xốt Mè Rang (Chai)",
     origin: "Xuất xứ: Việt Nam",
     currentPrice: 110000,
