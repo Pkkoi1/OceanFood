@@ -7,7 +7,7 @@ export const getAllProducts = (): Product[] => {
 };
 
 // Get a product by ID
-export const getProductById = (id: number): Product | undefined => {
+export const getProductById = (id: string): Product | undefined => {
   return newProducts.find((product) => product.id === id);
 };
 
@@ -18,7 +18,7 @@ export const addProduct = (product: Product): void => {
 
 // Update an existing product by ID
 export const updateProduct = (
-  id: number,
+  id: string,
   updatedProduct: Partial<Product>
 ): void => {
   const index = newProducts.findIndex((product) => product.id === id);
@@ -28,7 +28,7 @@ export const updateProduct = (
 };
 
 // Delete a product by ID
-export const deleteProduct = (id: number): void => {
+export const deleteProduct = (id: string): void => {
   const index = newProducts.findIndex((product) => product.id === id);
   if (index > -1) {
     newProducts.splice(index, 1);
