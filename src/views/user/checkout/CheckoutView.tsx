@@ -9,7 +9,6 @@ import {
   createOrder,
   type CreateOrderPayload,
 } from "../../../Service/orderService";
-import { CartService } from "../../../Service/CartService";
 
 interface CheckoutState {
   selectedItems: Array<CartItem & { key: string; selected?: boolean }>;
@@ -72,7 +71,7 @@ const CheckoutView: React.FC = () => {
       const userId = userData ? JSON.parse(userData).user?._id : null;
       if (!userId) {
         setLoading(false);
-        return;
+        return null;
       }
       const totalAmount =
         selectedItems
@@ -103,41 +102,6 @@ const CheckoutView: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Hàm xóa sản phẩm khỏi giỏ hàng (localStorage + database)
-  const handleClearCart = async (
-    userId: string,
-    selectedItems: Array<CartItem & { key: string; selected?: boolean }>
-  ) => {
-    // Xóa trên database
-    if (userId) {
-      console.log("Clearing cart for user:", userId);
-      console.log("Selected items to remove:", selectedItems);
-      if (selectedItems.length === 0) {
-        await Promise.all(
-          selectedItems.map((item) =>
-            CartService.removeFromCart(userId, item.id)
-          )
-        );
-      }
-    }
-    // Xóa trên localStorage
-    const cartItemsRaw = localStorage.getItem("cartItems");
-    if (cartItemsRaw) {
-      const cartItems = JSON.parse(cartItemsRaw);
-      const selectedIds = selectedItems.map((item) => item.id);
-      const newCartItems = cartItems.filter(
-        (item: { id: string }) => !selectedIds.includes(item.id)
-      );
-      if (newCartItems.length > 0) {
-        localStorage.setItem("cartItems", JSON.stringify(newCartItems));
-      } else {
-        localStorage.removeItem("cartItems");
-      }
-    }
-    alert("Đặt hàng thành công!");
-    navigate("/");
   };
 
   return (
@@ -174,12 +138,7 @@ const CheckoutView: React.FC = () => {
             totalAmount={totalAmount}
             shippingFee={shippingFee}
             formatPrice={formatPrice}
-            onPlaceOrder={async () => {
-              const result = await handleOrder();
-              if (result && result.userId) {
-                await handleClearCart(result.userId, result.selectedItems);
-              }
-            }}
+            onPlaceOrder={handleOrder}
             loading={loading}
           />
         </div>

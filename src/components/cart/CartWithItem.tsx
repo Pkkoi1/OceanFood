@@ -29,7 +29,6 @@ const CartWithItem: React.FC<CartData> = () => {
     const fetchCartItems = async () => {
       if (userId) {
         const cartData = await CartService.getCart(userId);
-        console.log("Fetched cart items:", cartData);
         setCartItems(
           cartData.items.map(
             (

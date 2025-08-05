@@ -11,7 +11,6 @@ import { getAllFavorites } from "../../../Service/FavoriteService";
 const Location = () => {
   const navigate = useNavigate();
   const [favoriteCount, setFavoriteCount] = useState(getAllFavorites().length);
-  console.log("Location mounted");
 
   useEffect(() => {
     const updateFavoriteCount = () => {
@@ -23,11 +22,9 @@ const Location = () => {
       });
     };
 
-    console.log("Adding favoriteChange listener");
     window.addEventListener("favoriteChange", updateFavoriteCount);
 
     return () => {
-      console.log("Removing favoriteChange listener");
       window.removeEventListener("favoriteChange", updateFavoriteCount);
     };
   }, []);
