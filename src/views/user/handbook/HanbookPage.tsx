@@ -1,5 +1,5 @@
-import SideMenu from "../../components/handbook/SideMenu";
-import HandbookList from "../../components/handbook/ListHandBook";
+import SideMenu from "../../../components/handbook/SideMenu";
+import HandbookList from "../../../components/handbook/ListHandBook";
 
 const HanbookPage = () => {
   return (

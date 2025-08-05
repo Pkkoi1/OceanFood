@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import FullBanner from "../../components/home/banner/FullBanner";
-import banner from "../../assets/images/collection-img.webp";
-import ListProduct from "../../components/home/ListProduct";
-import Brand from "../../components/home/Brand";
-import List from "../../components/product/List";
-import { productCategories } from "../../data/categoryData";
+import FullBanner from "../../../components/home/banner/FullBanner";
+import banner from "../../../assets/images/collection-img.webp";
+import ListProduct from "../../../components/home/ListProduct";
+import Brand from "../../../components/home/Brand";
+import List from "../../../components/product/List";
+import { productCategories } from "../../../data/categoryData";
 
 interface ProductShowListProps {
   isSidebarOpen?: boolean; // Add isSidebarOpen as an optional prop

@@ -4,8 +4,8 @@ import SaleProductCard from "./SaleProductCard";
 import flashSale from "../../assets/images/save-icon.webp";
 import type { CarouselRef } from "antd/es/carousel";
 import { favoriteProductIds } from "../../data/mockFavoriteProducts";
-import { FlashSaleService } from "../../Service/flashSaleService"; // Thêm dòng này
 import type { Product } from "../../data/mockData";
+import { FlashSaleService } from "../../Service/FlashSaleService";
 
 const FlashSale: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({

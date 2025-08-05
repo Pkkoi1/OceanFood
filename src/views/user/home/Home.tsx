@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import Banner from "../../components/home/banner/Banner";
-import FullBanner from "../../components/home/banner/FullBanner";
-import FlashSale from "../../components/home/FlashSale";
-import ListCategory from "../../components/home/ListCategory";
-import ListProduct from "../../components/home/ListProduct";
-import productImg1 from "../../assets/images/product-image-1.webp";
-import productImg2 from "../../assets/images/product-image-2.webp";
-import Handbook from "../../components/handbook/Handbook";
-import Brand from "../../components/home/Brand";
-import { getProductsByCategory } from "../../Service/ProductService";
-import type { Product } from "../../data/mockData";
+import Banner from "../../../components/home/banner/Banner";
+import FullBanner from "../../../components/home/banner/FullBanner";
+import FlashSale from "../../../components/home/FlashSale";
+import ListCategory from "../../../components/home/ListCategory";
+import ListProduct from "../../../components/home/ListProduct";
+import productImg1 from "../../../assets/images/product-image-1.webp";
+import productImg2 from "../../../assets/images/product-image-2.webp";
+import Handbook from "../../../components/handbook/Handbook";
+import Brand from "../../../components/home/Brand";
+import { getProductsByCategory } from "../../../Service/ProductService";
+import type { Product } from "../../../data/mockData";
 
 interface HomeProps {
   isSidebarOpen: boolean;

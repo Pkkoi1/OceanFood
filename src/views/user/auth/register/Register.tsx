@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { createFromIconfontCN, GoogleOutlined } from "@ant-design/icons";
-import { registerAccount } from "../../../Service/UserService";
+import { registerAccount } from "../../../../Service/UserService";
 import { notification } from "antd";
-import validateInput from "../../../components/validation/validateInput";
+import validateInput from "../../../../components/validation/validateInput";
 
 const IconFont = createFromIconfontCN({
   scriptUrl: "//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js",
@@ -66,8 +66,7 @@ const Register: React.FC = () => {
         err.response !== null &&
         "status" in err.response
       ) {
-        const errorMessage =
-          err.response?.data?.message || "Đã xảy ra lỗi.";
+        const errorMessage = err.response?.data?.message || "Đã xảy ra lỗi.";
         if (errorMessage.includes("email")) {
           setErrors({ ...errors, email: "Email đã được sử dụng." });
         } else if (errorMessage.includes("phone")) {

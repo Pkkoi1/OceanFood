@@ -6,8 +6,10 @@ import OrderItem from "./OrderItem";
 interface OrderSummaryProps {
   items: Array<CartItem & { key: string; selected?: boolean }>;
   totalAmount: number;
-  shippingFee: number; // Add shippingFee prop
+  shippingFee: number;
   formatPrice: (price: number) => string;
+  onPlaceOrder?: () => void;
+  loading?: boolean;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
@@ -15,16 +17,13 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   totalAmount,
   shippingFee,
   formatPrice,
+  onPlaceOrder,
+  loading,
 }) => {
   const [discountCode, setDiscountCode] = useState("");
   const finalTotal = totalAmount + shippingFee; // Include shipping fee in total
 
   console.log("Order Summary Items:", items);
-
-  const handlePlaceOrder = () => {
-    // Handle order placement
-    alert("Đặt hàng thành công!");
-  };
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6">
@@ -86,9 +85,11 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
         type="primary"
         size="large"
         className="w-full bg-[#37bee3] hover:bg-[#2a9bc4] border-[#37bee3]"
-        onClick={handlePlaceOrder}
+        onClick={onPlaceOrder}
+        loading={loading}
+        disabled={loading}
       >
-        ĐẶT HÀNG
+        {loading ? "Đang xử lý..." : "ĐẶT HÀNG"}
       </Button>
     </div>
   );

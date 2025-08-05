@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import ListProduct from "../../components/home/ListProduct";
-import type { Product } from "../../data/mockData"; // Import Product type
-import { searchProductsByName } from "../../Service/ProductService";
+import ListProduct from "../../../components/home/ListProduct";
+import type { Product } from "../../../data/mockData"; // Import Product type
+import { searchProductsByName } from "../../../Service/ProductService";
 
 const SearchResults: React.FC = () => {
   const location = useLocation();

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import ProductCard from "../../components/product/ProductCard";
-import { type Product } from "../../data/mockData";
-import { fetchFavorites, removeFavorite } from "../../Service/FavoriteService";
+import ProductCard from "../../../components/product/ProductCard";
+import { type Product } from "../../../data/mockData";
+import {
+  fetchFavorites,
+  removeFavorite,
+} from "../../../Service/FavoriteService";
 
 const FavoriteProducts: React.FC = () => {
   const user = JSON.parse(localStorage.getItem("userData") || "{}"); // Retrieve user object from local storage

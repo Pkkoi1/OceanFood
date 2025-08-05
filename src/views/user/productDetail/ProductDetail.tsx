@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { type Product } from "../../data/mockData";
-import { findProductById } from "../../Service/ProductService"; // Import the service function
-import ProductDetailContent from "../../components/product/ProductDetailContent";
-import ProductDetailTabs from "../../components/product/ProductDetailTabs";
-import ListProduct from "../../components/home/ListProduct";
-import Brand from "../../components/home/Brand";
+import { type Product } from "../../../data/mockData";
+import { findProductById } from "../../../Service/ProductService"; // Import the service function
+import ProductDetailContent from "../../../components/product/ProductDetailContent";
+import ProductDetailTabs from "../../../components/product/ProductDetailTabs";
+import ListProduct from "../../../components/home/ListProduct";
+import Brand from "../../../components/home/Brand";
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

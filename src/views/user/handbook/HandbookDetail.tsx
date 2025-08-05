@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchHandbookById } from "../../Service/HandBookService";
-import SideMenu from "../../components/handbook/SideMenu";
-import HandbookContent from "../../components/handbook/HandbookContent";
-import TableOfContents from "../../components/handbook/TableOfContents";
-import type { HandbookArticle } from "../../data/handbookData";
+import { fetchHandbookById } from "../../../Service/HandBookService";
+import SideMenu from "../../../components/handbook/SideMenu";
+import HandbookContent from "../../../components/handbook/HandbookContent";
+import TableOfContents from "../../../components/handbook/TableOfContents";
+import type { HandbookArticle } from "../../../data/handbookData";
 
 const HandbookDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

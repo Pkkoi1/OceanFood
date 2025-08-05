@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import DateFilter from "../../components/cart/DateFilter";
-import CartWithItem from "../../components/cart/CartWithItem";
-import { cartItems } from "../../data/cartItemData";
-import type { CartItem } from "../../data/cartItemData";
+import DateFilter from "../../../components/cart/DateFilter";
+import CartWithItem from "../../../components/cart/CartWithItem";
+import { cartItems } from "../../../data/cartItemData";
+import type { CartItem } from "../../../data/cartItemData";
 
 const CartView: React.FC = () => {
   const [products, setProducts] = useState<CartItem[]>(cartItems);

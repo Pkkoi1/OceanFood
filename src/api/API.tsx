@@ -361,3 +361,62 @@ export const FlashSaleAPI = {
     }
   },
 };
+
+// Order APIs
+export const OrderAPI = {
+  createOrder: async (payload: {
+    user: string;
+    items: { product: string; quantity: number; price: number }[];
+    totalAmount: number;
+    shippingAddress: string;
+    phone: string;
+    note?: string;
+    paymentMethod: "cod" | "banking" | "momo";
+  }) => {
+    try {
+      const response = await apiClient.post("/orders", payload);
+      return response.data;
+    } catch (error) {
+      console.error("Error creating order:", error);
+      throw error;
+    }
+  },
+  getOrdersByUser: async (userId: string) => {
+    try {
+      const response = await apiClient.get(`/orders/user/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching orders for user ${userId}:`, error);
+      throw error;
+    }
+  },
+  getOrderById: async (orderId: string) => {
+    try {
+      const response = await apiClient.get(`/orders/${orderId}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching order with ID ${orderId}:`, error);
+      throw error;
+    }
+  },
+  updateOrderStatus: async (orderId: string, status: string) => {
+    try {
+      const response = await apiClient.put(`/orders/${orderId}/status`, {
+        status,
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Error updating order status for ID ${orderId}:`, error);
+      throw error;
+    }
+  },
+  deleteOrder: async (orderId: string) => {
+    try {
+      const response = await apiClient.delete(`/orders/${orderId}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error deleting order with ID ${orderId}:`, error);
+      throw error;
+    }
+  },
+};
